@@ -1,62 +1,28 @@
-import React, { useEffect, useState } from 'react';
+/**
+ * @component HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics
+ *
+ * @todo [Apr 4]Implement dynamic determination of most recent game (may require GamePK or date logic)
+ * @todo [Apr 7]Fetch other required data in useEffect
+ * @todo [Apr 8] Review state management and error handling implementation
+ */
 
-// TEMPORARY URL
-// TODO: implement way to determine most recent game.
-// NOTE: May require the GamePK or could be date related
+import React, { useEffect, useState } from 'react';
+import type {
+  APIResponse,
+  RecentGame,
+  GameInfo,
+  CleanRecentGameData,
+} from './types';
+
 const RECENT_GAME_URL =
-  'https://statsapi.mlb.com/api/v1/schedule/?sportId=1&teamId=141&date=04/05/2026'; // TEMPORARY URL
+  'https://statsapi.mlb.com/api/v1/schedule/?sportId=1&teamId=141&date=04/05/2026'; // TEMP URL
 
 function HomePage() {
-  // todo: review
   const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
     []
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  type TeamInfo = {
-    id: number;
-    name: string;
-    link: string;
-  };
-
-  type TeamStats = {
-    score: number;
-    team: TeamInfo;
-  };
-
-  type GameInfo = {
-    gamePk: number;
-    venue: { name: string };
-    teams: {
-      away: TeamStats;
-      home: TeamStats;
-    };
-  };
-
-  type RecentGame = {
-    date: Date;
-    games: GameInfo[];
-  };
-
-  type CleanRecentGame = {
-    gameID: number;
-    awayTeamName: string;
-    homeTeamName: string;
-    awayTeamScore: number;
-    homeTeamScore: number;
-    gameVenue: string;
-  };
-
-  type CleanRecentGameData = {
-    date: Date;
-    gameInfo: CleanRecentGame[];
-  };
-
-  type APIResponse = {
-    dates: RecentGame[];
-  };
-  //todo: relocate type defintions to designated file
 
   useEffect(() => {
     async function fetchRecentGame() {
@@ -92,7 +58,6 @@ function HomePage() {
       }
     }
     fetchRecentGame();
-    // todo: fetch other required data
   }, []);
 
   return (
@@ -112,12 +77,7 @@ function HomePage() {
           blanditiis, odio reprehenderit, quas in optio dignissimos impedit sint
           quod.
         </aside>
-        <section id="recent-game" className="w-1/2 flex-auto">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic incidunt
-          veritatis quo! Distinctio fuga saepe totam? Voluptatem consequatur
-          minima non rerum commodi molestiae dolor accusamus, quisquam animi
-          possimus dolorum optio.
-        </section>
+        <section id="recent-game" className="w-1/2 flex-auto"></section>
         <aside id="player-stat-leaders" className="w-1/4 flex-auto">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum aliquam
           facere similique a praesentium rem alias velit eveniet quos beatae
