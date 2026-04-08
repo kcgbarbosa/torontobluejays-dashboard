@@ -7,38 +7,39 @@ const RECENT_GAME_URL =
   'https://statsapi.mlb.com/api/v1/schedule/?sportId=1&teamId=141&date=04/05/2026'; // TEMPORARY URL
 
 function HomePage() {
-  // TODO: requires Generics
-  const [recentGameData, setRecentGameData] = useState([]);
+  // todo: review
+  const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  type rawRecentGameAPIData = {
+  type TeamInfo = {
+    id: number;
+    name: string;
+    link: string;
+  };
+
+  type TeamStats = {
+    score: number;
+    team: TeamInfo;
+  };
+
+  type GameInfo = {
     gamePk: number;
-    venue: {
-      name: string;
-    };
+    venue: { name: string };
     teams: {
-      away: {
-        score: number;
-        team: {
-          name: string;
-        };
-      };
-      home: {
-        score: number;
-        team: {
-          name: string;
-        };
-      };
+      away: TeamStats;
+      home: TeamStats;
     };
   };
 
-  type rawRecentGameDate = {
-    date: string;
-    games: rawRecentGameAPIData[];
+  type RecentGame = {
+    date: Date;
+    games: GameInfo[];
   };
 
-  type cleanRecentGame = {
+  type CleanRecentGame = {
     gameID: number;
     awayTeamName: string;
     homeTeamName: string;
@@ -47,49 +48,52 @@ function HomePage() {
     gameVenue: string;
   };
 
-  type cleanRecentGameData = {
-    date: string;
-    gameInfo: cleanRecentGame[];
+  type CleanRecentGameData = {
+    date: Date;
+    gameInfo: CleanRecentGame[];
   };
 
-  const fetchRecentGame = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(RECENT_GAME_URL);
-      if (!response.ok) {
-        throw new Error(`response status;: ${response.status}`);
-      }
-      const result = await response.json();
-      const formattedResult = result.dates.map((data: recentGameMapping) => {
-        const gameDetails = data.games.map((subData: recentGameInfo) => {
+  type APIResponse = {
+    dates: RecentGame[];
+  };
+  //todo: relocate type defintions to designated file
+
+  useEffect(() => {
+    async function fetchRecentGame() {
+      setIsLoading(true);
+      try {
+        const response = await fetch(RECENT_GAME_URL);
+        if (!response.ok) {
+          throw new Error(`response status;: ${response.status}`);
+        }
+        const result = (await response.json()) as APIResponse;
+        const formattedResult = result.dates.map((data: RecentGame) => {
+          const gameDetails = data.games.map((subData: GameInfo) => {
+            return {
+              gameID: subData.gamePk,
+              awayTeamName: subData.teams.away.team.name,
+              awayTeamScore: subData.teams.away.score,
+              homeTeamName: subData.teams.home.team.name,
+              homeTeamScore: subData.teams.home.score,
+              gameVenue: subData.venue.name,
+            };
+          });
           return {
-            gameID: subData.gamePk,
-            awayTeamName: subData.teams.away.team.name,
-            awayTeamScore: subData.teams.away.score,
-            homeTeamName: subData.teams.home.team.name,
-            homeTeamScore: subData.teams.home.score,
-            gameVenue: subData.venue.name,
+            date: data.date,
+            gameInfo: gameDetails,
           };
         });
-        return {
-          date: data.date,
-          gameInfo: gameDetails,
-        };
-      });
-      setRecentGameData(formattedResult);
-    } catch (err) {
-      console.log(err);
-      setError(error);
-    } finally {
-      setIsLoading(false);
-      setError(null);
+        setRecentGameData(formattedResult);
+      } catch (err) {
+        console.log(err);
+        // set error
+      } finally {
+        setIsLoading(false);
+      }
     }
-  };
-
-  // todo: fetch other required data
-
-  //TODO: load data on mount
-  useEffect(() => {}, []);
+    fetchRecentGame();
+    // todo: fetch other required data
+  }, []);
 
   return (
     <div id="page-container">
@@ -113,10 +117,6 @@ function HomePage() {
           veritatis quo! Distinctio fuga saepe totam? Voluptatem consequatur
           minima non rerum commodi molestiae dolor accusamus, quisquam animi
           possimus dolorum optio.
-          {/* TODO: MAP through data to confirm its working */}
-          {/* {recentGameData.map((data) => 
-          <ul key={data.gameDetails.gameID}></ul>
-          )} */}
         </section>
         <aside id="player-stat-leaders" className="w-1/4 flex-auto">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum aliquam
@@ -124,6 +124,8 @@ function HomePage() {
           molestias ut nemo consectetur omnis ratione, ipsum eligendi autem
           quis.
         </aside>
+
+        <pre>{JSON.stringify(recentGameData, null, 2)}</pre>
       </main>
     </div>
   );
