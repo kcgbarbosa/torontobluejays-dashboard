@@ -3,6 +3,7 @@
  *
  * @todo [Apr 4]Implement dynamic determination of most recent game (may require GamePK or date logic)
  * @todo [Apr 7]Fetch other required data in useEffect
+ * will need to include additional team info for graphics and team records
  * @todo [Apr 8] Review state management and error handling implementation
  */
 
@@ -15,7 +16,7 @@ import type {
 } from './types';
 
 const RECENT_GAME_URL =
-  'https://statsapi.mlb.com/api/v1/schedule/?sportId=1&teamId=141&date=04/05/2026'; // TEMP URL
+  'https://statsapi.mlb.com/api/v1/schedule/?sportId=1&teamId=141&date=04/07/2026'; // TEMP URL
 
 function HomePage() {
   const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
@@ -77,16 +78,32 @@ function HomePage() {
           blanditiis, odio reprehenderit, quas in optio dignissimos impedit sint
           quod.
         </aside>
-        <section id="recent-game" className="w-1/2 flex-auto"></section>
+
+        {/* temp */}
+        <section id="recent-game" className="w-1/2 flex-auto">
+          <div id="scoreboard">
+            {recentGameData.map((data) =>
+              data.gameInfo.map((d) => (
+                <>
+                  <span>Date: {`${data.date}`}</span>
+                  <p>
+                    {`Away Team: ${d.awayTeamName} - ${d.awayTeamScore} vs. Home Team: ${d.homeTeamName} - ${d.homeTeamScore}`}
+                  </p>
+                  <span>Location: {d.gameVenue}</span>
+                </>
+              ))
+            )}
+          </div>
+        </section>
+
         <aside id="player-stat-leaders" className="w-1/4 flex-auto">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum aliquam
           facere similique a praesentium rem alias velit eveniet quos beatae
           molestias ut nemo consectetur omnis ratione, ipsum eligendi autem
           quis.
         </aside>
-
-        <pre>{JSON.stringify(recentGameData, null, 2)}</pre>
       </main>
+      <pre>{JSON.stringify(recentGameData, null, 2)}</pre>
     </div>
   );
 }

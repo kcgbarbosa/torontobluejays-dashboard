@@ -4,7 +4,7 @@
     link: string;
   };
 
-  export type TeamStats = {
+  export type TeamScore = {
     score: number;
     team: TeamInfo;
   };
@@ -13,8 +13,8 @@
     gamePk: number;
     venue: { name: string };
     teams: {
-      away: TeamStats;
-      home: TeamStats;
+      away: TeamScore;
+      home: TeamScore;
     };
   };
 
