@@ -14,16 +14,21 @@ import type {
   RecentGame,
   GameInfo,
   CleanRecentGameData,
+  MLBScheduleDates,
+  FullSchedule,
 } from '../types/types';
 
 const BASE_URL = `https://statsapi.mlb.com/api/v1`;
 const MLB_SCHEDULE_DATES = `${BASE_URL}seasons?sportId=1`;
+
 const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`; // TEMP URL
 
 function HomePage() {
   const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
     []
   );
+  const [seasonDateData, setSeasonDateData] = useState<MLBScheduleDates[]>([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -62,6 +67,24 @@ function HomePage() {
     }
     fetchRecentGame();
   }, []);
+
+  // @todo: CURRENT [Apr 9]: draft fetch season data
+  const fetchSeasonData = async () => {
+    try {
+      const response = await fetch(MLB_SCHEDULE_DATES);
+      if (!response.ok) {
+        throw new Error(`response status: ${response.status}`);
+      }
+      const result = await response.json();
+      const formattedResult = result.map((data: MLBScheduleDates) => ({
+        seasonStartDate: data.regularSeasonStartDate,
+        seasonEndDate: data.regularSeasonEndDate,
+      }));
+      // @todo: Use the dates to fetch full season schedule data
+
+      // const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${seasonStartDate}5&endDate=${seasonEndDate}`
+    } catch (error) {}
+  };
 
   return (
     <div id="page-container">
