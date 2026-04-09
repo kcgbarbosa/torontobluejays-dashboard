@@ -1,3 +1,8 @@
+  /**
+   * @types 
+   * 
+   */
+
   export type TeamInfo = {
     id: number;
     name: string;
@@ -40,4 +45,3 @@
  export type APIResponse = {
     dates: RecentGame[];
   };
-  

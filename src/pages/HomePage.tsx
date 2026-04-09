@@ -4,6 +4,7 @@
  * @todo [Apr 4]Implement dynamic determination of most recent game (may require GamePK or date logic)
  * @todo [Apr 7]Fetch other required data in useEffect
  * will need to include additional team info for graphics and team records
+ *
  * @todo [Apr 8] Review state management and error handling implementation
  */
 
@@ -13,10 +14,11 @@ import type {
   RecentGame,
   GameInfo,
   CleanRecentGameData,
-} from './types';
+} from '../types/types';
 
-const RECENT_GAME_URL =
-  'https://statsapi.mlb.com/api/v1/schedule/?sportId=1&teamId=141&date=04/07/2026'; // TEMP URL
+const BASE_URL = `https://statsapi.mlb.com/api/v1`;
+const MLB_SCHEDULE_DATES = `${BASE_URL}seasons?sportId=1`;
+const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`; // TEMP URL
 
 function HomePage() {
   const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
