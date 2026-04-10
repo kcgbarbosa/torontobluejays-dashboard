@@ -1,11 +1,11 @@
 /**
- * @component HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics
+ * #component HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics
  *
- * @todo [Apr 4]Implement dynamic determination of most recent game (may require GamePK or date logic)
- * @todo [Apr 7]Fetch other required data in useEffect
+ * #TODO [Apr 4] Implement dynamic determination of most recent game (may require GamePK or date logic)
+ * #TODO [Apr 7]Fetch other required data in useEffect
  * will need to include additional team info for graphics and team records
  *
- * @todo [Apr 8] Review state management and error handling implementation
+ * #TODO [Apr 8] Review state management and error handling implementation
  */
 
 import React, { useEffect, useState } from 'react';
@@ -24,52 +24,52 @@ const MLB_SCHEDULE_DATES = `${BASE_URL}seasons?sportId=1`;
 const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`; // TEMP URL
 
 function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
     []
   );
-  const [seasonDateData, setSeasonDateData] = useState<MLBScheduleDates[]>([]);
+  const [seasonDateData, setSeasonDateData] = useState<MLBScheduleDates[]>([]); // correct Type?
+  const [scheduleData, setScheduleData] = useState<FullSchedule[]>([]); // correct Type?
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchRecentGame() {
-      setIsLoading(true);
-      try {
-        const response = await fetch(RECENT_GAME_URL);
-        if (!response.ok) {
-          throw new Error(`response status;: ${response.status}`);
-        }
-        const result = (await response.json()) as APIResponse;
-        const formattedResult = result.dates.map((data: RecentGame) => {
-          const gameDetails = data.games.map((subData: GameInfo) => {
-            return {
-              gameID: subData.gamePk,
-              awayTeamName: subData.teams.away.team.name,
-              awayTeamScore: subData.teams.away.score,
-              homeTeamName: subData.teams.home.team.name,
-              homeTeamScore: subData.teams.home.score,
-              gameVenue: subData.venue.name,
-            };
-          });
+  async function fetchRecentGame() {
+    try {
+      const response = await fetch(RECENT_GAME_URL);
+      if (!response.ok) {
+        throw new Error(`response status;: ${response.status}`);
+      }
+      const result = (await response.json()) as APIResponse;
+      const formattedResult = result.dates.map((data: RecentGame) => {
+        const gameDetails = data.games.map((subData: GameInfo) => {
           return {
-            date: data.date,
-            gameInfo: gameDetails,
+            gameID: subData.gamePk,
+            awayTeamName: subData.teams.away.team.name,
+            awayTeamScore: subData.teams.away.score,
+            homeTeamName: subData.teams.home.team.name,
+            homeTeamScore: subData.teams.home.score,
+            gameVenue: subData.venue.name,
           };
         });
-        setRecentGameData(formattedResult);
-      } catch (err) {
-        console.log(err);
-        // set error
-      } finally {
-        setIsLoading(false);
+        return {
+          date: data.date,
+          gameInfo: gameDetails,
+        };
+      });
+      setRecentGameData(formattedResult);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        throw error;
       }
+    } finally {
+      setIsLoading(false);
     }
-    fetchRecentGame();
-  }, []);
+  }
 
-  // @todo: CURRENT [Apr 9]: draft fetch season data
-  const fetchSeasonData = async () => {
+  // #TODO: CURRENT [Apr 9]: draft fetch season data
+  async function fetchSeasonData() {
     try {
       const response = await fetch(MLB_SCHEDULE_DATES);
       if (!response.ok) {
@@ -80,11 +80,63 @@ function HomePage() {
         seasonStartDate: data.regularSeasonStartDate,
         seasonEndDate: data.regularSeasonEndDate,
       }));
-      // @todo: Use the dates to fetch full season schedule data
+      setSeasonDateData(formattedResult);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        throw error;
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
-      // const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${seasonStartDate}5&endDate=${seasonEndDate}`
-    } catch (error) {}
-  };
+
+  async function fetchSchedule() {
+    try {
+      const seasonStartDate = seasonDateData.map(
+        (d) => d.regularSeasonStartDate
+      );
+      const seasonEndDate = seasonDateData.map((d) => d.regularSeasonEndDate);
+      const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${seasonStartDate}5&endDate=${seasonEndDate}`;
+
+      const response = await fetch(FULL_TEAM_SCHEDULE);
+
+      if (!response.ok) {
+        throw new Error(`response status: ${response.status}`);
+      }
+      const result = (await response.json()) as APIResponse;
+      const formattedResult = result.dates.map((data: RecentGame) => {
+        const gameDetails = data.games.map((subData: GameInfo) => {
+          return {
+            gameID: subData.gamePk,
+            awayTeamName: subData.teams.away.team.name,
+            awayTeamScore: subData.teams.away.score,
+            homeTeamName: subData.teams.home.team.name,
+            homeTeamScore: subData.teams.home.score,
+            gameVenue: subData.venue.name,
+          };
+        });
+        return {
+          date: data.date,
+          gameInfo: gameDetails,
+        };
+      });
+      setScheduleData(formattedResult);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        throw error;
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // #TODO [Apr 10]: create master controller function to call all required fetch data on mount
+  useEffect(() => {}, []);
 
   return (
     <div id="page-container">
