@@ -1,11 +1,8 @@
 /**
  * #component HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics
+ * 
+ * #TODO UP NEXT: GIT MANAGEMENT
  *
- * #TODO [Apr 4] Implement dynamic determination of most recent game (may require GamePK or date logic)
- * #TODO [Apr 7]Fetch other required data in useEffect
- * will need to include additional team info for graphics and team records
- *
- * #TODO [Apr 8] Review state management and error handling implementation
  */
 
 import React, { useEffect, useState } from 'react';
@@ -21,7 +18,8 @@ import type {
 const BASE_URL = `https://statsapi.mlb.com/api/v1`;
 const MLB_SCHEDULE_DATES = `${BASE_URL}seasons?sportId=1`;
 
-const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`; // TEMP URL
+// #TODO [N/A] Implement dynamic determination of most recent game (may require GamePK or date logic)
+const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`;
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,19 +54,19 @@ function HomePage() {
           gameInfo: gameDetails,
         };
       });
-      setRecentGameData(formattedResult);
+      return formattedResult;
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
         throw error;
       }
+      return [];
     } finally {
       setIsLoading(false);
     }
   }
 
-  // #TODO: CURRENT [Apr 9]: draft fetch season data
   async function fetchSeasonData() {
     try {
       const response = await fetch(MLB_SCHEDULE_DATES);
@@ -76,22 +74,24 @@ function HomePage() {
         throw new Error(`response status: ${response.status}`);
       }
       const result = await response.json();
-      const formattedResult = result.map((data: MLBScheduleDates) => ({
-        seasonStartDate: data.regularSeasonStartDate,
-        seasonEndDate: data.regularSeasonEndDate,
-      }));
-      setSeasonDateData(formattedResult);
+      const formattedResult = result.map((data: MLBScheduleDates) => {
+        return {
+          seasonStartDate: data.regularSeasonStartDate,
+          seasonEndDate: data.regularSeasonEndDate,
+        };
+      });
+      return formattedResult;
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
         throw error;
       }
+      return []; // REQUIRED because without this, the error path would return undefined which is a big no-no. Need to provide default for every possible path.
     } finally {
       setIsLoading(false);
     }
   }
-
 
   async function fetchSchedule() {
     try {
@@ -123,20 +123,32 @@ function HomePage() {
           gameInfo: gameDetails,
         };
       });
-      setScheduleData(formattedResult);
+      return formattedResult;
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
         throw error;
       }
+      return [];
     } finally {
       setIsLoading(false);
     }
   }
 
-  // #TODO [Apr 10]: create master controller function to call all required fetch data on mount
-  useEffect(() => {}, []);
+  // #TODO [APR 10] Define types & confirm fetchAllData is working
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      const season = await fetchSeasonData();
+      setSeasonDateData(season);
+      const recentGame = await fetchRecentGame();
+      setRecentGameData(recentGame);
+      const schedule = await fetchSchedule();
+      setScheduleData(schedule);
+    };
+    fetchAllData();
+  }, []);
 
   return (
     <div id="page-container">
@@ -180,7 +192,6 @@ function HomePage() {
           quis.
         </aside>
       </main>
-      <pre>{JSON.stringify(recentGameData, null, 2)}</pre>
     </div>
   );
 }

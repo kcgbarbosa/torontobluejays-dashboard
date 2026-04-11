@@ -35,8 +35,8 @@ export type CleanRecentGame = {
   gameID: number;
   awayTeamName: string;
   homeTeamName: string;
-  awayTeamScore?: number; 
-  homeTeamScore?: number ;
+  awayTeamScore?: number;
+  homeTeamScore?: number;
   gameVenue: string;
 };
 
@@ -53,16 +53,10 @@ export type CleanRecentGameData = {
 // ------------------------------
 
 // START OF SCHEDULE TYPES
-export type ScheduleData = {
-  date: Date;
-  scheduleInfo: 
-}
-
-
 
 // START OF GENERAL USE TYPES
 
-// NOTE: change type for common use? 
+// NOTE: change type for common use?
 export type APIResponse = {
   dates: RecentGame[];
 };
