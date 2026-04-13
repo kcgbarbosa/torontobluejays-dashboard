@@ -1,35 +1,37 @@
 /**
  * #component HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics
- * 
- * #TODO UP NEXT: GIT MANAGEMENT
+ *
+ *
+ * #TODO [N/A] Implement dynamic determination of most recent game (may require GamePK or date logic)
+ *
+ * #TODO [Apr 12] relocate fetch logic and data mappers to different files
+ *
  *
  */
 
 import React, { useEffect, useState } from 'react';
 import type {
-  APIResponse,
-  RecentGame,
-  GameInfo,
-  CleanRecentGameData,
-  MLBScheduleDates,
-  FullSchedule,
-} from '../types/types';
+  GameResponseDTO,
+  GameDTO,
+  GameInfoDTO,
+  SeasonDTO,
+  SeasonResponseDTO,
+} from '../types/dto/mlb.dto';
+
+import type { Game, Season } from '../types/models/game.model';
 
 const BASE_URL = `https://statsapi.mlb.com/api/v1`;
-const MLB_SCHEDULE_DATES = `${BASE_URL}seasons?sportId=1`;
+const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
 
-// #TODO [N/A] Implement dynamic determination of most recent game (may require GamePK or date logic)
 const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`;
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [recentGameData, setRecentGameData] = useState<CleanRecentGameData[]>(
-    []
-  );
-  const [seasonDateData, setSeasonDateData] = useState<MLBScheduleDates[]>([]); // correct Type?
-  const [scheduleData, setScheduleData] = useState<FullSchedule[]>([]); // correct Type?
+  const [recentGameData, setRecentGameData] = useState<Game[]>([]);
+  const [seasonData, setSeasonData] = useState<Season[]>([]);
+  const [scheduleData, setScheduleData] = useState<Game[]>([]);
 
   async function fetchRecentGame() {
     try {
@@ -37,10 +39,11 @@ function HomePage() {
       if (!response.ok) {
         throw new Error(`response status;: ${response.status}`);
       }
-      const result = (await response.json()) as APIResponse;
-      const formattedResult = result.dates.map((data: RecentGame) => {
-        const gameDetails = data.games.map((subData: GameInfo) => {
+      const result = (await response.json()) as GameResponseDTO;
+      const formattedResult = result.dates.flatMap((data: GameDTO) => {
+        return data.games.map((subData: GameInfoDTO) => {
           return {
+            date: data.date,
             gameID: subData.gamePk,
             awayTeamName: subData.teams.away.team.name,
             awayTeamScore: subData.teams.away.score,
@@ -49,10 +52,6 @@ function HomePage() {
             gameVenue: subData.venue.name,
           };
         });
-        return {
-          date: data.date,
-          gameInfo: gameDetails,
-        };
       });
       return formattedResult;
     } catch (error) {
@@ -73,54 +72,11 @@ function HomePage() {
       if (!response.ok) {
         throw new Error(`response status: ${response.status}`);
       }
-      const result = await response.json();
-      const formattedResult = result.map((data: MLBScheduleDates) => {
+      const result = (await response.json()) as SeasonResponseDTO;
+      const formattedResult = result.seasons.map((data: SeasonDTO) => {
         return {
-          seasonStartDate: data.regularSeasonStartDate,
-          seasonEndDate: data.regularSeasonEndDate,
-        };
-      });
-      return formattedResult;
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        throw error;
-      }
-      return []; // REQUIRED because without this, the error path would return undefined which is a big no-no. Need to provide default for every possible path.
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function fetchSchedule() {
-    try {
-      const seasonStartDate = seasonDateData.map(
-        (d) => d.regularSeasonStartDate
-      );
-      const seasonEndDate = seasonDateData.map((d) => d.regularSeasonEndDate);
-      const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${seasonStartDate}5&endDate=${seasonEndDate}`;
-
-      const response = await fetch(FULL_TEAM_SCHEDULE);
-
-      if (!response.ok) {
-        throw new Error(`response status: ${response.status}`);
-      }
-      const result = (await response.json()) as APIResponse;
-      const formattedResult = result.dates.map((data: RecentGame) => {
-        const gameDetails = data.games.map((subData: GameInfo) => {
-          return {
-            gameID: subData.gamePk,
-            awayTeamName: subData.teams.away.team.name,
-            awayTeamScore: subData.teams.away.score,
-            homeTeamName: subData.teams.home.team.name,
-            homeTeamScore: subData.teams.home.score,
-            gameVenue: subData.venue.name,
-          };
-        });
-        return {
-          date: data.date,
-          gameInfo: gameDetails,
+          seasonStartDate: data.seasonStartDate,
+          seasonEndDate: data.seasonEndDate,
         };
       });
       return formattedResult;
@@ -136,15 +92,54 @@ function HomePage() {
     }
   }
 
-  // #TODO [APR 10] Define types & confirm fetchAllData is working
+  async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
+    try {
+      const seasonData = seasonStartAndEndDates.find((d) => d.seasonStartDate);
+      if (seasonData === undefined) {
+        console.log(`Error: seasonData is undefined`);
+      }
+      const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${seasonData?.seasonStartDate}&endDate=${seasonData?.seasonEndDate}`;
+      const response = await fetch(FULL_TEAM_SCHEDULE);
+
+      if (!response.ok) {
+        throw new Error(`response status: ${response.status}`);
+      }
+      const result = (await response.json()) as GameResponseDTO;
+      const formattedResult = result.dates.flatMap((data: GameDTO) => {
+        return data.games.map((subData: GameInfoDTO) => {
+          return {
+            date: data.date,
+            gameID: subData.gamePk,
+            awayTeamName: subData.teams.away.team.name,
+            awayTeamScore: subData.teams.away.score,
+            homeTeamName: subData.teams.home.team.name,
+            homeTeamScore: subData.teams.home.score,
+            gameVenue: subData.venue.name,
+          };
+        });
+      });
+      return formattedResult;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        throw error;
+      }
+      return [];
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
     const fetchAllData = async () => {
-      const season = await fetchSeasonData();
-      setSeasonDateData(season);
       const recentGame = await fetchRecentGame();
       setRecentGameData(recentGame);
-      const schedule = await fetchSchedule();
+
+      const season = await fetchSeasonData();
+      setSeasonData(season);
+
+      const schedule = await fetchSchedule(season);
       setScheduleData(schedule);
     };
     fetchAllData();
@@ -167,21 +162,18 @@ function HomePage() {
           blanditiis, odio reprehenderit, quas in optio dignissimos impedit sint
           quod.
         </aside>
-
         {/* temp */}
         <section id="recent-game" className="w-1/2 flex-auto">
           <div id="scoreboard">
-            {recentGameData.map((data) =>
-              data.gameInfo.map((d) => (
-                <>
-                  <span>Date: {`${data.date}`}</span>
-                  <p>
-                    {`Away Team: ${d.awayTeamName} - ${d.awayTeamScore} vs. Home Team: ${d.homeTeamName} - ${d.homeTeamScore}`}
-                  </p>
-                  <span>Location: {d.gameVenue}</span>
-                </>
-              ))
-            )}
+            {recentGameData.map((data) => (
+              <>
+                <span>Date: {`${data.date}`}</span>
+                <p>
+                  {`Away Team: ${data.awayTeamName} - ${data.awayTeamScore} vs. Home Team: ${data.homeTeamName} - ${data.homeTeamScore}`}
+                </p>
+                <span>Location: {data.gameVenue}</span>
+              </>
+            ))}
           </div>
         </section>
 
@@ -192,6 +184,15 @@ function HomePage() {
           quis.
         </aside>
       </main>
+      <div>
+        <h3>Testing Schedule Data</h3>
+        {scheduleData.map((data) => (
+          <ul key={data.gameID}>
+            <li>Date: {`${data.date}`} </li>
+            <li>Game: {` ${data.homeTeamName} vs. ${data.awayTeamName}`} </li>
+          </ul>
+        ))}
+      </div>
     </div>
   );
 }
