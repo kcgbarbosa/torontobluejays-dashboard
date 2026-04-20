@@ -131,6 +131,13 @@ function HomePage() {
     }
   }
 
+  const seenGames = new Set();
+  const filteredScheduleData = scheduleData.filter((d) => {
+    const duplicateGame = seenGames.has(d.gameID);
+    seenGames.add(d.gameID);
+    return !duplicateGame;
+  });
+
   useEffect(() => {
     const fetchAllData = async () => {
       const recentGame = await fetchRecentGame();
@@ -157,22 +164,28 @@ function HomePage() {
       </nav>
       <main id="home-main" className="flex gap-4">
         <aside id="upcoming-schedule" className="w-1/4 flex-auto">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-          veritatis id ad rem minus, provident quisquam molestias fugit ut aut
-          blanditiis, odio reprehenderit, quas in optio dignissimos impedit sint
-          quod.
+          <div>
+            <h3>Season Schedule</h3>
+            {filteredScheduleData.map((data) => (
+              <ul key={data.gameID}>
+                <li>Date: {`${data.date}`} </li>
+                <li>
+                  Game: {` ${data.homeTeamName} vs. ${data.awayTeamName}`}{' '}
+                </li>
+              </ul>
+            ))}
+          </div>
         </aside>
-        {/* temp */}
         <section id="recent-game" className="w-1/2 flex-auto">
           <div id="scoreboard">
             {recentGameData.map((data) => (
-              <>
+              <div key={data.gameID}>
                 <span>Date: {`${data.date}`}</span>
                 <p>
                   {`Away Team: ${data.awayTeamName} - ${data.awayTeamScore} vs. Home Team: ${data.homeTeamName} - ${data.homeTeamScore}`}
                 </p>
                 <span>Location: {data.gameVenue}</span>
-              </>
+              </div>
             ))}
           </div>
         </section>
@@ -184,15 +197,8 @@ function HomePage() {
           quis.
         </aside>
       </main>
-      <div>
-        <h3>Testing Schedule Data</h3>
-        {scheduleData.map((data) => (
-          <ul key={data.gameID}>
-            <li>Date: {`${data.date}`} </li>
-            <li>Game: {` ${data.homeTeamName} vs. ${data.awayTeamName}`} </li>
-          </ul>
-        ))}
-      </div>
+
+      <div>{JSON.stringify(scheduleData, null, 4)}</div>
     </div>
   );
 }
