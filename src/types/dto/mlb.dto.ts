@@ -1,5 +1,7 @@
 /**
  * @types
+ *
+ * #TODO : add calendarEventID dto for access to first pitch times, will be used in recent game and schedule data display and will require updates for all
  */
 
 type TeamInfoDTO = {
@@ -15,6 +17,7 @@ type TeamScoreDTO = {
 
 export type GameInfoDTO = {
   gamePk: number;
+  calendarEventID: string;
   venue: { name: string };
   teams: {
     away: TeamScoreDTO;

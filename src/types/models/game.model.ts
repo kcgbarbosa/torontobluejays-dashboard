@@ -4,6 +4,7 @@
 
 export type Game = {
   date: Date;
+  startTime: string;
   gameID: number;
   awayTeamName: string;
   homeTeamName: string;

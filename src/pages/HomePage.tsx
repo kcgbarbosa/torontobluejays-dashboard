@@ -44,6 +44,7 @@ function HomePage() {
         return data.games.map((subData: GameInfoDTO) => {
           return {
             date: data.date,
+            startTime: subData.calendarEventID,
             gameID: subData.gamePk,
             awayTeamName: subData.teams.away.team.name,
             awayTeamScore: subData.teams.away.score,
@@ -109,6 +110,7 @@ function HomePage() {
         return data.games.map((subData: GameInfoDTO) => {
           return {
             date: data.date,
+            startTime: subData.calendarEventID,
             gameID: subData.gamePk,
             awayTeamName: subData.teams.away.team.name,
             awayTeamScore: subData.teams.away.score,
@@ -185,16 +187,35 @@ function HomePage() {
                   {`Away Team: ${data.awayTeamName} - ${data.awayTeamScore} vs. Home Team: ${data.homeTeamName} - ${data.homeTeamScore}`}
                 </p>
                 <span>Location: {data.gameVenue}</span>
+                <br />
+                <span>Start Time: {data.startTime}</span>
               </div>
             ))}
           </div>
         </section>
 
         <aside id="player-stat-leaders" className="w-1/4 flex-auto">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum aliquam
-          facere similique a praesentium rem alias velit eveniet quos beatae
-          molestias ut nemo consectetur omnis ratione, ipsum eligendi autem
-          quis.
+          <h1> STATS SECTION </h1>
+          {/* #TODO create stat card component for different stat props */}
+          {/* TEMP MOCK CARDS FOR STAT DECISIONS */}
+          <br />
+
+          <div id="team-record">
+            <h3>TEMP TEAM RECORD PLACEHOLDER</h3>
+          </div>
+          <br />
+          <div id="top-position-player">
+            <h3>TEMP TOP POSITION PLAYER PLACEHOLDER</h3>
+            <p>Will include best player based on WAR+</p>
+            <p>Will also display a couple of their key stats</p>
+          </div>
+          <br />
+          <div id="top-pitcher">
+            <h3>TEMP TOP PITCHER PLACEHOLDER</h3>
+            <p>Will include best pitcher based on WAR+</p>
+            <p>Will also display a couple of their key stats</p>
+          </div>
+          <br />
         </aside>
       </main>
 
