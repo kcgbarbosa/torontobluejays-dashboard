@@ -1,7 +1,6 @@
 /**
  * @types
  *
- * #TODO : add calendarEventID dto for access to first pitch times, will be used in recent game and schedule data display and will require updates for all
  */
 
 type TeamInfoDTO = {
