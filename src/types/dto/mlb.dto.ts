@@ -4,6 +4,7 @@
  * #TODO [Apr 24] Add team logo Types to be displayed with recent game and schedule
  *    - will need to update fetch data, add new types, and display new data
  *
+ * #TODO [Apr 26] Add team abrv data to be used in the preview game schedule for the HomePage (full team names is too long for the use case)
  */
 
 type TeamInfoDTO = {

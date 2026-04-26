@@ -14,7 +14,7 @@ import {
   fetchSchedule,
 } from '../services/apiService';
 import RecentGame from '../components/RecentGame';
-import ScheduledGame from '../components/ScheduledGame';
+import ScheduledGameDetailed from '../components/ScheduledGameDetailed';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +55,7 @@ function HomePage() {
       </nav>
       <main id="home-main" className="flex gap-4">
         <aside id="scheduled-games" className="w-1/4 flex-auto">
-          <ScheduledGame scheduledGameDataProp={scheduleData} />
+          <ScheduledGameDetailed scheduledGameDataProp={scheduleData} />
         </aside>
         <section id="recent-game" className="w-1/2 flex-auto">
           <RecentGame recentGameDataProp={recentGameData} />
