@@ -1,6 +1,9 @@
 /**
  * @types
  *
+ * #TODO [Apr 24] Add team logo Types to be displayed with recent game and schedule
+ *    - will need to update fetch data, add new types, and display new data
+ *
  */
 
 type TeamInfoDTO = {

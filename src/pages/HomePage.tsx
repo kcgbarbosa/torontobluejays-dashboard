@@ -1,9 +1,6 @@
 /**
- * #component HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics
- *
- *
- * #TODO [N/A] Implement dynamic determination of most recent game (may require GamePK or date logic)
- *
+ * @page
+ * HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics *
  *
  */
 
@@ -16,6 +13,7 @@ import {
   fetchSeasonData,
   fetchSchedule,
 } from '../services/apiService';
+import RecentGame from '../components/RecentGame';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,10 +44,10 @@ function HomePage() {
 
   return (
     <div id="page-container">
-      <header>
+      <header className="flex justify-center gap-20 pt-5">
         <h3> Blue Jays Dashboard</h3>
       </header>
-      <nav>
+      <nav className="flex justify-center gap-20 py-4">
         <span> Home </span>
         <span> Schedule </span>
         <span> Roster </span>
@@ -69,19 +67,7 @@ function HomePage() {
           </div>
         </aside>
         <section id="recent-game" className="w-1/2 flex-auto">
-          <div id="scoreboard">
-            {recentGameData.map((data) => (
-              <div key={data.gameID}>
-                <span>Date: {`${data.date}`}</span>
-                <p>
-                  {`Away Team: ${data.awayTeamName} - ${data.awayTeamScore} vs. Home Team: ${data.homeTeamName} - ${data.homeTeamScore}`}
-                </p>
-                <span>Location: {data.gameVenue}</span>
-                <br />
-                <span>Start Time: {data.startTime}</span>
-              </div>
-            ))}
-          </div>
+          <RecentGame recentGameDataProp={recentGameData} />
         </section>
 
         <aside id="player-stat-leaders" className="w-1/4 flex-auto">
@@ -108,8 +94,6 @@ function HomePage() {
           <br />
         </aside>
       </main>
-
-      <div>{JSON.stringify(scheduleData, null, 4)}</div>
     </div>
   );
 }
