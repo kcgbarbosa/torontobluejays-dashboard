@@ -14,6 +14,7 @@ import {
   fetchSchedule,
 } from '../services/apiService';
 import RecentGame from '../components/RecentGame';
+import ScheduledGame from '../components/ScheduledGame';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,18 +54,8 @@ function HomePage() {
         <span> Roster </span>
       </nav>
       <main id="home-main" className="flex gap-4">
-        <aside id="upcoming-schedule" className="w-1/4 flex-auto">
-          <div>
-            <h3>Season Schedule</h3>
-            <ul>
-              {scheduleData.map((data) => (
-                <li key={data.gameID}>
-                  Date: {`${data.date}`} Game:
-                  {` ${data.homeTeamName} vs. ${data.awayTeamName}`}{' '}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <aside id="scheduled-games" className="w-1/4 flex-auto">
+          <ScheduledGame scheduledGameDataProp={scheduleData} />
         </aside>
         <section id="recent-game" className="w-1/2 flex-auto">
           <RecentGame recentGameDataProp={recentGameData} />
