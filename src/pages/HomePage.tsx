@@ -54,14 +54,14 @@ function HomePage() {
         <span> Roster </span>
       </nav>
       <main id="home-main" className="flex gap-4">
-        <aside id="scheduled-games" className="w-1/4 flex-auto">
+        <aside id="scheduled-games" className="w-1/8 flex-auto">
           <ScheduledGameDetailed scheduledGameDataProp={scheduleData} />
         </aside>
         <section id="recent-game" className="w-1/2 flex-auto">
           <RecentGame recentGameDataProp={recentGameData} />
         </section>
 
-        <aside id="player-stat-leaders" className="w-1/4 flex-auto">
+        <aside id="player-stat-leaders" className="w-1/6 flex-auto">
           <h1> STATS SECTION </h1>
           {/* #TODO create stat card component for different stat props */}
           {/* TEMP MOCK CARDS FOR STAT DECISIONS */}
