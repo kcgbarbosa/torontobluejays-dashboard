@@ -14,7 +14,7 @@ import {
   fetchSchedule,
 } from '../services/apiService';
 import RecentGame from '../components/RecentGame';
-import ScheduledGameDetailed from '../components/ScheduledGameDetailed';
+import ScheduledGameDetailed from '../components/ScheduledGameCondensed';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
