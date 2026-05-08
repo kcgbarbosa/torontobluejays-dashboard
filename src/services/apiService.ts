@@ -92,3 +92,6 @@ export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
   });
   return filteredScheduleData;
 }
+
+// #TODO [CURRENT] fetch standings data, define required types and implement data into a new component here
+// NOTE: include extensive data, as i can potentially provide a more detailed look at the AL East playoff picture on a different page

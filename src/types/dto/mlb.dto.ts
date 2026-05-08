@@ -41,3 +41,31 @@ export type SeasonDTO = {
 export type SeasonResponseDTO = {
   seasons: SeasonDTO[];
 };
+
+// LEAGUE RECORD TYPES (bottom to top for nested property access )
+type RecordsResponseDTO = {
+  records: TeamRecordsDTO[];
+};
+
+type TeamRecordsDTO = {
+  teamRecords: TeamRecordsInfoDTO[];
+};
+
+type TeamRecordsInfoDTO = {
+  divisionRank: number;
+  gamesPlayed: number;
+  divisionGamesBack: number;
+  wins: number;
+  losses: number;
+  runDifferential: number;
+  winningPercentage: string;
+  hasWildCard: boolean;
+  clinched: false;
+  streak: StreakDTO;
+};
+
+type StreakDTO = {
+  streakCode: string;
+  streakType: string;
+  streakNumber: number;
+};
