@@ -1,10 +1,6 @@
 /**
  * @types
  *
- * #TODO [Apr 24] Add team logo Types to be displayed with recent game and schedule
- *    - will need to update fetch data, add new types, and display new data
- *
- * #TODO [Apr 26] Add team abrv data to be used in the preview game schedule for the HomePage (full team names is too long for the use case)
  */
 
 type TeamInfoDTO = {
@@ -44,4 +40,38 @@ export type SeasonDTO = {
 
 export type SeasonResponseDTO = {
   seasons: SeasonDTO[];
+};
+
+// LEAGUE RECORD TYPES (bottom to top for nested property access )
+export type RecordsResponseDTO = {
+  records: TeamRecordsDTO[];
+};
+
+export type TeamRecordsDTO = {
+  division: TeamDivisionDTO;
+  teamRecords: TeamRecordsInfoDTO[];
+};
+
+export type TeamRecordsInfoDTO = {
+  team: TeamInfoDTO;
+  divisionRank: number;
+  gamesPlayed: number;
+  divisionGamesBack: number;
+  wins: number;
+  losses: number;
+  runDifferential: number;
+  winningPercentage: string;
+  hasWildCard: boolean;
+  clinched: false;
+  streak: StreakDTO;
+};
+
+type TeamDivisionDTO = {
+  id: number;
+};
+
+export type StreakDTO = {
+  streakCode: string;
+  streakType: string;
+  streakNumber: number;
 };
