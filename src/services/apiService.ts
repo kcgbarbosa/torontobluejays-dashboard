@@ -10,10 +10,12 @@ import type {
   SeasonDTO,
   SeasonResponseDTO,
 } from '../types/dto/mlb.dto';
+import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
 
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
-const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&teamId=141&date=04/07/2026`;
+const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=04/07/2026`;
+const AL_STANDINGS_URL = `${BASE_URL}/standings?leagueID=103&season=${CURRENT_YEAR}&standingTypes=regularSeason&hydrate=division,team`;
 
 export async function fetchRecentGame() {
   const response = await fetch(RECENT_GAME_URL);
