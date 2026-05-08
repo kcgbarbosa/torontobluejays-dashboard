@@ -2,9 +2,10 @@
  * @types
  */
 
-export type ALRecords = {
-  teamName: string, 
-  teamID: number,
+// #TODO [May 8] Update ALRecords DTO and Model to include an ID for keys
+  export type ALRecords = {
+  divisionId: number;
+  teamName: string;
   divisionRank: number;
   gamesPlayed: number;
   gamesBack: number;

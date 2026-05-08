@@ -13,9 +13,11 @@ import {
   fetchRecentGame,
   fetchSeasonData,
   fetchSchedule,
+  fetchALTeamRecords,
 } from '../services/apiService';
 import RecentGame from '../components/RecentGame';
 import ScheduledGameDetailed from '../components/ScheduledGameCondensed';
+import ALEastStandings from '../components/ALEastStandings';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +38,8 @@ function HomePage() {
         setSeasonData(season);
         const schedule = await fetchSchedule(season);
         setScheduleData(schedule);
+        const standings = await fetchALTeamRecords();
+        setStandingsData(standings);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
@@ -64,13 +68,10 @@ function HomePage() {
         </section>
 
         <aside id="player-stat-leaders" className="w-1/6 flex-auto">
-          <h1> STATS SECTION </h1>
-          {/* #TODO create stat card component for different stat props */}
-          {/* TEMP MOCK CARDS FOR STAT DECISIONS */}
-          <br />
-
+          <h1>Stats </h1>
           <div id="team-record">
             <h3>TEMP TEAM RECORD PLACEHOLDER</h3>
+            <ALEastStandings standingsDataProp={standingsData} />
           </div>
           <br />
           <div id="top-position-player">

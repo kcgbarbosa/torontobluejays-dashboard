@@ -19,7 +19,7 @@ import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
 const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=04/07/2026`;
-const AL_STANDINGS_URL = `${BASE_URL}/standings?leagueID=103&season=${CURRENT_YEAR}&standingTypes=regularSeason&hydrate=division,team`;
+const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
 
 export async function fetchRecentGame() {
   const response = await fetch(RECENT_GAME_URL);
@@ -97,9 +97,6 @@ export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
   return filteredScheduleData;
 }
 
-// #TODO [CURRENT] fetch standings data, define required types and implement data into a new component here
-// NOTE: include extensive data, as i can potentially provide a more detailed look at the AL East playoff picture on a different page
-
 export async function fetchALTeamRecords() {
   const response = await fetch(AL_STANDINGS_URL);
   if (!response.ok) {
@@ -110,7 +107,7 @@ export async function fetchALTeamRecords() {
     return data.teamRecords.map((subdata: TeamRecordsInfoDTO) => {
       return {
         divisionId: data.division.id,
-        teamName: subdata.team,
+        teamName: subdata.team.name,
         divisionRank: subdata.divisionRank,
         gamesPlayed: subdata.gamesPlayed,
         gamesBack: subdata.divisionGamesBack,
@@ -120,7 +117,9 @@ export async function fetchALTeamRecords() {
         winPercentage: subdata.winningPercentage,
         hasWildCard: subdata.hasWildCard,
         hasClinched: subdata.clinched,
-        streakAbbr: subdata.streak,
+        streakAbbr: subdata.streak.streakCode,
+        streakType: subdata.streak.streakType,
+        streakLength: subdata.streak.streakNumber,
       };
     });
   });
