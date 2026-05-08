@@ -8,14 +8,11 @@ type ScheduledGameProps = {
 
 function ScheduledGameDetailed({ scheduledGameDataProp }: ScheduledGameProps) {
   return (
-    //#FIXME [APR 26] issue with keys
     <main id="component-container">
       <header className="pl-3">Upcoming Games</header>
       {scheduledGameDataProp.map((d) => (
-        <section className='py-4 my-2 border-2 rounded-2xl'>
-          <div key={d.gameID} className="flex pl-3">
-            {/* PLACEHOLDER DATA */}
-            {/* #FIXME: need abbreviation data, team names too long */}
+        <section key={d.gameID} className="py-4 my-2 border-2 rounded-2xl">
+          <div className="flex pl-3">
             <img src={d.awayTeamLogo} className="px-1 size-12"></img>
             <div className="pr-1">{teamAbbreviator(d.awayTeamName)}</div>
             <div>@</div>
