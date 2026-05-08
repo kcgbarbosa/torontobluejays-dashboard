@@ -7,6 +7,7 @@
 import React, { useEffect, useState } from 'react';
 
 import type { Game, Season } from '../types/models/game.model';
+import type { ALRecords } from '../types/models/standings.model';
 
 import {
   fetchRecentGame,
@@ -23,6 +24,7 @@ function HomePage() {
   const [recentGameData, setRecentGameData] = useState<Game[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
+  const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
 
   useEffect(() => {
     const fetchAllData = async () => {

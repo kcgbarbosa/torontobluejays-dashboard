@@ -9,7 +9,11 @@ import type {
   GameInfoDTO,
   SeasonDTO,
   SeasonResponseDTO,
+  RecordsResponseDTO,
+  TeamRecordsDTO,
+  TeamRecordsInfoDTO,
 } from '../types/dto/mlb.dto';
+
 import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
 
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
@@ -95,3 +99,30 @@ export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
 
 // #TODO [CURRENT] fetch standings data, define required types and implement data into a new component here
 // NOTE: include extensive data, as i can potentially provide a more detailed look at the AL East playoff picture on a different page
+
+export async function fetchALTeamRecords() {
+  const response = await fetch(AL_STANDINGS_URL);
+  if (!response.ok) {
+    throw new Error(`response status: ${response.status}`);
+  }
+  const result = (await response.json()) as RecordsResponseDTO;
+  const formattedResult = result.records.flatMap((data: TeamRecordsDTO) => {
+    return data.teamRecords.map((subdata: TeamRecordsInfoDTO) => {
+      return {
+        divisionId: data.division.id,
+        teamName: subdata.team,
+        divisionRank: subdata.divisionRank,
+        gamesPlayed: subdata.gamesPlayed,
+        gamesBack: subdata.divisionGamesBack,
+        wins: subdata.wins,
+        losses: subdata.losses,
+        runDiff: subdata.runDifferential,
+        winPercentage: subdata.winningPercentage,
+        hasWildCard: subdata.hasWildCard,
+        hasClinched: subdata.clinched,
+        streakAbbr: subdata.streak,
+      };
+    });
+  });
+  return formattedResult;
+}

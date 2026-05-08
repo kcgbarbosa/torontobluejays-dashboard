@@ -2,7 +2,9 @@
  * @types
  */
 
-export type ALEastRecords = {
+export type ALRecords = {
+  teamName: string, 
+  teamID: number,
   divisionRank: number;
   gamesPlayed: number;
   gamesBack: number;
