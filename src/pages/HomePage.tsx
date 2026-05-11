@@ -15,7 +15,7 @@ import {
   fetchSchedule,
   fetchALTeamRecords,
 } from '../services/apiService';
-import RecentGame from '../components/RecentGame';
+import RecentGame from '../components/Game';
 import ScheduledGameDetailed from '../components/ScheduledGameCondensed';
 import ALEastStandings from '../components/ALEastStandings';
 
