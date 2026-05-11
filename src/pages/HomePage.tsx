@@ -63,7 +63,9 @@ function HomePage() {
         <aside id="scheduled-games" className="w-1/8 flex-auto">
           <ScheduledGameDetailed scheduledGameDataProp={scheduleData} />
         </aside>
+
         <section id="recent-game" className="w-1/2 flex-auto">
+          {/* #TODO [May 9] Include the next upcoming game */}
           <RecentGame recentGameDataProp={recentGameData} />
         </section>
 
@@ -74,14 +76,14 @@ function HomePage() {
             <ALEastStandings standingsDataProp={standingsData} />
           </div>
           <br />
-          <div id="top-position-player">
-            <h3>TEMP TOP POSITION PLAYER PLACEHOLDER</h3>
+          <div id="position-stat-leader">
+            <h3>POSITION PLAYER STAT LEADER PLACEHOLDER</h3>
             <p>Will include best player based on WAR+</p>
             <p>Will also display a couple of their key stats</p>
           </div>
           <br />
-          <div id="top-pitcher">
-            <h3>TEMP TOP PITCHER PLACEHOLDER</h3>
+          <div id="pitcher-stat-leader">
+            <h3>PITCHER PLAYER STAT LEADER PLACEHOLDER</h3>
             <p>Will include best pitcher based on WAR+</p>
             <p>Will also display a couple of their key stats</p>
           </div>

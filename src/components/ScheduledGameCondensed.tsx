@@ -19,7 +19,7 @@ function ScheduledGameDetailed({ scheduledGameDataProp }: ScheduledGameProps) {
             <div className="pr-1">{teamAbbreviator(d.homeTeamName)}</div>
             <img src={d.homeTeamLogo} className="px-1 size-12"></img>
             <div className="pr-1">12:00</div>
-            <div> March 5</div>
+            <div> {d.date.toLocaleDateString()}</div>
           </div>
         </section>
       ))}

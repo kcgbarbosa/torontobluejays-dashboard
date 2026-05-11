@@ -30,7 +30,7 @@ export async function fetchRecentGame() {
   const formattedResult = result.dates.flatMap((data: GameDTO) => {
     return data.games.map((subData: GameInfoDTO) => {
       return {
-        date: data.date,
+        date: new Date(data.date),
         startTime: subData.calendarEventID,
         gameID: subData.gamePk,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
@@ -75,7 +75,7 @@ export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
   const formattedResult = result.dates.flatMap((data: GameDTO) => {
     return data.games.map((subData: GameInfoDTO) => {
       return {
-        date: data.date,
+        date: new Date(data.date),
         startTime: subData.calendarEventID,
         gameID: subData.gamePk,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
@@ -125,3 +125,5 @@ export async function fetchALTeamRecords() {
   });
   return formattedResult;
 }
+
+// #TODO NEXT: Roster & Stat Leader data fetch
