@@ -91,10 +91,15 @@ export type RosterMemberDTO = {
 // Person Types
 export type PersonDTO = {
   id: number;
-  fullName: string;
   link: string;
-  firstName: string;
-  lastName: string;
+  useName: string;
+  useLastName: string;
+  fullName: string;
+  boxscoreName: string;
+  nickName?: string;
+  lastFirstName: string;
+  lastInitName: string;
+
   primaryNumber: string;
   birthDate: string;
   currentAge: number;
@@ -105,26 +110,13 @@ export type PersonDTO = {
   weight: number;
   active: boolean;
   primaryPosition: PositionDTO;
-  useName: string;
-  useLastName: string;
-  middleName?: string;
-  boxscoreName: string;
-  nickName?: string;
+
   gender: string;
   draftYear: number;
   mlbDebutDate: string;
   batSide: HandednessDTO;
   pitchHand: HandednessDTO;
-  nameFirstLast: string;
-  nameSlug: string;
-  firstLastName: string;
-  lastFirstName: string;
-  lastInitName: string;
-  initLastName: string;
-  fullFMLName: string;
-  fullLFMName: string;
-  strikeZoneTop: number;
-  strikeZoneBottom: number;
+
   stats: PlayerStatGroupDTO[];
 };
 
@@ -215,10 +207,7 @@ export type PlayerStatsDTO = {
   shutouts?: number;
   strikes?: number;
   strikePercentage?: string;
-  hitBatsmen?: number;
   winPercentage?: string;
-  pitchesPerInning?: string;
-  winningPercentage?: string;
   strikeoutsPer9?: string;
   hitsPer9?: string;
   strikesoutsToWalks?: string;
