@@ -33,11 +33,17 @@ function RecentGame({ recentGameDataProp }: RecentGameProps) {
               gap-20
             "
           >
-            <div>{data.awayTeamName}</div>
+            <span className="flex">
+              <img className="size-10" src={data.awayTeamLogo} />
+              <div>{data.awayTeamName}</div>
+            </span>
             <div>{data.awayTeamScore}</div>
             <div>FINAL</div>
             <div>{data.homeTeamScore}</div>
-            <div>{data.homeTeamName}</div>
+            <span className="flex">
+              <div>{data.homeTeamName}</div>
+              <img className="size-10" src={data.homeTeamLogo} />
+            </span>
           </div>
           <div id="game-venu" className="text-center">
             <div>{data.gameVenue}</div>

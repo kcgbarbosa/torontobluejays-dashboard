@@ -42,7 +42,7 @@ export type SeasonResponseDTO = {
   seasons: SeasonDTO[];
 };
 
-// LEAGUE RECORD TYPES (bottom to top for nested property access )
+// LEAGUE RECORD TYPES
 export type RecordsResponseDTO = {
   records: TeamRecordsDTO[];
 };
@@ -74,4 +74,143 @@ export type StreakDTO = {
   streakCode: string;
   streakType: string;
   streakNumber: number;
+};
+
+export type RosterResponseDTO = {
+  roster: RosterMemberDTO[];
+};
+
+export type RosterMemberDTO = {
+  person: PersonDTO;
+  jerseyNumber: string;
+  position: PositionDTO;
+  status: StatusCodeDTO;
+  parentTeamId: number;
+};
+
+// Person Types
+export type PersonDTO = {
+  id: number;
+  link: string;
+  useName: string;
+  useLastName: string;
+  fullName: string;
+  boxscoreName: string;
+  nickName?: string;
+  lastFirstName: string;
+  lastInitName: string;
+
+  primaryNumber: string;
+  birthDate: string;
+  currentAge: number;
+  birthCity: string;
+  birthStateProvince?: string;
+  birthCountry: string;
+  height: string;
+  weight: number;
+  active: boolean;
+  primaryPosition: PositionDTO;
+
+  gender: string;
+  draftYear: number;
+  mlbDebutDate: string;
+  batSide: HandednessDTO;
+  pitchHand: HandednessDTO;
+
+  stats: PlayerStatGroupDTO[];
+};
+
+export type PositionDTO = {
+  code: string;
+  name: string;
+  type: string;
+  abbreviation: string;
+};
+
+export type StatusCodeDTO = {
+  code: string;
+  description: string;
+};
+
+export type HandednessDTO = {
+  code: string;
+  description: string;
+};
+
+export type MetadataEntityDTO = {
+  id: number;
+  name?: string;
+  fullName?: string;
+  link: string;
+  abbreviation?: string;
+};
+
+export type PlayerStatGroupDTO = {
+  type: {
+    displayName: 'season' | 'seasonAdvanced';
+  };
+  group: {
+    displayName: 'hitting' | 'pitching' | 'fielding';
+  };
+  splits: StatSplitDTO[];
+};
+
+export type StatSplitDTO = {
+  season: string;
+  gameType: string;
+  team: TeamInfoDTO;
+  player: MetadataEntityDTO;
+  league: MetadataEntityDTO;
+  sport: MetadataEntityDTO;
+  stat: PlayerStatsDTO;
+};
+
+export type PlayerStatsDTO = {
+  age: number;
+  gamesPlayed?: number;
+  gamesStarted?: number;
+  runs?: number;
+  doubles?: number;
+  triples?: number;
+  homeRuns?: number;
+  strikeOuts?: number;
+  baseOnBalls?: number;
+  intentionalWalks?: number;
+  hits?: number;
+  avg?: string;
+  atBats?: number;
+  obp?: string;
+  slg?: string;
+  ops?: string;
+  stolenBases?: number;
+  plateAppearances?: number;
+  hitByPitch?: number;
+  extraBaseHits?: number;
+  // hitting-specific
+  rbi?: number;
+  walkOffs?: number;
+  // pitching-specific
+  era?: string;
+  inningsPitched?: string;
+  wins?: number;
+  losses?: number;
+  saves?: number;
+  saveOpportunities?: number;
+  holds?: number;
+  blownSaves?: number;
+  earnedRuns?: number;
+  whip?: string;
+  battersFaced?: number;
+  outs?: number;
+  gamesPitched?: number;
+  completeGames?: number;
+  shutouts?: number;
+  strikes?: number;
+  strikePercentage?: string;
+  winPercentage?: string;
+  strikeoutsPer9?: string;
+  hitsPer9?: string;
+  strikesoutsToWalks?: string;
+  qualityStarts?: number;
+  inningsPitchedPerGame?: string;
 };

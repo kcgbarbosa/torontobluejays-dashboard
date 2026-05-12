@@ -1,25 +1,29 @@
 /**
  * @services
- *
  */
 
 import type {
   GameResponseDTO,
-  GameDTO,
-  GameInfoDTO,
   SeasonDTO,
   SeasonResponseDTO,
   RecordsResponseDTO,
-  TeamRecordsDTO,
-  TeamRecordsInfoDTO,
+  RosterResponseDTO,
 } from '../types/dto/mlb.dto';
 
 import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
+import {
+  alTeamRecordsDataModelMapper,
+  recentGameModelMapper,
+  rosterDataModelMapper,
+  scheduleDataModelMapper,
+  seasonDataModelMapper,
+} from '../utils/dtoToModelMappers';
 
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
 const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=04/07/2026`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
+const ROSTER_DATA_URL = `${BASE_URL}/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
 
 export async function fetchRecentGame() {
   const response = await fetch(RECENT_GAME_URL);
@@ -27,22 +31,7 @@ export async function fetchRecentGame() {
     throw new Error(`response status;: ${response.status}`);
   }
   const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = result.dates.flatMap((data: GameDTO) => {
-    return data.games.map((subData: GameInfoDTO) => {
-      return {
-        date: new Date(data.date),
-        startTime: subData.calendarEventID,
-        gameID: subData.gamePk,
-        awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
-        awayTeamName: subData.teams.away.team.name,
-        awayTeamScore: subData.teams.away.score,
-        homeTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.home.team.id}.svg`,
-        homeTeamName: subData.teams.home.team.name,
-        homeTeamScore: subData.teams.home.score,
-        gameVenue: subData.venue.name,
-      };
-    });
-  });
+  const formattedResult = recentGameModelMapper(result);
   return formattedResult;
 }
 
@@ -52,12 +41,7 @@ export async function fetchSeasonData() {
     throw new Error(`response status: ${response.status}`);
   }
   const result = (await response.json()) as SeasonResponseDTO;
-  const formattedResult = result.seasons.map((data: SeasonDTO) => {
-    return {
-      seasonStartDate: data.seasonStartDate,
-      seasonEndDate: data.seasonEndDate,
-    };
-  });
+  const formattedResult = seasonDataModelMapper(result);
   return formattedResult;
 }
 
@@ -72,29 +56,8 @@ export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
     throw new Error(`response status: ${response.status}`);
   }
   const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = result.dates.flatMap((data: GameDTO) => {
-    return data.games.map((subData: GameInfoDTO) => {
-      return {
-        date: new Date(data.date),
-        startTime: subData.calendarEventID,
-        gameID: subData.gamePk,
-        awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
-        awayTeamName: subData.teams.away.team.name,
-        awayTeamScore: subData.teams.away.score,
-        homeTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.home.team.id}.svg`,
-        homeTeamName: subData.teams.home.team.name,
-        homeTeamScore: subData.teams.home.score,
-        gameVenue: subData.venue.name,
-      };
-    });
-  });
-  const seenGames = new Set();
-  const filteredScheduleData = formattedResult.filter((d) => {
-    if (seenGames.has(d.gameID)) return false;
-    seenGames.add(d.gameID);
-    return true;
-  });
-  return filteredScheduleData;
+  const formattedResult = scheduleDataModelMapper(result);
+  return formattedResult;
 }
 
 export async function fetchALTeamRecords() {
@@ -103,27 +66,18 @@ export async function fetchALTeamRecords() {
     throw new Error(`response status: ${response.status}`);
   }
   const result = (await response.json()) as RecordsResponseDTO;
-  const formattedResult = result.records.flatMap((data: TeamRecordsDTO) => {
-    return data.teamRecords.map((subdata: TeamRecordsInfoDTO) => {
-      return {
-        divisionId: data.division.id,
-        teamName: subdata.team.name,
-        divisionRank: subdata.divisionRank,
-        gamesPlayed: subdata.gamesPlayed,
-        gamesBack: subdata.divisionGamesBack,
-        wins: subdata.wins,
-        losses: subdata.losses,
-        runDiff: subdata.runDifferential,
-        winPercentage: subdata.winningPercentage,
-        hasWildCard: subdata.hasWildCard,
-        hasClinched: subdata.clinched,
-        streakAbbr: subdata.streak.streakCode,
-        streakType: subdata.streak.streakType,
-        streakLength: subdata.streak.streakNumber,
-      };
-    });
-  });
+  const formattedResult = alTeamRecordsDataModelMapper(result);
   return formattedResult;
 }
 
-// #TODO NEXT: Roster & Stat Leader data fetch
+export async function fetchRosterData() {
+  const response = await fetch(ROSTER_DATA_URL);
+
+  if (!response.ok) {
+    throw new Error(`response status: ${response.status}`);
+  }
+
+  const result = (await response.json()) as RosterResponseDTO;
+  const formattedResult = rosterDataModelMapper(result);
+  return formattedResult;
+}
