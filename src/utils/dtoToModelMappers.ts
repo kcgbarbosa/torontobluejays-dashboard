@@ -1,7 +1,7 @@
 /**
  * @utils
  *
- * dtoToModelMappers - Util functions which
+ * dtoToModelMappers - Functions which handle the mapping of raw JSON response to match it's correct model shape
  *
  *
  */
@@ -127,7 +127,8 @@ export function rosterDataModelMapper(result: RosterResponseDTO) {
       lastInitName: data.person.lastInitName,
 
       jerseyNumber: data.jerseyNumber,
-      imageUrl: `#TODO [May 11] Determine URL for Headshot`,
+      // setting image size default to 240px, subject to change
+      imageUrl: `https://midfield.mlbstatic.com/v1/people/${data.person.id}/spots/240`,
       primaryNumber: data.person.primaryNumber,
       birthDate: data.person.birthDate,
       currentAge: data.person.currentAge,
