@@ -23,7 +23,7 @@ const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
 const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=04/07/2026`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
-const ROSTER_DATA_URL = `${BASE_URL}/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
+const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
 
 export async function fetchRecentGame() {
   const response = await fetch(RECENT_GAME_URL);

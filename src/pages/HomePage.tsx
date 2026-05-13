@@ -14,19 +14,24 @@ import {
   fetchSeasonData,
   fetchSchedule,
   fetchALTeamRecords,
+  fetchRosterData,
 } from '../services/apiService';
 import RecentGame from '../components/Game';
 import ScheduledGameDetailed from '../components/ScheduledGameCondensed';
 import ALEastStandings from '../components/ALEastStandings';
+import type { Player } from '../types/models/person.model';
+import PlayerCard from '../components/PlayerCard';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // #TODO [May 13] Once i begin working on other pages, lift state to nearest common ancestor
   const [recentGameData, setRecentGameData] = useState<Game[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
+  const [playerData, setPlayerData] = useState<Player[]>([]);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -40,6 +45,8 @@ function HomePage() {
         setScheduleData(schedule);
         const standings = await fetchALTeamRecords();
         setStandingsData(standings);
+        const players = await fetchRosterData();
+        setPlayerData(players);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
@@ -76,17 +83,11 @@ function HomePage() {
             <ALEastStandings standingsDataProp={standingsData} />
           </div>
           <br />
-          <div id="position-stat-leader">
-            <h3>POSITION PLAYER STAT LEADER PLACEHOLDER</h3>
-            <p>Will include best player based on WAR+</p>
-            <p>Will also display a couple of their key stats</p>
-          </div>
-          <br />
-          <div id="pitcher-stat-leader">
-            <h3>PITCHER PLAYER STAT LEADER PLACEHOLDER</h3>
-            <p>Will include best pitcher based on WAR+</p>
-            <p>Will also display a couple of their key stats</p>
-          </div>
+          <section id="position-player-stat-leader">
+            <PlayerCard playerDataProp={playerData} />
+            <PlayerCard playerDataProp={playerData} />
+            <PlayerCard playerDataProp={playerData} />
+          </section>
           <br />
         </aside>
       </main>
