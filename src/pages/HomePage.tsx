@@ -57,19 +57,18 @@ function HomePage() {
   }, []);
 
   return (
-    <div id="page-container">
-
-      <main id="home-main" className="flex gap-4">
-        <aside id="scheduled-games" className="w-1/8 flex-auto">
+    <div id="page-container" className="bg-gray-100 min-h-screen p-4">
+      <main id="home-main" className="grid grid-cols-4 gap-5">
+        <aside id="scheduled-games">
           <ScheduledGameDetailed scheduledGameDataProp={scheduleData} />
         </aside>
 
-        <section id="recent-game" className="w-1/2 flex-auto">
+        <section id="recent-game" className="col-span-2">
           {/* #TODO [May 9] Include the next upcoming game */}
           <RecentGame recentGameDataProp={recentGameData} />
         </section>
 
-        <aside id="player-stat-leaders" className="w-1/6 flex-auto">
+        <aside id="player-stat-leaders" className="">
           <h1>Stats </h1>
           <div id="team-record">
             <h3>TEMP TEAM RECORD PLACEHOLDER</h3>
