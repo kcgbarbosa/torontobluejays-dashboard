@@ -58,14 +58,7 @@ function HomePage() {
 
   return (
     <div id="page-container">
-      <header className="flex justify-center gap-20 pt-5">
-        <h3> Blue Jays Dashboard</h3>
-      </header>
-      <nav className="flex justify-center gap-20 py-4">
-        <span> Home </span>
-        <span> Schedule </span>
-        <span> Roster </span>
-      </nav>
+
       <main id="home-main" className="flex gap-4">
         <aside id="scheduled-games" className="w-1/8 flex-auto">
           <ScheduledGameDetailed scheduledGameDataProp={scheduleData} />
