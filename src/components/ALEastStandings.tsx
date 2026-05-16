@@ -11,6 +11,7 @@ function ALEastStandings() {
   {
     if (error) return <div> Error : {error} </div>;
   }
+
   return (
     <div>
       <h1>AL Standings</h1>
