@@ -6,16 +6,23 @@
  *
  */
 
-import type { Game } from '../types/models/game.model';
+import { useContext } from 'react';
+import { AppStatusContext, RecentGameContext } from '../store/contexts';
 
-type RecentGameProps = {
-  recentGameDataProp: Game[];
-};
+function RecentGame() {
+  const recentGame = useContext(RecentGameContext);
 
-function RecentGame({ recentGameDataProp }: RecentGameProps) {
+  const { isLoading, error } = useContext(AppStatusContext);
+
+  {
+    if (isLoading) return <div>Loading...</div>;
+  }
+  {
+    if (error) return <div> Error : {error} </div>;
+  }
   return (
     <>
-      {recentGameDataProp.map((data) => (
+      {recentGame.map((data) => (
         <div
           key={data.gameID}
           className="

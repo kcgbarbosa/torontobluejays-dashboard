@@ -1,16 +1,20 @@
-import React from 'react';
+import { useContext } from 'react';
+import { AppStatusContext, StandingsContext } from '../store/contexts';
 
-import type { ALRecords } from '../types/models/standings.model';
+function ALEastStandings() {
+  const standingsData = useContext(StandingsContext);
+  const { isLoading, error } = useContext(AppStatusContext);
 
-type ALEastStandingsProps = {
-  standingsDataProp: ALRecords[];
-};
-
-function ALEastStandings({ standingsDataProp }: ALEastStandingsProps) {
+  {
+    if (isLoading) return <div>Loading...</div>;
+  }
+  {
+    if (error) return <div> Error : {error} </div>;
+  }
   return (
     <div>
       <h1>AL Standings</h1>
-      {standingsDataProp.map((d) => (
+      {standingsData.map((d) => (
         <div key={d.teamName}>
           <>
             <span>

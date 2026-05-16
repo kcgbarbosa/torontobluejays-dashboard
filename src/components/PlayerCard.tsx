@@ -5,20 +5,26 @@
  * Intention is to reuse this component in the Stat Leader cards
  * Also to be used in Player Info cards (which display when you select a player from the roster list)
  *
- * # TODO NOTE: [May 13] Roster data validity confirmed. Next step is lifting state to strengthen this components reusability
  *
  *
  */
 
-import React from 'react';
-import type { Player } from '../types/models/person.model';
+import { useContext } from 'react';
+import { AppStatusContext, PlayerContext } from '../store/contexts';
 
-type playerDataTypes = {
-  playerDataProp: Player[];
-};
+function PlayerCard() {
+  const playerData = useContext(PlayerContext);
+  const { isLoading, error } = useContext(AppStatusContext);
 
-function PlayerCard({ playerDataProp }: playerDataTypes) {
-  const vladdyTest = playerDataProp.find((p) => p.id === 665489);
+  {
+    if (isLoading) return <div>Loading...</div>;
+  }
+  {
+    if (error) return <div> Error : {error} </div>;
+  }
+
+  const vladdyTest = playerData.find((p) => p.id === 665489);
+
   return (
     <div>
       <div id="page-container" className="flex flex-col border-2 ">

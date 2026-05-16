@@ -1,16 +1,27 @@
-import React from 'react';
+import { useContext } from 'react';
 import type { Game } from '../types/models/game.model';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
+import { AppStatusContext, ScheduleContext } from '../store/contexts';
 
 type ScheduledGameProps = {
   scheduledGameDataProp: Game[];
 };
 
-function ScheduledGameDetailed({ scheduledGameDataProp }: ScheduledGameProps) {
+function ScheduledGameDetailed() {
+  const scheduledGameData = useContext(ScheduleContext);
+  const { isLoading, error } = useContext(AppStatusContext);
+
+  {
+    if (isLoading) return <div>Loading...</div>;
+  }
+  {
+    if (error) return <div> Error : {error} </div>;
+  }
+
   return (
     <main id="component-container">
       <header className="pl-3">Upcoming Games</header>
-      {scheduledGameDataProp.map((d) => (
+      {scheduledGameData.map((d) => (
         <section key={d.gameID} className="py-4 my-2 border-2 rounded-2xl">
           <div className="flex pl-3">
             <img src={d.awayTeamLogo} className="px-1 size-12"></img>
