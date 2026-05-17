@@ -9,11 +9,19 @@ function ScheduleTable() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <table>
+    <table className="w-full text-xl">
+      <thead>
+        <tr>
+          <td className="px-10"> Date</td>
+          <td> Start Time</td>
+          <td> Teams</td>
+          <td> Venue</td>
+        </tr>
+      </thead>
       <tbody>
         {scheduleData.map((d) => (
-          <tr key={d.gameID}>
-            <td>{d.date.toLocaleDateString()}</td>
+          <tr key={d.gameID} className=" border border-blue-300 ">
+            <td className=" pl-10 py-10">{d.date.toLocaleDateString()}</td>
             <td>{d.startTime}</td>
             <td>
               {d.awayTeamName} @ {d.homeTeamName}
