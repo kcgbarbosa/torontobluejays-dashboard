@@ -3,7 +3,8 @@
  */
 
 export type Game = {
-  date: Date;
+  keyID: string;
+  date: string;
   startTime: string;
   gameID: number;
   awayTeamLogo: string;

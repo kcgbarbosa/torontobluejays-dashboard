@@ -1,1 +1,60 @@
+import type { Game } from '../types/models/game.model';
+
 export const CURRENT_YEAR = new Date().getFullYear();
+const now = new Date();
+
+export const todayStr = now.toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
+export const currentTimeStr = now.toLocaleDateString('en-CA', {
+  // FORMAT: HH:MM AM/PM
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true,
+});
+
+export function normalizeToLocalDateString(dateString: any): string {
+  if (!dateString) return '';
+
+  const dateStr = String(dateString).trim();
+
+  // early exit if the format is already proper
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+  const parsedDate = new Date(dateStr);
+
+  if (isNaN(parsedDate.getTime())) return dateStr;
+
+  const year = parsedDate.getFullYear();
+  const month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+  const day = String(parsedDate.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+export const isGameInPast = (game: Game) => {
+  if (game.date < todayStr) return true;
+  if (game.date > todayStr) return false;
+
+  return game.startTime < currentTimeStr;
+};
+
+export const getRecentGameDateUtil = (scheduleData: Game[]): Game | null => {
+  const pastGames = scheduleData.filter((game) => isGameInPast(game));
+  if (pastGames.length === 0) return null;
+
+  return pastGames.reduce((prevGame, game) =>
+    new Date(game.date).getTime() > new Date(prevGame.date).getTime()
+      ? game
+      : prevGame
+  );
+};
+
+export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
+  const upcomingGames = scheduleData.filter((game) => !isGameInPast(game));
+  if (upcomingGames.length === 0) return null;
+
+  return upcomingGames.reduce((nextGame, game) =>
+    new Date(game.date).getTime() < new Date(nextGame.date).getTime()
+      ? game
+      : nextGame
+  );
+};

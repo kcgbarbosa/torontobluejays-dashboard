@@ -3,8 +3,8 @@
  *
  * dtoToModelMappers - Functions which handle the mapping of raw JSON response to match it's correct model shape
  *
- *
  */
+
 import type {
   GameDTO,
   GameInfoDTO,
@@ -18,11 +18,12 @@ import type {
   TeamRecordsInfoDTO,
 } from '../types/dto/mlb.dto';
 
-export function recentGameModelMapper(result: GameResponseDTO) {
+export function gameModelMapper(result: GameResponseDTO) {
   const formattedResult = result.dates.flatMap((data: GameDTO) => {
     return data.games.map((subData: GameInfoDTO) => {
       return {
-        date: new Date(data.date),
+        keyID: crypto.randomUUID(),
+        date: data.date,
         startTime: subData.calendarEventID,
         gameID: subData.gamePk,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
@@ -52,7 +53,8 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
   const formattedResult = result.dates.flatMap((data: GameDTO) => {
     return data.games.map((subData: GameInfoDTO) => {
       return {
-        date: new Date(data.date),
+        keyID: crypto.randomUUID(),
+        date: data.date.toString(),
         startTime: subData.calendarEventID,
         gameID: subData.gamePk,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
@@ -65,13 +67,7 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
       };
     });
   });
-  const seenGames = new Set();
-  const filteredScheduleData = formattedResult.filter((d) => {
-    if (seenGames.has(d.gameID)) return false;
-    seenGames.add(d.gameID);
-    return true;
-  });
-  return filteredScheduleData;
+  return formattedResult;
 }
 
 export function alTeamRecordsDataModelMapper(result: RecordsResponseDTO) {
@@ -100,7 +96,6 @@ export function alTeamRecordsDataModelMapper(result: RecordsResponseDTO) {
 
 export function rosterDataModelMapper(result: RosterResponseDTO) {
   const formattedResult = result.roster.map((data: RosterMemberDTO) => {
-    // defining hitting and pitching groups to ensure accurate stat access, regardless of specific players json response
     const hittingGroup = data.person.stats?.find(
       (g) =>
         g.type.displayName === 'season' && g.group.displayName === 'hitting'
