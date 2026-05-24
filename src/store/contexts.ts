@@ -7,7 +7,8 @@ export const AppStatusContext = createContext({
   isLoading: true,
   error: null as string | null,
 });
-export const RecentGameContext = createContext<Game[]>([]);
+export const RecentGameContext = createContext<Game | null>(null);
+export const NextGameContext = createContext<Game | null>(null);
 export const StandingsContext = createContext<ALRecords[]>([]);
 export const ScheduleContext = createContext<Game[]>([]);
 export const PlayerContext = createContext<Player[]>([]);

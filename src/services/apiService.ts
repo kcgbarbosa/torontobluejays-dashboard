@@ -1,5 +1,6 @@
 /**
  * @services
+ *
  */
 
 import type {
@@ -9,11 +10,15 @@ import type {
   RecordsResponseDTO,
   RosterResponseDTO,
 } from '../types/dto/mlb.dto';
+import type { Game } from '../types/models/game.model';
 
-import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
+import {
+  CURRENT_YEAR,
+  normalizeToLocalDateString,
+} from '../utils/dateAndTimeUtilities';
 import {
   alTeamRecordsDataModelMapper,
-  recentGameModelMapper,
+  gameModelMapper,
   rosterDataModelMapper,
   scheduleDataModelMapper,
   seasonDataModelMapper,
@@ -21,28 +26,21 @@ import {
 
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
-const RECENT_GAME_URL = `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=04/07/2026`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
 const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
 
-export async function fetchRecentGame() {
-  const response = await fetch(RECENT_GAME_URL);
-  if (!response.ok) {
-    throw new Error(`response status;: ${response.status}`);
-  }
-  const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = recentGameModelMapper(result);
-  return formattedResult;
-}
-
-export async function fetchSeasonData() {
-  const response = await fetch(MLB_SCHEDULE_DATES);
+export async function fetchRecentGame(recentGameData: Game | null) {
+  if (!recentGameData) return null;
+  const dateForURL = normalizeToLocalDateString(recentGameData.date);
+  const response = await fetch(
+    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+  );
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
   }
-  const result = (await response.json()) as SeasonResponseDTO;
-  const formattedResult = seasonDataModelMapper(result);
-  return formattedResult;
+  const result = (await response.json()) as GameResponseDTO;
+  const formattedResult = gameModelMapper(result);
+  return formattedResult[0];
 }
 
 export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
@@ -57,6 +55,30 @@ export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
   }
   const result = (await response.json()) as GameResponseDTO;
   const formattedResult = scheduleDataModelMapper(result);
+  return formattedResult;
+}
+
+export async function fetchNextGame(nextGameData: Game | null) {
+  if (!nextGameData) return null;
+  const dateForURL = normalizeToLocalDateString(nextGameData.date);
+  const response = await fetch(
+    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+  );
+  if (!response.ok) {
+    throw new Error(`response status;: ${response.status}`);
+  }
+  const result = (await response.json()) as GameResponseDTO;
+  const formattedResult = gameModelMapper(result);
+  return formattedResult[0];
+}
+
+export async function fetchSeasonData() {
+  const response = await fetch(MLB_SCHEDULE_DATES);
+  if (!response.ok) {
+    throw new Error(`response status: ${response.status}`);
+  }
+  const result = (await response.json()) as SeasonResponseDTO;
+  const formattedResult = seasonDataModelMapper(result);
   return formattedResult;
 }
 
