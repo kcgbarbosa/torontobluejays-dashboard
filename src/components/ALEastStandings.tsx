@@ -18,7 +18,7 @@ function ALEastStandings() {
     <div>
       <h1 className="text-2xl">AL East Standings</h1>
       {alEastTeams.map((d) => (
-        <div key={d.teamName}>
+        <div key={d.keyID}>
           <>
             <span>
               {d.teamName}: {d.wins} - {d.losses}
