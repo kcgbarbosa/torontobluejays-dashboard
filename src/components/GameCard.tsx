@@ -47,7 +47,8 @@ function GameCard({ gameDataProp }: GameDataProps) {
             <img className="size-10" src={gameDataProp.homeTeamLogo} />
           </span>
         </div>
-        <div id="game-venue" className="text-center">
+        <div id="game-venue" className="text-center flex flex-col">
+          <div>{gameDataProp.startTime}</div>
           <div>{gameDataProp.gameVenue}</div>
         </div>
       </div>
