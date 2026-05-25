@@ -24,7 +24,7 @@ export function gameModelMapper(result: GameResponseDTO) {
       return {
         keyID: crypto.randomUUID(),
         date: data.date,
-        startTime: subData.calendarEventID,
+        startTime: subData.gameDate,
         gameID: subData.gamePk,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
         awayTeamName: subData.teams.away.team.name,
@@ -55,7 +55,7 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
       return {
         keyID: crypto.randomUUID(),
         date: data.date.toString(),
-        startTime: subData.calendarEventID,
+        startTime: subData.gameDate,
         gameID: subData.gamePk,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
         awayTeamName: subData.teams.away.team.name,
