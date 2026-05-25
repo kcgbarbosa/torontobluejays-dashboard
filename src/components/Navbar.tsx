@@ -1,17 +1,16 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const navLinkInfo = [
-  { name: 'Home', href: '/' },
-  { name: 'Roster', href: '/RosterPage' },
-  { name: 'Schedule', href: '/SchedulePage' },
+  { id: 1, name: 'Home', href: '/' },
+  { id: 2, name: 'Roster', href: '/RosterPage' },
+  { id: 3, name: 'Schedule', href: '/SchedulePage' },
 ];
 
 function Navbar() {
   return (
     <nav className="flex justify-around py-4  ">
       {navLinkInfo.map((d) => (
-        <Link
+        <Link key={d.id}
           to={d.href}
           className="
           text-black no-underline 
