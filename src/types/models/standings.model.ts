@@ -4,6 +4,7 @@
 
 // #TODO [May 8] Update ALRecords DTO and Model to include an ID for keys
   export type ALRecords = {
+  keyID: string,
   divisionId: number;
   teamName: string;
   divisionRank: number;
