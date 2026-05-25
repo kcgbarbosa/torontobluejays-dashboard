@@ -9,6 +9,7 @@
 import { useContext } from 'react';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
+import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
 
 function SchedulePreview() {
   const schedulePreviewData = useContext(ScheduleContext);
@@ -36,7 +37,7 @@ function SchedulePreview() {
             <div>@</div>
             <div className="pr-1">{teamAbbreviator(d.homeTeamName)}</div>
             <img src={d.homeTeamLogo} className="px-1 size-12"></img>
-            <div className="pr-1">{d.startTime}</div>
+            <div className="pr-1">{formatTimeUtil(d.startTime)}</div>
             <div> {new Date(d.date).toLocaleDateString()}</div>
           </div>
         </section>
