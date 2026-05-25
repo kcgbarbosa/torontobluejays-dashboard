@@ -12,10 +12,12 @@ function ALEastStandings() {
     if (error) return <div> Error : {error} </div>;
   }
 
+  const alEastTeams = standingsData.filter((team) => team.divisionId === 201);
+
   return (
     <div>
-      <h1>AL Standings</h1>
-      {standingsData.map((d) => (
+      <h1 className="text-2xl">AL East Standings</h1>
+      {alEastTeams.map((d) => (
         <div key={d.teamName}>
           <>
             <span>
