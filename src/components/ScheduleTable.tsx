@@ -21,7 +21,9 @@ function ScheduleTable() {
       <tbody>
         {scheduleData.map((d) => (
           <tr key={d.gameID} className=" border border-blue-300 ">
-            <td className=" pl-10 py-10">{d.date.toLocaleDateString()}</td>
+            <td className=" pl-10 py-10">
+              {new Date(d.date).toLocaleDateString()}
+            </td>
             <td>{d.startTime}</td>
             <td>
               {d.awayTeamName} @ {d.homeTeamName}
