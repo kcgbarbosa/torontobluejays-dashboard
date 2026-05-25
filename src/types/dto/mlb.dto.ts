@@ -16,7 +16,7 @@ type TeamScoreDTO = {
 
 export type GameInfoDTO = {
   gamePk: number;
-  calendarEventID: string;
+  gameDate: string;
   venue: { name: string };
   teams: {
     away: TeamScoreDTO;
