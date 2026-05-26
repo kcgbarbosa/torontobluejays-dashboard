@@ -11,6 +11,7 @@ export const currentTimeStr = now.toLocaleDateString('en-CA', {
   hour12: true,
 });
 
+// #TODO-Refactor [may 26] the newly fetched api date is already formatted correctly, so this should be able to be removed
 export function normalizeToLocalDateString(dateString: any): string {
   if (!dateString) return '';
 
@@ -37,6 +38,8 @@ export const isGameInPast = (game: Game) => {
   return game.startTime < currentTimeStr;
 };
 
+// #TODO [May 26] Change these 2 functions to 1 multi-use function for homepage hero
+
 export const getRecentGameDateUtil = (scheduleData: Game[]): Game | null => {
   const pastGames = scheduleData.filter((game) => isGameInPast(game));
   if (pastGames.length === 0) return null;
@@ -59,6 +62,21 @@ export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
   );
 };
 
+// #NOTE [may 26] I suspect there will be complications with this when we get to rendering. Will require additional logic using the status field to determine which game should be displayed and at what time. Could be done on the front end but may be better to handle this in the service layer 
+export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
+  const todaysGame = scheduleData.find((d) => d.date === todayStr);
+  if (todaysGame) {
+    return todaysGame;
+  }
+  const upcomingGames = scheduleData.filter((game) => !isGameInPast(game));
+  if (upcomingGames.length === 0) return null;
+
+  return upcomingGames.reduce((nextGame, game) =>
+    new Date(game.date).getTime() < new Date(nextGame.date).getTime()
+      ? game
+      : nextGame
+  );
+  
 export const formatTimeUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
   if (!stringToDate) return 'Date not found';

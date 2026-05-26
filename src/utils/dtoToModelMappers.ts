@@ -23,9 +23,13 @@ export function gameModelMapper(result: GameResponseDTO) {
     return data.games.map((subData: GameInfoDTO) => {
       return {
         keyID: crypto.randomUUID(),
+        date: subData.officialDate,
         date: data.date,
         startTime: subData.gameDate,
         gameID: subData.gamePk,
+        abstractGameState: subData.status.abstractGameState,
+        detailedState: subData.status.detailedState,
+        statusCode: subData.status.statusCode,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
         awayTeamName: subData.teams.away.team.name,
         awayTeamScore: subData.teams.away.score,
@@ -54,9 +58,13 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
     return data.games.map((subData: GameInfoDTO) => {
       return {
         keyID: crypto.randomUUID(),
+        date: subData.officialDate,
         date: data.date.toString(),
         startTime: subData.gameDate,
         gameID: subData.gamePk,
+        abstractGameState: subData.status.abstractGameState,
+        detailedState: subData.status.detailedState,
+        statusCode: subData.status.statusCode,
         awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
         awayTeamName: subData.teams.away.team.name,
         awayTeamScore: subData.teams.away.score,

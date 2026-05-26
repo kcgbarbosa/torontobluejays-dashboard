@@ -7,6 +7,9 @@ export type Game = {
   date: string;
   startTime: string;
   gameID: number;
+  abstractGameState: string;
+  detailedState: string;
+  statusCode: string;
   awayTeamLogo: string;
   awayTeamName: string;
   homeTeamLogo: string;
