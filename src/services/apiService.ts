@@ -72,6 +72,20 @@ export async function fetchNextGame(nextGameData: Game | null) {
   return formattedResult[0];
 }
 
+export async function fetchHeroGameData(heroGameData: Game | null) {
+  if (!heroGameData) return null;
+  const dateForURL = normalizeToLocalDateString(heroGameData.date);
+  const response = await fetch(
+    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+  );
+  if (!response.ok) {
+    throw new Error(`response status;: ${response.status}`);
+  }
+  const result = (await response.json()) as GameResponseDTO;
+  const formattedResult = gameModelMapper(result);
+  return formattedResult[0];
+}
+
 export async function fetchSeasonData() {
   const response = await fetch(MLB_SCHEDULE_DATES);
   if (!response.ok) {
