@@ -19,14 +19,11 @@ function HomePage() {
     <div id="page-container" className="bg-gray-100 min-h-screen p-4">
       <main id="home-main" className="grid gap-3 lg:grid-cols-4">
         <section id="hero-games" className="order-2 lg:order-1 lg:col-span-4">
-          Next Game
-          <GameCard gameDataProp={nextGame} />
-          Recent Game
-          {/* #FIXME [May 24] recent game should adjust its display if the game is today versus yesterday vs  "Live". Implementation ideas include: 
+          <GameCard gameDataProp={recentGame} />
+          {/* #FIXME [May 26] recent game should adjust its display if the game is today versus yesterday vs  "Live". Implementation ideas include: 
           1. implement by leveraging the GUMBO API, 
           2. examine gameId for a gameLive (or similarly named) boolean, 
           3. changing website to display "Todays Game" instead of "Recent Game" */}
-          <GameCard gameDataProp={recentGame} />
         </section>
 
         <aside
