@@ -76,6 +76,7 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
       ? game
       : nextGame
   );
+};
   
 export const formatTimeUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
