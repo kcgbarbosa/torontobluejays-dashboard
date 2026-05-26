@@ -24,6 +24,7 @@ export function gameModelMapper(result: GameResponseDTO) {
       return {
         keyID: crypto.randomUUID(),
         date: subData.officialDate,
+        date: data.date,
         startTime: subData.gameDate,
         gameID: subData.gamePk,
         abstractGameState: subData.status.abstractGameState,
@@ -58,6 +59,7 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
       return {
         keyID: crypto.randomUUID(),
         date: subData.officialDate,
+        date: data.date.toString(),
         startTime: subData.gameDate,
         gameID: subData.gamePk,
         abstractGameState: subData.status.abstractGameState,
@@ -80,6 +82,7 @@ export function alTeamRecordsDataModelMapper(result: RecordsResponseDTO) {
   const formattedResult = result.records.flatMap((data: TeamRecordsDTO) => {
     return data.teamRecords.map((subdata: TeamRecordsInfoDTO) => {
       return {
+        keyID: crypto.randomUUID(),
         divisionId: data.division.id,
         teamName: subdata.team.name,
         divisionRank: subdata.divisionRank,

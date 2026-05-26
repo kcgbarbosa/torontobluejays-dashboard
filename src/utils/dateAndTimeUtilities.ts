@@ -76,4 +76,15 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
       ? game
       : nextGame
   );
+  
+export const formatTimeUtil = (dateString: string): string => {
+  const stringToDate = new Date(dateString);
+  if (!stringToDate) return 'Date not found';
+
+  let hours = stringToDate.getHours();
+  let AMorPM = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12 || 12;
+  let minutes = stringToDate.getMinutes();
+
+  return `${hours}:${minutes < 10 ? `0${minutes}` : minutes} ${AMorPM}`.toString();
 };
