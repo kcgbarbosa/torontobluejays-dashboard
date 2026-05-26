@@ -14,18 +14,25 @@ type TeamScoreDTO = {
   team: TeamInfoDTO;
 };
 
+type StatusDTO = {
+  abstractGameState: string;
+  detailedState: string;
+  statusCode: string;
+};
+
 export type GameInfoDTO = {
   gamePk: number;
-  calendarEventID: string;
+  gameDate: string;
+  officialDate: string;
   venue: { name: string };
   teams: {
     away: TeamScoreDTO;
     home: TeamScoreDTO;
   };
+  status: StatusDTO;
 };
 
 export type GameDTO = {
-  date: Date;
   games: GameInfoDTO[];
 };
 
