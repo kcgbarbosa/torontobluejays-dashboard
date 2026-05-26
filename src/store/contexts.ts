@@ -9,6 +9,7 @@ export const AppStatusContext = createContext({
 });
 export const RecentGameContext = createContext<Game | null>(null);
 export const NextGameContext = createContext<Game | null>(null);
+export const HeroGameContext = createContext<Game | null>(null);
 export const StandingsContext = createContext<ALRecords[]>([]);
 export const ScheduleContext = createContext<Game[]>([]);
 export const PlayerContext = createContext<Player[]>([]);
