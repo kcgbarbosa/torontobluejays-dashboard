@@ -10,8 +10,9 @@ function RosterPage() {
       <button
         className="border-2 rounded-2xl p-2"
         onClick={() => setIsOpen(true)}
-      >Temp Button</button>
-      <PlayerInfoModal />
+      >
+        Temp Button
+      </button>
       <Roster />
     </div>
   );
