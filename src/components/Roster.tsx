@@ -5,23 +5,23 @@
  *
  */
 
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AppStatusContext, PlayerContext } from '../store/contexts';
-import PlayerInfoModal from './PlayerInfoModal';
 
-function Roster() {
+type RosterProps = {
+  onSelectPlayer: (id: number) => void;
+};
+
+function Roster({ onSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
   const { isLoading, error } = useContext(AppStatusContext);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const [playerViewID, setPlayerViewID] = useState(Number);
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <>
-        <PlayerInfoModal playerIDProp={playerViewID} />
         {playerData.length === 0 ? (
           <div>No roster data available.</div>
         ) : (
@@ -48,14 +48,15 @@ function Roster() {
                 const placeOfBirth = placeOfBirthParts.join(', ');
 
                 return (
-                  <tr key={player.id} className="hover:bg-slate-50">
+                  <tr
+                    key={player.id}
+                    className="hover:bg-slate-50"
+                    onClick={() => onSelectPlayer(player.id)}
+                  >
                     <td className="px-4 py-4">
-                      <div
-                        className="flex items-center gap-3"
-                        // playerID for filtering to populate modal with selected players info
-                        onClick={() => setPlayerViewID(player.id)}
-                      >
+                      <div className="flex items-center gap-3">
                         <img
+                          // #FIXME-NEXT [May 27] type issue with onClick
                           src={player.imageUrl}
                           alt={player.fullName}
                           className="h-12 w-12 rounded-full"
