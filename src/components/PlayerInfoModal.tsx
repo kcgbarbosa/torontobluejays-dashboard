@@ -28,74 +28,112 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         onClick={onClose}
       >
         <div className="min-w-1/2 min-h-3/4 border-4 bg-white shadow p-6 ">
-          <div id="player-headshot" className="w-1/2 border-2 flex-col">
+          <div
+            id="player-headshot-with-footer"
+            className="w-1/2 h-full border-2 flex-col"
+          >
             <img
               src={selectedPlayerData?.imageUrl}
               alt={selectedPlayerData?.fullName}
               className="min-w-11/12 border"
             />
+            <h3>
+              {selectedPlayerData?.fullName} #{selectedPlayerData?.jerseyNumber}
+            </h3>
             <span>
-              {selectedPlayerData?.draftYear !== undefined
-                ? `Drafted: ${selectedPlayerData?.draftYear}`
-                : `Debut: ${selectedPlayerData?.mlbDebutDate}`}
+              {selectedPlayerData?.positionAbbreviation} | B/T:
+              {selectedPlayerData?.batSideCode}/
+              {selectedPlayerData?.pitchHandCode}
+              {selectedPlayerData?.height} | {selectedPlayerData?.weight}lbs |
+              Age: {selectedPlayerData?.currentAge}
             </span>
 
-            {selectedPlayerData?.positionName !== 'Pitcher' && (
-              <div id="hitter-stat-table">
-                <h3> 2026 Hitting Stats</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <td> AB </td>
-                      <td> AVG </td>
-                      <td> OBP% </td>
-                      <td> RBI </td>
-                      <td> SB </td>
-                      <td> OPS </td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> {selectedPlayerData?.hitting?.atBats}</td>
-                      <td> {selectedPlayerData?.hitting?.avg}</td>
-                      <td> {selectedPlayerData?.hitting?.obp}</td>
-                      <td> {selectedPlayerData?.hitting?.rbi}</td>
-                      <td> {selectedPlayerData?.hitting?.stolenBases}</td>
-                      <td> {selectedPlayerData?.hitting?.ops}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
+            <div id="player-bio">
+              <h3> Biography</h3>
+              <p>
+                Born:{selectedPlayerData?.birthDate} in{' '}
+                {[
+                  selectedPlayerData?.birthCity,
+                  selectedPlayerData?.birthStateProvince,
+                  selectedPlayerData?.birthCountry,
+                ]
+                  .filter(Boolean)
+                  .join(', ')}
+                {selectedPlayerData?.draftYear !== undefined
+                  ? `Drafted: ${selectedPlayerData?.draftYear}`
+                  : `Debut: ${selectedPlayerData?.mlbDebutDate}`}
+              </p>
+            </div>
 
-            {!selectedPlayerData?.isPitcher && (
-              <div id="hitter-stat-table">
-                <h3> 2026 Statistics</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <td> AB </td>
-                      <td> AVG </td>
-                      <td> OBP% </td>
-                      <td> RBI </td>
-                      <td> SB </td>
-                      <td> OPS </td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> {selectedPlayerData?.hitting?.atBats}</td>
-                      <td> {selectedPlayerData?.hitting?.avg}</td>
-                      <td> {selectedPlayerData?.hitting?.obp}</td>
-                      <td> {selectedPlayerData?.hitting?.rbi}</td>
-                      <td> {selectedPlayerData?.hitting?.stolenBases}</td>
-                      <td> {selectedPlayerData?.hitting?.ops}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {/* no data available handling for hitters */}
+{selectedPlayerData?.hitting === undefined && !selectedPlayerData?.isPitcher ? (
+  <div id="no-stats-available">
+    <h1>No stats available.</h1>
+  </div>
+) : (
+  // 1. This container only displays if the player is NOT a pitcher
+  selectedPlayerData?.positionName !== 'Pitcher' && (
+    <div id="hitter-stat-tables">
+      
+      {/* Table 1: Standard Stats */}
+      <div>
+        <h3> 2026 Standard Statistics</h3>
+        <table>
+          <thead>
+            <tr>
+              <td className="text-left px-2 py-2"> AB </td>
+              <td className="text-left px-2 py-2"> AVG </td>
+              <td className="text-left px-2 py-2"> H </td>
+              <td className="text-left px-2 py-2"> RBI </td>
+              <td className="text-left px-2 py-2"> SB </td>
+              <td className="text-left px-2 py-2"> OPS </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.atBats}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.avg}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.hits}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.rbi}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.stolenBases}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.ops}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
+      {/* Table 2: Additional Stats (Now safely inside the non-pitcher check) */}
+      <div id="hitter-stat-table">
+        <h3> 2026 Additional Stats</h3>
+        <table>
+          <thead>
+            <tr>
+              <td className="text-left px-2 py-2"> BB </td>
+              <td className="text-left px-2 py-2"> Doubles </td>
+              <td className="text-left px-2 py-2"> Triples </td>
+              <td className="text-left px-2 py-2"> HR </td>
+              <td className="text-left px-2 py-2"> OBP </td>
+              <td className="text-left px-2 py-2"> SLG </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.baseOnBalls}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.doubles}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.triples}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.homeRuns}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.obp}</td>
+              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.slg}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  )
+)}
+
+            {/* display for pitchers */}
             {selectedPlayerData?.isPitcher && (
               <div id="pitcher-stat-table">
                 <h3> 2026 Statistics</h3>
@@ -126,13 +164,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                 </table>
               </div>
             )}
-
-            <div id="player-bio">
-              <h3 className="text-lg font-bold">
-                {selectedPlayerData?.fullName}
-              </h3>
-            </div>
-            <div id="player-header">{selectedPlayerData?.fullName}</div>
           </div>
         </div>
       </div>
