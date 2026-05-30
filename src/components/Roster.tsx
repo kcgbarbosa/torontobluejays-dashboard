@@ -34,19 +34,10 @@ function Roster({ onSelectPlayer }: RosterProps) {
                 <th className="text-left px-4 py-4">Age</th>
                 <th className="text-left px-4 py-4">HT</th>
                 <th className="text-left px-4 py-4">Wt</th>
-                <th className="text-left px-4 py-4">DOB</th>
-                <th className="text-left px-4 py-4">Place of Birth</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {playerData.map((player) => {
-                const placeOfBirthParts = [
-                  player.birthCity,
-                  player.birthStateProvince,
-                  player.birthCountry,
-                ].filter(Boolean);
-                const placeOfBirth = placeOfBirthParts.join(', ');
-
                 return (
                   <tr
                     key={player.id}
@@ -56,7 +47,6 @@ function Roster({ onSelectPlayer }: RosterProps) {
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <img
-                          // #FIXME-NEXT [May 27] type issue with onClick
                           src={player.imageUrl}
                           alt={player.fullName}
                           className="h-12 w-12 rounded-full"
@@ -69,15 +59,15 @@ function Roster({ onSelectPlayer }: RosterProps) {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4">{player.positionAbbreviation}</td>
+                    <td className="px-4 py-4">
+                      {player.positionName} / {player.positionAbbreviation}
+                    </td>
                     <td className="px-4 py-4">
                       {player.batSideCode}/{player.pitchHandCode}
                     </td>
                     <td className="px-4 py-4">{player.currentAge}</td>
                     <td className="px-4 py-4">{player.height}</td>
                     <td className="px-4 py-4">{player.weight}lbs</td>
-                    <td className="px-4 py-4">{player.birthDate}</td>
-                    <td className="px-4 py-4">{placeOfBirth || 'N/A'}</td>
                   </tr>
                 );
               })}
