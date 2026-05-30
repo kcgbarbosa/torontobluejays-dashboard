@@ -17,157 +17,227 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    // #TODO-NEXT [May 29] Complete skeleton of player data display in the modal.
-    <>
+    <div
+      id="playerModal"
+      className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
+        isOpen ? 'visible bg-black/40' : 'visible'
+      }`}
+      onClick={onClose}
+    >
       <div
-        id="playerModal"
-        // className={`fixed inset-0 flex justify-center items-center transition-colors ${isOpen ? 'visible bg-black/30' : 'invisible'}`}
-
-        // #FIXME [May 30] temp always visible display for designing
-        className={`fixed inset-0 flex justify-center items-center transition-colors ${isOpen ? 'visible bg-black/30' : 'visible'}`}
-        onClick={onClose}
+        className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-800"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="min-w-1/2 min-h-3/4 border-4 bg-white shadow p-6 ">
-          <div
-            id="player-headshot-with-footer"
-            className="w-1/2 h-full border-2 flex-col"
-          >
-            <img
-              src={selectedPlayerData?.imageUrl}
-              alt={selectedPlayerData?.fullName}
-              className="min-w-11/12 border"
-            />
-            <h3>
-              {selectedPlayerData?.fullName} #{selectedPlayerData?.jerseyNumber}
-            </h3>
-            <span>
-              {selectedPlayerData?.positionAbbreviation} | B/T:
+        <div className="flex flex-col gap-3">
+          <img
+            src={selectedPlayerData?.imageUrl}
+            alt={selectedPlayerData?.fullName}
+            className="w-full max-w-70 h-auto rounded-xl bg-slate-100 border border-slate-200 self-center md:self-start"
+          />
+          <div>
+            <h2 className="text-3xl font-extrabold tracking-tight">
+              {selectedPlayerData?.fullName}{' '}
+              <span className="text-blue-600 text-2xl">
+                #{selectedPlayerData?.jerseyNumber}
+              </span>
+            </h2>
+            <p className="text-sm font-semibold text-slate-500 mt-1 uppercase tracking-wider">
+              {selectedPlayerData?.positionAbbreviation} - B/T:{' '}
               {selectedPlayerData?.batSideCode}/
               {selectedPlayerData?.pitchHandCode}
+            </p>
+            <p className="text-sm text-slate-600 mt-0.5">
               {selectedPlayerData?.height} | {selectedPlayerData?.weight}lbs |
               Age: {selectedPlayerData?.currentAge}
-            </span>
-
-            <div id="player-bio">
-              <h3> Biography</h3>
-              <p>
-                Born:{selectedPlayerData?.birthDate} in{' '}
-                {[
-                  selectedPlayerData?.birthCity,
-                  selectedPlayerData?.birthStateProvince,
-                  selectedPlayerData?.birthCountry,
-                ]
-                  .filter(Boolean)
-                  .join(', ')}
-                {selectedPlayerData?.draftYear !== undefined
-                  ? `Drafted: ${selectedPlayerData?.draftYear}`
-                  : `Debut: ${selectedPlayerData?.mlbDebutDate}`}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col justify-start bg-slate-50 p-4 rounded-xl border border-slate-100">
+          <h3 className="text-lg font-bold text-slate-900 border-b pb-2 mb-3">
+            Biography
+          </h3>
+          <div className="text-sm space-y-2 text-slate-700">
+            <p>
+              <span className="font-semibold text-slate-500">Born:</span>{' '}
+              {selectedPlayerData?.birthDate}
+            </p>
+            <p>
+              <span className="font-semibold text-slate-500">Location:</span>{' '}
+              {[
+                selectedPlayerData?.birthCity,
+                selectedPlayerData?.birthStateProvince,
+                selectedPlayerData?.birthCountry,
+              ]
+                .filter(Boolean)
+                .join(', ')}
+            </p>
+            <p>
+              {selectedPlayerData?.draftYear !== undefined ? (
+                <>
+                  <span className="font-semibold text-slate-500">Drafted:</span>{' '}
+                  {selectedPlayerData?.draftYear}
+                </>
+              ) : (
+                <>
+                  <span className="font-semibold text-slate-500">
+                    MLB Debut:
+                  </span>{' '}
+                  {selectedPlayerData?.mlbDebutDate}
+                </>
+              )}
+            </p>
+            <p>
+              <span className="font-semibold text-slate-500">
+                Active Status:
+              </span>{' '}
+              {selectedPlayerData?.active ? 'Active' : 'Inactive'}
+            </p>
+          </div>
+        </div>
+        <div id="player-stats-block" className="md:col-span-2 mt-2">
+          {selectedPlayerData?.hitting === undefined &&
+          !selectedPlayerData?.isPitcher ? (
+            <div className="text-center py-6 bg-slate-50 rounded-xl border">
+              <p className="text-slate-500 font-medium">
+                No hitting statistics available.
               </p>
             </div>
+          ) : (
+            selectedPlayerData?.positionName !== 'Pitcher' && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-base font-bold mb-2 text-slate-900">
+                    2026 Standard Statistics
+                  </h3>
+                  <div className="overflow-x-auto border rounded-xl">
+                    <table className="w-full text-center text-sm">
+                      <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs border-b">
+                        <tr>
+                          <th className="px-3 py-2.5">AB</th>
+                          <th className="px-3 py-2.5">AVG</th>
+                          <th className="px-3 py-2.5">H</th>
+                          <th className="px-3 py-2.5">RBI</th>
+                          <th className="px-3 py-2.5">SB</th>
+                          <th className="px-3 py-2.5">OPS</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y font-medium text-slate-900">
+                        <tr>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.atBats}
+                          </td>
+                          <td className="px-3 py-3 text-blue-600 font-bold">
+                            {selectedPlayerData?.hitting?.avg}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.hits}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.rbi}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.stolenBases}
+                          </td>
+                          <td className="px-3 py-3 font-bold">
+                            {selectedPlayerData?.hitting?.ops}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
 
-            {/* no data available handling for hitters */}
-{selectedPlayerData?.hitting === undefined && !selectedPlayerData?.isPitcher ? (
-  <div id="no-stats-available">
-    <h1>No stats available.</h1>
-  </div>
-) : (
-  // 1. This container only displays if the player is NOT a pitcher
-  selectedPlayerData?.positionName !== 'Pitcher' && (
-    <div id="hitter-stat-tables">
-      
-      {/* Table 1: Standard Stats */}
-      <div>
-        <h3> 2026 Standard Statistics</h3>
-        <table>
-          <thead>
-            <tr>
-              <td className="text-left px-2 py-2"> AB </td>
-              <td className="text-left px-2 py-2"> AVG </td>
-              <td className="text-left px-2 py-2"> H </td>
-              <td className="text-left px-2 py-2"> RBI </td>
-              <td className="text-left px-2 py-2"> SB </td>
-              <td className="text-left px-2 py-2"> OPS </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.atBats}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.avg}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.hits}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.rbi}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.stolenBases}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.ops}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      {/* Table 2: Additional Stats (Now safely inside the non-pitcher check) */}
-      <div id="hitter-stat-table">
-        <h3> 2026 Additional Stats</h3>
-        <table>
-          <thead>
-            <tr>
-              <td className="text-left px-2 py-2"> BB </td>
-              <td className="text-left px-2 py-2"> Doubles </td>
-              <td className="text-left px-2 py-2"> Triples </td>
-              <td className="text-left px-2 py-2"> HR </td>
-              <td className="text-left px-2 py-2"> OBP </td>
-              <td className="text-left px-2 py-2"> SLG </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.baseOnBalls}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.doubles}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.triples}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.homeRuns}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.obp}</td>
-              <td className="text-left px-2 py-2">{selectedPlayerData?.hitting?.slg}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  )
-)}
-
-            {/* display for pitchers */}
-            {selectedPlayerData?.isPitcher && (
-              <div id="pitcher-stat-table">
-                <h3> 2026 Statistics</h3>
-                <table>
-                  <thead>
+                <div>
+                  <h3 className="text-base font-bold mb-2 text-slate-900">
+                    2026 Additional Statistics
+                  </h3>
+                  <div className="overflow-x-auto border rounded-xl">
+                    <table className="w-full text-center text-sm">
+                      <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs border-b">
+                        <tr>
+                          <th className="px-3 py-2.5">BB</th>
+                          <th className="px-3 py-2.5">2B</th>
+                          <th className="px-3 py-2.5">3B</th>
+                          <th className="px-3 py-2.5">HR</th>
+                          <th className="px-3 py-2.5">OBP</th>
+                          <th className="px-3 py-2.5">SLG</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y font-medium text-slate-900">
+                        <tr>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.baseOnBalls}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.doubles}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.triples}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.homeRuns}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.obp}
+                          </td>
+                          <td className="px-3 py-3">
+                            {selectedPlayerData?.hitting?.slg}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
+          {selectedPlayerData?.isPitcher && (
+            <div>
+              <h3 className="text-base font-bold mb-2 text-slate-900">
+                2026 Pitching Statistics
+              </h3>
+              <div className="overflow-x-auto border rounded-xl">
+                <table className="w-full text-center text-sm">
+                  <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs border-b">
                     <tr>
-                      <td> G </td>
-                      <td> W-L </td>
-                      <td> ERA </td>
-                      <td> IP </td>
-                      <td> K/9 </td>
-                      <td> WHIP </td>
+                      <th className="px-3 py-2.5">G</th>
+                      <th className="px-3 py-2.5">W-L</th>
+                      <th className="px-3 py-2.5">ERA</th>
+                      <th className="px-3 py-2.5">IP</th>
+                      <th className="px-3 py-2.5">K/9</th>
+                      <th className="px-3 py-2.5">WHIP</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y font-medium text-slate-900">
                     <tr>
-                      <td> {selectedPlayerData?.pitching?.gamesPitched}</td>
-                      <td>
+                      <td className="px-3 py-3">
+                        {selectedPlayerData?.pitching?.gamesPitched}
+                      </td>
+                      <td className="px-3 py-3">
                         {selectedPlayerData?.pitching?.wins}-
                         {selectedPlayerData?.pitching?.losses}
                       </td>
-                      <td> {selectedPlayerData?.pitching?.era}</td>
-                      <td> {selectedPlayerData?.pitching?.inningsPitched}</td>
-                      <td> {selectedPlayerData?.pitching?.strikeoutsPer9}</td>
-                      <td> {selectedPlayerData?.pitching?.whip}</td>
+                      <td className="px-3 py-3">
+                        {selectedPlayerData?.pitching?.era}
+                      </td>
+                      <td className="px-3 py-3">
+                        {selectedPlayerData?.pitching?.inningsPitched}
+                      </td>
+                      <td className="px-3 py-3">
+                        {selectedPlayerData?.pitching?.strikeoutsPer9}
+                      </td>
+                      <td className="px-3 py-3 font-bold">
+                        {selectedPlayerData?.pitching?.whip}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
