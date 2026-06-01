@@ -2,8 +2,6 @@
  * @component
  * Game: Displays various key statistics and general game information.
  *
- * #FIXME [May 21] game score results not being displayed
- *
  */
 
 import { useContext } from 'react';
