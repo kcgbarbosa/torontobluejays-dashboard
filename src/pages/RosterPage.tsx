@@ -1,9 +1,33 @@
-import React from 'react';
+import Roster from '../components/Roster';
+import PlayerInfoModal from '../components/PlayerInfoModal';
+import { useContext, useState } from 'react';
+import { AppStatusContext } from '../store/contexts';
 
 function RosterPage() {
+  const { isLoading, error } = useContext(AppStatusContext);
+
+  const [selectedPlayerID, setSelectedPlayerID] = useState<number | null>(null);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleSelectPlayer = (id: number) => {
+    setSelectedPlayerID(id);
+    setIsOpen(true);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
   return (
     <div id="page-container" className="bg-gray-100 min-h-screen p-4">
-      Roster Page
+      {/* {isOpen && <PlayerInfoModal playerIDProp={selectedPlayerID} />} */}
+      {isOpen && (
+        <PlayerInfoModal
+          playerID={selectedPlayerID}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
+      <Roster onSelectPlayer={handleSelectPlayer} />
     </div>
   );
 }

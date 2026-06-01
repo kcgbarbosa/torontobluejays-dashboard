@@ -10,9 +10,11 @@ import {
   fetchALTeamRecords,
   fetchRosterData,
   fetchNextGame,
+  fetchHeroGameData,
 } from '../services/apiService';
 import {
   AppStatusContext,
+  HeroGameContext,
   NextGameContext,
   PlayerContext,
   RecentGameContext,
@@ -20,6 +22,7 @@ import {
   StandingsContext,
 } from './contexts';
 import {
+  getHeroGameDateUtil,
   getNextGameDateUtil,
   getRecentGameDateUtil,
 } from '../utils/dateAndTimeUtilities';
@@ -27,6 +30,7 @@ import {
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [recentGameData, setRecentGameData] = useState<Game | null>(null);
   const [nextGameData, setNextGameData] = useState<Game | null>(null);
+  const [heroGameData, setHeroGameData] = useState<Game | null>(null);
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
@@ -54,6 +58,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const nextGame = await fetchNextGame(nextGameData);
         setNextGameData(nextGame as Game | null);
 
+        const heroGameData = await getHeroGameDateUtil(schedule);
+        const heroGame = await fetchHeroGameData(heroGameData);
+        setHeroGameData(heroGameData as Game | null);
+
         const standings = await fetchALTeamRecords();
         setStandingsData(standings);
 
@@ -71,15 +79,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AppStatusContext.Provider value={{ isLoading, error }}>
       <ScheduleContext.Provider value={scheduleData}>
-        <RecentGameContext.Provider value={recentGameData}>
-          <NextGameContext value={nextGameData}>
-            <StandingsContext.Provider value={standingsData}>
-              <PlayerContext.Provider value={playerData}>
-                {children}
-              </PlayerContext.Provider>
-            </StandingsContext.Provider>
-          </NextGameContext>
-        </RecentGameContext.Provider>
+        <HeroGameContext.Provider value={heroGameData}>
+          <RecentGameContext.Provider value={recentGameData}>
+            <NextGameContext.Provider value={nextGameData}>
+              <StandingsContext.Provider value={standingsData}>
+                <PlayerContext.Provider value={playerData}>
+                  {children}
+                </PlayerContext.Provider>
+              </StandingsContext.Provider>
+            </NextGameContext.Provider>
+          </RecentGameContext.Provider>
+        </HeroGameContext.Provider>
       </ScheduleContext.Provider>
     </AppStatusContext.Provider>
   );
