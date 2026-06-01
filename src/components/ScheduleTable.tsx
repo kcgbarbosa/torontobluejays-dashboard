@@ -1,18 +1,31 @@
 import React, { useContext, useState } from 'react';
-import { AppStatusContext, ScheduleContext } from '../store/contexts';
+import {
+  AppStatusContext,
+  ScheduleContext,
+  SeasonContext,
+} from '../store/contexts';
 import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
+
+// #FIXME: [June 1] - This component uses seasonStart and endDates to filter the schedule data. I need to update the SeasonDTO to include all of the dates for  regular season games vs pre season games vs playoffs, ect. Will also require i updated the Model.
 
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
+  const seasonData = useContext(SeasonContext);
   const { isLoading, error } = useContext(AppStatusContext);
   const [scheduleFilter, setScheduleFilter] = useState('Remaining Games');
+  const handleSetScheduleFilter = (filter: string) => {
+    setScheduleFilter(filter);
+  };
 
-  const handleSetScheduleFilter = (filter: string) => setScheduleFilter(filter);
+  const seasonStartDate = seasonData[0]?.seasonStartDate ?? '';
+  const seasonEndDate = seasonData[0]?.seasonEndDate ?? '';
 
   const filteredGames =
     scheduleFilter === 'Remaining Games'
       ? scheduleData.filter((d) => new Date(d.date).getTime() > Date.now())
-      : scheduleData;
+      : scheduleData.filter(
+          (d) => d.date > seasonStartDate && d.date < seasonEndDate
+        );
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -22,6 +35,7 @@ function ScheduleTable() {
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
           <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
+            {/* #TODO: [June 1] implement conditional styling, display which one is toggled, add required info for past games to table */}
             <span className="inline-block gap-2 border-2 rounded-full">
               <button
                 className="p-2 m-2 hover:bg-gray-100 transition-colors duration-100"
@@ -46,7 +60,6 @@ function ScheduleTable() {
               </tr>
             </thead>
             <tbody>
-              {/* #FIXME [June 1] mapping not working */}
               {filteredGames.map((d) => (
                 <tr
                   key={d.gameID}
