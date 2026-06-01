@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
 import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
 
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
   const { isLoading, error } = useContext(AppStatusContext);
+  const [scheduleFilter, setScheduleFilter] = useState('Remaining Games');
 
-  const futureGames = scheduleData.filter(
-    (d) => new Date(d.date).getTime() > Date.now()
-  );
-  
+  const handleSetScheduleFilter = (filter: string) => setScheduleFilter(filter);
+
+  const filteredGames =
+    scheduleFilter === 'Remaining Games'
+      ? scheduleData.filter((d) => new Date(d.date).getTime() > Date.now())
+      : scheduleData;
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -19,21 +22,32 @@ function ScheduleTable() {
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
           <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
-            <span className="flex gap-2">
-              <button>Full Schedule</button>
-              <button>By Month</button>
+            <span className="inline-block gap-2 border-2 rounded-full">
+              <button
+                className="p-2 m-2 hover:bg-gray-100 transition-colors duration-100"
+                onClick={() => handleSetScheduleFilter('Remaining Games')}
+              >
+                Remaining Games
+              </button>
+              <button
+                className="p-2 m-2  hover:bg-gray-100 transition-colors duration-100"
+                onClick={() => handleSetScheduleFilter('All Season Games')}
+              >
+                Complete Season Schedule
+              </button>
             </span>
           </h1>
           <table className="w-full border-collapse">
             <thead>
-              <tr>
+              <tr className="hover:bg-gray-100 transition-colors duration-200">
                 <td className="p-4"> Date</td>
                 <td className="p-4"> Matchup</td>
                 <td className="p-4"> First Pitch</td>
               </tr>
             </thead>
             <tbody>
-              {futureGames.map((d) => (
+              {/* #FIXME [June 1] mapping not working */}
+              {filteredGames.map((d) => (
                 <tr
                   key={d.gameID}
                   className="bg-white hover:bg-gray-100 transition-colors duration-200"
