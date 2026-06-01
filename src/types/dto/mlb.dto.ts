@@ -43,6 +43,21 @@ export type GameResponseDTO = {
 export type SeasonDTO = {
   seasonStartDate: string;
   seasonEndDate: string;
+  seasonId: string;
+  hasWildcard: boolean;
+  preSeasonStartDate: string;
+  preSeasonEndDate: string;
+  springStartDate: string;
+  springEndDate: string;
+  regularSeasonStartDate: string;
+  lastDate1stHalf: string;
+  allStarDate: string;
+  firstDate2ndHalf: string;
+  regularSeasonEndDate: string;
+  postSeasonStartDate: string;
+  postSeasonEndDate: string;
+  offseasonStartDate: string;
+  offSeasonEndDate: string;
 };
 
 export type SeasonResponseDTO = {

@@ -25,7 +25,7 @@ import {
 } from '../utils/dtoToModelMappers';
 
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
-const MLB_SCHEDULE_DATES = `${BASE_URL}/seasons?sportId=1`;
+const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
 const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
 
@@ -43,12 +43,12 @@ export async function fetchRecentGame(recentGameData: Game | null) {
   return formattedResult[0];
 }
 
-export async function fetchSchedule(seasonStartAndEndDates: SeasonDTO[]) {
-  const seasonData = seasonStartAndEndDates.find((d) => d.seasonStartDate);
-  if (seasonData === undefined) {
+export async function fetchSchedule(seasonData: SeasonDTO[]) {
+  const data = seasonData[0];
+  if (data === undefined) {
     console.log(`Error: seasonData is undefined`);
   }
-  const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${seasonData?.seasonStartDate}&endDate=${seasonData?.seasonEndDate}`;
+  const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${data?.seasonStartDate}&endDate=${data?.seasonEndDate}`;
   const response = await fetch(FULL_TEAM_SCHEDULE);
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
@@ -87,7 +87,7 @@ export async function fetchHeroGameData(heroGameData: Game | null) {
 }
 
 export async function fetchSeasonData() {
-  const response = await fetch(MLB_SCHEDULE_DATES);
+  const response = await fetch(SEASON_DATA_URL);
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
   }
