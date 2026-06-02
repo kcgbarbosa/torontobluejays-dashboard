@@ -4,16 +4,23 @@ import {
   ScheduleContext,
   SeasonContext,
 } from '../store/contexts';
-import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
+import { CURRENT_YEAR, formatTimeUtil } from '../utils/dateAndTimeUtilities';
 
 // #FIXME: [June 1] - This component uses seasonStart and endDates to filter the schedule data. I need to update the SeasonDTO to include all of the dates for  regular season games vs pre season games vs playoffs, ect. Will also require i updated the Model.
+
+type ScheduleFilterType =
+  | 'Remaining Games'
+  | 'regularSeason'
+  | 'spring'
+  | 'postSeason';
 
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
   const seasonData = useContext(SeasonContext);
   const { isLoading, error } = useContext(AppStatusContext);
-  const [scheduleFilter, setScheduleFilter] = useState('Remaining Games');
-  const handleSetScheduleFilter = (filter: string) => {
+  const [scheduleFilter, setScheduleFilter] =
+    useState<ScheduleFilterType>('Remaining Games');
+  const handleSetScheduleFilter = (filter: ScheduleFilterType) => {
     setScheduleFilter(filter);
   };
 
@@ -31,14 +38,18 @@ function ScheduleTable() {
           gameDate <= new Date(regularSeasonEndDate).getTime()
         );
       });
-    if (scheduleFilter === 'Regular Season')
+
+    if (scheduleFilter) {
       return scheduleData.filter((d) => {
         const gameDate = new Date(d.date).getTime();
         return (
-          gameDate >= new Date(regularSeasonStartDate).getTime() &&
-          gameDate <= new Date(regularSeasonEndDate).getTime()
+          gameDate >=
+            new Date(seasonData[0][`${scheduleFilter}StartDate`]).getTime() &&
+          gameDate <=
+            new Date(seasonData[0][`${scheduleFilter}EndDate`]).getTime()
         );
       });
+    }
     return scheduleData;
   }, [
     scheduleFilter,
@@ -64,12 +75,20 @@ function ScheduleTable() {
               >
                 Remaining Games
               </button>
-              <button
-                className="p-2 m-2  hover:bg-gray-100 transition-colors duration-100"
-                onClick={() => handleSetScheduleFilter('All Season Games')}
+              <select
+                className="p-2 m-2 border border-gray-300 rounded"
+                value={scheduleFilter}
+                onChange={(e) =>
+                  handleSetScheduleFilter(e.target.value as ScheduleFilterType)
+                }
               >
-                Complete Season Schedule
-              </button>
+                <option value="">Select Season:</option>
+                <option value="regularSeason">
+                  {CURRENT_YEAR} Regular Season
+                </option>
+                <option value="spring">{CURRENT_YEAR} Spring Training</option>
+                <option value="postSeason">{CURRENT_YEAR} Postseason</option>
+              </select>
             </span>
           </h1>
           <table className="w-full border-collapse">
@@ -81,24 +100,32 @@ function ScheduleTable() {
               </tr>
             </thead>
             <tbody>
-              {filteredGames.map((d) => (
-                <tr
-                  key={d.gameID}
-                  className="bg-white hover:bg-gray-100 transition-colors duration-200"
-                >
-                  <td className="px-4 py-4">{d.date}</td>
-                  <td className="px-4 py-4">
-                    <div className="flex align-left gap-2">
-                      <img className="size-6" src={d.awayTeamLogo} />
-                      <span>{d.awayTeamName}</span>
-                      <p>@</p>
-                      <img className="size-6" src={d.homeTeamLogo} />
-                      <span>{d.homeTeamName}</span>
-                    </div>
+              {filteredGames.length === 0 ? (
+                <tr>
+                  <td colSpan={3} className="text-center p-4">
+                    No games found for the selected filter.
                   </td>
-                  <td className="px-4 py-4">{formatTimeUtil(d.startTime)}</td>
                 </tr>
-              ))}
+              ) : (
+                filteredGames.map((d) => (
+                  <tr
+                    key={d.gameID}
+                    className="bg-white hover:bg-gray-100 transition-colors duration-200"
+                  >
+                    <td className="px-4 py-4">{d.date}</td>
+                    <td className="px-4 py-4">
+                      <div className="flex align-left gap-2">
+                        <img className="size-6" src={d.awayTeamLogo} />
+                        <span>{d.awayTeamName}</span>
+                        <p>@</p>
+                        <img className="size-6" src={d.homeTeamLogo} />
+                        <span>{d.homeTeamName}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">{formatTimeUtil(d.startTime)}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </main>
