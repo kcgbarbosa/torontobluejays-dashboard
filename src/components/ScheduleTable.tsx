@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import {
   AppStatusContext,
   ScheduleContext,
@@ -20,12 +20,24 @@ function ScheduleTable() {
   const seasonStartDate = seasonData[0]?.seasonStartDate ?? '';
   const seasonEndDate = seasonData[0]?.seasonEndDate ?? '';
 
-  const filteredGames =
-    scheduleFilter === 'Remaining Games'
-      ? scheduleData.filter((d) => new Date(d.date).getTime() > Date.now())
-      : scheduleData.filter(
-          (d) => d.date > seasonStartDate && d.date < seasonEndDate
+  const filteredGames = useMemo(() => {
+    if (scheduleFilter === 'Remaining Games')
+      return scheduleData.filter((d) => {
+        const gameDate = new Date(d.date).getTime();
+        return (
+          gameDate > Date.now() && gameDate <= new Date(seasonEndDate).getTime()
         );
+      });
+    if (scheduleFilter === 'All Season Games')
+      return scheduleData.filter((d) => {
+        const gameDate = new Date(d.date).getTime();
+        return (
+          gameDate >= new Date(seasonStartDate).getTime() &&
+          gameDate <= new Date(seasonEndDate).getTime()
+        );
+      });
+    return scheduleData;
+  }, [scheduleFilter, scheduleData, seasonStartDate, seasonEndDate]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -36,6 +48,7 @@ function ScheduleTable() {
         <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
           <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
             {/* #TODO: [June 1] implement conditional styling, display which one is toggled, add required info for past games to table */}
+            {/* #FIXME: [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
             <span className="inline-block gap-2 border-2 rounded-full">
               <button
                 className="p-2 m-2 hover:bg-gray-100 transition-colors duration-100"
