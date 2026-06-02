@@ -17,27 +17,35 @@ function ScheduleTable() {
     setScheduleFilter(filter);
   };
 
-  const seasonStartDate = seasonData[0]?.seasonStartDate ?? '';
-  const seasonEndDate = seasonData[0]?.seasonEndDate ?? '';
+  const regularSeasonStartDate = seasonData[0]?.regularSeasonStartDate ?? '';
+  const regularSeasonEndDate = seasonData[0]?.regularSeasonEndDate ?? '';
+
+  // #TODO [Jun 2] seperate button for Remaining games, then a seperate dropdown with options for Spring Training, Regular Season, Playoffs. Then we can use the new dates to filter accordingly.
 
   const filteredGames = useMemo(() => {
     if (scheduleFilter === 'Remaining Games')
       return scheduleData.filter((d) => {
         const gameDate = new Date(d.date).getTime();
         return (
-          gameDate > Date.now() && gameDate <= new Date(seasonEndDate).getTime()
+          gameDate > Date.now() &&
+          gameDate <= new Date(regularSeasonEndDate).getTime()
         );
       });
-    if (scheduleFilter === 'All Season Games')
+    if (scheduleFilter === 'Regular Season')
       return scheduleData.filter((d) => {
         const gameDate = new Date(d.date).getTime();
         return (
-          gameDate >= new Date(seasonStartDate).getTime() &&
-          gameDate <= new Date(seasonEndDate).getTime()
+          gameDate >= new Date(regularSeasonStartDate).getTime() &&
+          gameDate <= new Date(regularSeasonEndDate).getTime()
         );
       });
     return scheduleData;
-  }, [scheduleFilter, scheduleData, seasonStartDate, seasonEndDate]);
+  }, [
+    scheduleFilter,
+    scheduleData,
+    regularSeasonStartDate,
+    regularSeasonEndDate,
+  ]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

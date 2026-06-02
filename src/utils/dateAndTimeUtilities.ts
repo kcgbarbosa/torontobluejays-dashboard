@@ -1,7 +1,7 @@
 import type { Game } from '../types/models/game.model';
 
 export const CURRENT_YEAR = new Date().getFullYear();
-const now = new Date();
+export const now = new Date();
 
 export const todayStr = now.toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
 export const currentTimeStr = now.toLocaleDateString('en-CA', {
@@ -62,7 +62,7 @@ export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
   );
 };
 
-// #NOTE [may 26] I suspect there will be complications with this when we get to rendering. Will require additional logic using the status field to determine which game should be displayed and at what time. Could be done on the front end but may be better to handle this in the service layer 
+// #NOTE [may 26] I suspect there will be complications with this when we get to rendering. Will require additional logic using the status field to determine which game should be displayed and at what time. Could be done on the front end but may be better to handle this in the service layer
 export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
   const todaysGame = scheduleData.find((d) => d.date === todayStr);
   if (todaysGame) {
@@ -77,7 +77,7 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
       : nextGame
   );
 };
-  
+
 export const formatTimeUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
   if (!stringToDate) return 'Date not found';

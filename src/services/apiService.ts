@@ -48,7 +48,7 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
   if (data === undefined) {
     console.log(`Error: seasonData is undefined`);
   }
-  const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${data?.seasonStartDate}&endDate=${data?.seasonEndDate}`;
+  const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${data?.regularSeasonStartDate}&endDate=${data?.regularSeasonEndDate}`;
   const response = await fetch(FULL_TEAM_SCHEDULE);
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);

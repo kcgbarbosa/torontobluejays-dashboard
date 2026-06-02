@@ -45,23 +45,16 @@ export function gameModelMapper(result: GameResponseDTO) {
 export function seasonDataModelMapper(result: SeasonResponseDTO) {
   const formattedResult = result.seasons.map((data: SeasonDTO) => {
     return {
-      seasonStartDate: data.seasonStartDate,
-      seasonEndDate: data.seasonEndDate,
       seasonId: data.seasonId,
-      hasWildcard: data.hasWildcard,
-      preSeasonStartDate: data.preSeasonStartDate,
-      preSeasonEndDate: data.preSeasonEndDate,
       springStartDate: data.springStartDate,
       springEndDate: data.springEndDate,
       regularSeasonStartDate: data.regularSeasonStartDate,
-      lastDate1stHalf: data.lastDate1stHalf,
-      allStarDate: data.allStarDate,
-      firstDate2ndHalf: data.firstDate2ndHalf,
+      endOfFirstHalf: data.lastDate1stHalf,
+      allStarBreakStartDate: data.allStarDate,
+      startOfSecondHalf: data.firstDate2ndHalf,
       regularSeasonEndDate: data.regularSeasonEndDate,
       postSeasonStartDate: data.postSeasonStartDate,
       postSeasonEndDate: data.postSeasonEndDate,
-      offseasonStartDate: data.offseasonStartDate,
-      offSeasonEndDate: data.offSeasonEndDate,
     };
   });
   return formattedResult;

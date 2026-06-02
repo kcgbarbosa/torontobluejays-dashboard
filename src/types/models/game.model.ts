@@ -20,6 +20,14 @@ export type Game = {
 };
 
 export type Season = {
-  seasonStartDate: string;
-  seasonEndDate: string;
+  seasonId: string;
+  springStartDate: string;
+  springEndDate: string;
+  regularSeasonStartDate: string;
+  regularSeasonEndDate: string;
+  endOfFirstHalf: string;
+  allStarBreakStartDate: string;
+  startOfSecondHalf: string;
+  postSeasonStartDate: string;
+  postSeasonEndDate: string;
 };
