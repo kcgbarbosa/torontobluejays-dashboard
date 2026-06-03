@@ -5,6 +5,8 @@ import {
   SeasonContext,
 } from '../store/contexts';
 import { CURRENT_YEAR, formatTimeUtil } from '../utils/dateAndTimeUtilities';
+import { PastGameTableRow } from './PastGameTableRow';
+import FutureGameTableRow from './FutureGameTableRow';
 
 // #FIXME: [June 1] - This component uses seasonStart and endDates to filter the schedule data. I need to update the SeasonDTO to include all of the dates for  regular season games vs pre season games vs playoffs, ect. Will also require i updated the Model.
 
@@ -64,7 +66,6 @@ function ScheduleTable() {
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
           <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
-            {/* # TODO [June 1] Add required info for past games to table */}
             {/* # FIXME [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
             <span className="flex items-center gap-2">
               <button
@@ -107,11 +108,19 @@ function ScheduleTable() {
           </h1>
           <table className="w-full border-collapse">
             <thead>
-              <tr className="hover:bg-gray-100 transition-colors duration-200">
-                <td className="p-4"> Date</td>
-                <td className="p-4"> Matchup</td>
-                <td className="p-4"> First Pitch</td>
-              </tr>
+              {scheduleFilter !== 'Remaining Games' &&
+              scheduleFilter !== null ? (
+                <tr className="hover:bg-gray-100 transition-colors duration-200">
+                  <td className="p-4"> Date</td>
+                  <td className="p-4"> Result</td>
+                </tr>
+              ) : (
+                <tr className="hover:bg-gray-100 transition-colors duration-200">
+                  <td className="p-4"> Date</td>
+                  <td className="p-4"> Matchup</td>
+                  <td className="p-4"> First Pitch</td>
+                </tr>
+              )}
             </thead>
             <tbody>
               {filteredGames.length === 0 ? (
@@ -120,25 +129,11 @@ function ScheduleTable() {
                     No games found for the selected filter.
                   </td>
                 </tr>
+              ) : scheduleFilter !== 'Remaining Games' &&
+                scheduleFilter !== null ? (
+                filteredGames.map((d) => <PastGameTableRow gameData={d} />)
               ) : (
-                filteredGames.map((d) => (
-                  <tr
-                    key={d.gameID}
-                    className="bg-white hover:bg-gray-100 transition-colors duration-200"
-                  >
-                    <td className="px-4 py-4">{d.date}</td>
-                    <td className="px-4 py-4">
-                      <div className="flex align-left gap-2">
-                        <img className="size-6" src={d.awayTeamLogo} />
-                        <span>{d.awayTeamName}</span>
-                        <p>@</p>
-                        <img className="size-6" src={d.homeTeamLogo} />
-                        <span>{d.homeTeamName}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4">{formatTimeUtil(d.startTime)}</td>
-                  </tr>
-                ))
+                filteredGames.map((d) => <FutureGameTableRow gameData={d} />)
               )}
             </tbody>
           </table>
