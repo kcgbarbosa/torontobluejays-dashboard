@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Game } from '../types/models/game.model';
 import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
+import type { Game } from '../types/models/game.model';
 type GameProps = {
   gameData: Game;
 };
