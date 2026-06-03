@@ -66,17 +66,33 @@ function ScheduleTable() {
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
           <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
-            {/* #TODO: [June 1] implement conditional styling, display which one is toggled, add required info for past games to table */}
+            {/* #TODO: [June 1] Add required info for past games to table */}
             {/* #FIXME: [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
-            <span className="inline-block gap-2 border-2 rounded-full">
+            <span className="flex items-center gap-2">
               <button
-                className="p-2 m-2 hover:bg-gray-100 transition-colors duration-100"
+                className={`p-2 m-2 rounded-2xl transition-colors duration-100 ${
+                  scheduleFilter === 'Remaining Games'
+                    ? 'bg-blue-600 text-white font-semibold shadow-md'
+                    : 'bg-gray-200 '
+                } ${
+                  scheduleFilter === 'Remaining Games'
+                    ? 'hover:bg-blue-700 cursor-pointer'
+                    : 'hover:bg-gray-300 cursor-pointer'
+                }`}
                 onClick={() => handleSetScheduleFilter('Remaining Games')}
               >
                 Remaining Games
               </button>
               <select
-                className="p-2 m-2 border border-gray-300 rounded"
+                className={` 
+                  p-2 m-2 rounded-md transition-colors duration-100 shadow-sm 
+                  ${
+                    scheduleFilter !== 'Remaining Games' &&
+                    scheduleFilter !== null
+                      ? 'bg-blue-600 text-white font-semibold  hover:bg-blue-700 cursor-pointer'
+                      : 'bg-gray-200 text-gray-800 border-gray-300 hover:bg-gray-300 cursor-pointer'
+                  }
+                `}
                 value={scheduleFilter}
                 onChange={(e) =>
                   handleSetScheduleFilter(e.target.value as ScheduleFilterType)
