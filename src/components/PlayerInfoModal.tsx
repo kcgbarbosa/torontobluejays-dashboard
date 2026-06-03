@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AppStatusContext, PlayerContext } from '../store/contexts';
 
-// #TODO [May 30] - refactor statistics table into reusable component
+// # TODO [May 30] - refactor statistics table into reusable component
 
 type PlayerInfoModalProps = {
   playerID: number | null;

@@ -3,7 +3,7 @@
  *
  * SchedulePreview: Displays upcoming games in a compact format, presents key details and invites user to visit schedule page for more info.
  *
- * #TODO [May 24] Update DTO's and modeling to include past game results
+ * # TODO [May 24] Update DTO's and modeling to include past game results
  */
 
 import { useContext } from 'react';

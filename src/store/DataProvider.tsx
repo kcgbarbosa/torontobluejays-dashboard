@@ -39,7 +39,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // #TODO-FEAT [May 14] : Improve performance while still maintaining correct order of operations
+  // # TODO FEAT [May 14] : Improve performance while still maintaining correct order of operations
   useEffect(() => {
     const fetchAllData = async () => {
       try {

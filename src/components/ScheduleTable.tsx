@@ -27,8 +27,6 @@ function ScheduleTable() {
   const regularSeasonStartDate = seasonData[0]?.regularSeasonStartDate ?? '';
   const regularSeasonEndDate = seasonData[0]?.regularSeasonEndDate ?? '';
 
-  // #TODO [Jun 2] seperate button for Remaining games, then a seperate dropdown with options for Spring Training, Regular Season, Playoffs. Then we can use the new dates to filter accordingly.
-
   const filteredGames = useMemo(() => {
     if (scheduleFilter === 'Remaining Games')
       return scheduleData.filter((d) => {
@@ -66,8 +64,8 @@ function ScheduleTable() {
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
           <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
-            {/* #TODO: [June 1] Add required info for past games to table */}
-            {/* #FIXME: [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
+            {/* # TODO [June 1] Add required info for past games to table */}
+            {/* # FIXME [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
             <span className="flex items-center gap-2">
               <button
                 className={`p-2 m-2 rounded-2xl transition-colors duration-100 ${

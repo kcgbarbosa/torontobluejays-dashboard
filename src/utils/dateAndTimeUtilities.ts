@@ -11,7 +11,7 @@ export const currentTimeStr = now.toLocaleDateString('en-CA', {
   hour12: true,
 });
 
-// #TODO-Refactor [may 26] the newly fetched api date is already formatted correctly, so this should be able to be removed
+// # TODO Refactor [may 26] the newly fetched api date is already formatted correctly, so this should be able to be removed
 export function normalizeToLocalDateString(dateString: any): string {
   if (!dateString) return '';
 
@@ -38,7 +38,7 @@ export const isGameInPast = (game: Game) => {
   return game.startTime < currentTimeStr;
 };
 
-// #TODO [May 26] Change these 2 functions to 1 multi-use function for homepage hero
+// # TODO [May 26] Change these 2 functions to 1 multi-use function for homepage hero
 
 export const getRecentGameDateUtil = (scheduleData: Game[]): Game | null => {
   const pastGames = scheduleData.filter((game) => isGameInPast(game));
