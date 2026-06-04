@@ -27,14 +27,14 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-800"
+        className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-800"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col gap-3">
           <img
             src={selectedPlayerData?.imageUrl}
             alt={selectedPlayerData?.fullName}
-            className="w-full max-w-70 h-auto rounded-xl bg-slate-100 border border-slate-200 self-center md:self-start"
+            className="w-full max-w-70 h-auto rounded-xl bg-gray-100 border border-gray-200 self-center md:self-start"
           />
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight">
@@ -43,28 +43,28 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                 #{selectedPlayerData?.jerseyNumber}
               </span>
             </h2>
-            <p className="text-sm font-semibold text-slate-500 mt-1 uppercase tracking-wider">
+            <p className="text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">
               {selectedPlayerData?.positionAbbreviation} - B/T:{' '}
               {selectedPlayerData?.batSideCode}/
               {selectedPlayerData?.pitchHandCode}
             </p>
-            <p className="text-sm text-slate-600 mt-0.5">
+            <p className="text-sm text-gray-600 mt-0.5">
               {selectedPlayerData?.height} | {selectedPlayerData?.weight}lbs |
               Age: {selectedPlayerData?.currentAge}
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-start bg-slate-50 p-4 rounded-xl border border-slate-100">
-          <h3 className="text-lg font-bold text-slate-900 border-b pb-2 mb-3">
+        <div className="flex flex-col justify-start bg-gray-50 p-4 rounded-xl border border-gray-100">
+          <h3 className="text-lg font-bold text-gray-900 border-b pb-2 mb-3">
             Biography
           </h3>
-          <div className="text-sm space-y-2 text-slate-700">
+          <div className="text-sm space-y-2 text-gray-700">
             <p>
-              <span className="font-semibold text-slate-500">Born:</span>{' '}
+              <span className="font-semibold text-gray-500">Born:</span>{' '}
               {selectedPlayerData?.birthDate}
             </p>
             <p>
-              <span className="font-semibold text-slate-500">Location:</span>{' '}
+              <span className="font-semibold text-gray-500">Location:</span>{' '}
               {[
                 selectedPlayerData?.birthCity,
                 selectedPlayerData?.birthStateProvince,
@@ -76,12 +76,12 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             <p>
               {selectedPlayerData?.draftYear !== undefined ? (
                 <>
-                  <span className="font-semibold text-slate-500">Drafted:</span>{' '}
+                  <span className="font-semibold text-gray-500">Drafted:</span>{' '}
                   {selectedPlayerData?.draftYear}
                 </>
               ) : (
                 <>
-                  <span className="font-semibold text-slate-500">
+                  <span className="font-semibold text-gray-500">
                     MLB Debut:
                   </span>{' '}
                   {selectedPlayerData?.mlbDebutDate}
@@ -89,7 +89,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
               )}
             </p>
             <p>
-              <span className="font-semibold text-slate-500">
+              <span className="font-semibold text-gray-500">
                 Active Status:
               </span>{' '}
               {selectedPlayerData?.active ? 'Active' : 'Inactive'}
@@ -99,8 +99,8 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         <div id="player-stats-block" className="md:col-span-2 mt-2">
           {selectedPlayerData?.hitting === undefined &&
           !selectedPlayerData?.isPitcher ? (
-            <div className="text-center py-6 bg-slate-50 rounded-xl border">
-              <p className="text-slate-500 font-medium">
+            <div className="text-center py-6 bg-gray-50 rounded-xl border">
+              <p className="text-gray-500 font-medium">
                 No hitting statistics available.
               </p>
             </div>
@@ -108,12 +108,12 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             selectedPlayerData?.positionName !== 'Pitcher' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-base font-bold mb-2 text-slate-900">
+                  <h3 className="text-base font-bold mb-2 text-gray-900">
                     2026 Standard Statistics
                   </h3>
                   <div className="overflow-x-auto border rounded-xl">
                     <table className="w-full text-center text-sm">
-                      <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs border-b">
+                      <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b">
                         <tr>
                           <th className="px-3 py-2.5">AB</th>
                           <th className="px-3 py-2.5">AVG</th>
@@ -123,7 +123,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                           <th className="px-3 py-2.5">OPS</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y font-medium text-slate-900">
+                      <tbody className="divide-y font-medium text-gray-900">
                         <tr>
                           <td className="px-3 py-3">
                             {selectedPlayerData?.hitting?.atBats}
@@ -150,12 +150,12 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold mb-2 text-slate-900">
+                  <h3 className="text-base font-bold mb-2 text-gray-900">
                     2026 Additional Statistics
                   </h3>
                   <div className="overflow-x-auto border rounded-xl">
                     <table className="w-full text-center text-sm">
-                      <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs border-b">
+                      <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b">
                         <tr>
                           <th className="px-3 py-2.5">BB</th>
                           <th className="px-3 py-2.5">2B</th>
@@ -165,7 +165,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                           <th className="px-3 py-2.5">SLG</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y font-medium text-slate-900">
+                      <tbody className="divide-y font-medium text-gray-900">
                         <tr>
                           <td className="px-3 py-3">
                             {selectedPlayerData?.hitting?.baseOnBalls}
@@ -195,12 +195,12 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
           )}
           {selectedPlayerData?.isPitcher && (
             <div>
-              <h3 className="text-base font-bold mb-2 text-slate-900">
+              <h3 className="text-base font-bold mb-2 text-gray-900">
                 2026 Pitching Statistics
               </h3>
               <div className="overflow-x-auto border rounded-xl">
                 <table className="w-full text-center text-sm">
-                  <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs border-b">
+                  <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b">
                     <tr>
                       <th className="px-3 py-2.5">G</th>
                       <th className="px-3 py-2.5">W-L</th>
@@ -210,7 +210,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                       <th className="px-3 py-2.5">WHIP</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y font-medium text-slate-900">
+                  <tbody className="divide-y font-medium text-gray-900">
                     <tr>
                       <td className="px-3 py-3">
                         {selectedPlayerData?.pitching?.gamesPitched}

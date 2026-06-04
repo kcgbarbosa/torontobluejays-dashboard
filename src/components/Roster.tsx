@@ -41,7 +41,7 @@ function Roster({ onSelectPlayer }: RosterProps) {
                 return (
                   <tr
                     key={player.id}
-                    className="hover:bg-slate-50"
+                    className="hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
                     onClick={() => onSelectPlayer(player.id)}
                   >
                     <td className="px-4 py-4">
@@ -53,7 +53,7 @@ function Roster({ onSelectPlayer }: RosterProps) {
                         />
                         <div>
                           <div>{player.fullName}</div>
-                          <div className="text-sm text-slate-500">
+                          <div className="text-sm text-gray-500">
                             #{player.jerseyNumber}
                           </div>
                         </div>

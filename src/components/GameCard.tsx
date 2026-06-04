@@ -23,7 +23,7 @@ function GameCard({ gameDataProp }: GameDataProps) {
 
   return (
     <>
-      <div className="w-full bg-white p-4 border rounded-lg shadow-sm">
+      <div className="w-full bg-white p-4 border border-gray-200 rounded-xl shadow-sm">
         <div id="recent-game-date" className="text-center pb-6">
           <div>Date: {`${gameDataProp.date}`}</div>
         </div>

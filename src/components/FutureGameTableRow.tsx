@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
 import type { Game } from '../types/models/game.model';
 type GameProps = {
@@ -19,15 +18,15 @@ function FutureGameTableRow({ gameData }: GameProps) {
   return (
     <tr
       key={gameID}
-      className={`border-b border-slate-100 transition-colors duration-200 $`}
+      className={`border-b border-gray-100 transition-colors duration-150 $`}
     >
       <td
-        className={`px-6 py-4 text-sm font-medium text-slate-500 whitespace-nowrap md:text-base`}
+        className={`px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap md:text-base`}
       >
         {date}
       </td>
 
-      <td className="px-6 py-4 text-sm text-slate-900 lg:text-base">
+      <td className="px-6 py-4 text-sm text-gray-900 lg:text-base">
         <div className="flex items-center gap-3">
           <img className="size-6 object-contain" src={awayTeamLogo} />
           <span>{awayTeamName}</span>
