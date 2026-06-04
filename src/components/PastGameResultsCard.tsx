@@ -9,7 +9,6 @@
 import { useContext } from 'react';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
-import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
 
 function PastGameResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
@@ -28,22 +27,27 @@ function PastGameResultsCard() {
     .slice(0, 6);
 
   return (
-    <main id="component-container">
-      <header className="pl-3">Past Games</header>
-      {pastGames.map((d) => (
-        <section key={d.keyID} className="py-4 my-2 border-2 rounded-2xl">
-          <div className="flex pl-3">
-            <img src={d.awayTeamLogo} className="px-1 size-12"></img>
-            <div className="pr-1">{teamAbbreviator(d.awayTeamName)}</div>
-            <div>@</div>
-            <div className="pr-1">{teamAbbreviator(d.homeTeamName)}</div>
-            <img src={d.homeTeamLogo} className="px-1 size-12"></img>
-            <div className="pr-1">{formatTimeUtil(d.startTime)}</div>
-            <div> {new Date(d.date).toLocaleDateString()}</div>
+    <div>
+      <h2 className="text-base font-semibold text-gray-900 py-4">Past Games</h2>
+      <div className="flex flex-col gap-3">
+        {pastGames.map((d) => (
+          <div
+            key={d.keyID}
+            className="bg-white border border-gray-200 rounded-xl shadow-sm px-4 py-3 flex items-center gap-3 text-sm text-gray-700"
+          >
+            <img src={d.awayTeamLogo} className="size-7 object-contain" />
+            <span>{teamAbbreviator(d.awayTeamName)}</span>
+            <span className="text-gray-400">@</span>
+            <span>{teamAbbreviator(d.homeTeamName)}</span>
+            <img src={d.homeTeamLogo} className="size-7 object-contain" />
+            {/* #TODO [June 4] Need to add the game score results  */}
+            <span className="ml-auto text-gray-400">
+              {new Date(d.date).toLocaleDateString()}
+            </span>
           </div>
-        </section>
-      ))}
-    </main>
+        ))}
+      </div>
+    </div>
   );
 }
 
