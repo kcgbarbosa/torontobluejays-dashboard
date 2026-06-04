@@ -15,30 +15,28 @@ function ALEastStandings() {
   const alEastTeams = standingsData.filter((team) => team.divisionId === 201);
 
   return (
-    <div className="bg-white p-4 border rounded-2xl">
-      <h1 className="text-xl font-bold pb-6">AL East Standings</h1>
-      <div className="">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="text-base font-bold border-b-2 border-slate-500 ">
-              <td className="pb-1">Team</td>
-              <td className="pb-1">W</td>
-              <td className="pb-1">L</td>
-              <td className="pb-1">GB</td>
+    <div className="bg-white p-4 border border-gray-200 rounded-xl shadow-sm">
+      <h2 className="text-base font-semibold text-gray-900 pb-4">AL East Standings</h2>
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+            <td className="pb-2">Team</td>
+            <td className="pb-2">W</td>
+            <td className="pb-2">L</td>
+            <td className="pb-2">GB</td>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100">
+          {alEastTeams.map((team) => (
+            <tr key={team.keyID} className="text-sm text-gray-700">
+              <td className="py-2">{team.teamName}</td>
+              <td className="py-2">{team.wins}</td>
+              <td className="py-2">{team.losses}</td>
+              <td className="py-2">{team.gamesBack}</td>
             </tr>
-          </thead>
-          <tbody>
-            {alEastTeams.map((team) => (
-              <tr>
-                <td>{team.teamName}</td>
-                <td>{team.wins}</td>
-                <td>{team.losses}</td>
-                <td>{team.gamesBack}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
