@@ -18,7 +18,7 @@ function RosterPage() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   return (
-    <div id="page-container" className="bg-gray-100 w-full min-h-screen p-4">
+    <div id="page-container" className="bg-gray-50 w-full min-h-screen p-4">
       {/* {isOpen && <PlayerInfoModal playerIDProp={selectedPlayerID} />} */}
       {isOpen && (
         <PlayerInfoModal
