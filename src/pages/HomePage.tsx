@@ -15,27 +15,25 @@ function HomePage() {
   const heroGame = useContext(HeroGameContext);
 
   return (
-    <div id="page-container" className="bg-gray-100 min-h-screen p-4">
-      <main id="home-main" className="grid gap-3 md:grid-cols-4">
-        <section id="hero-game" className="order-2 lg:order-1 lg:col-span-4">
-          <GameCard gameDataProp={heroGame} />
-        </section>
-        <aside
-          id="scheduled-games"
-          className="order-1 lg:order-2 lg:col-span-1"
-        >
-          <div className="flex gap-3 overflow-x-auto pb-2 lg:flex-col">
+    <div id="page-container" className="bg-gray-100 min-h-screen w-full p-4">
+      <main className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <div >
+            <GameCard gameDataProp={heroGame} />
+          </div>
+          <div >
             <PastGameResultsCard />
           </div>
-        </aside>
-        <aside id="player-stat-leaders" className="order-3 lg:col-span-3">
-          <div id="team-record">
+        </div>
+
+        <section className='lg:col-span-1'>
+          <div>
             <ALEastStandings />
           </div>
-          <section id="position-player-stat-leader">
+          <div>
             <PlayerCard />
-          </section>
-        </aside>
+          </div>
+        </section>
       </main>
     </div>
   );

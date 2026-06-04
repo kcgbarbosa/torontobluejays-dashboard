@@ -23,7 +23,7 @@ function GameCard({ gameDataProp }: GameDataProps) {
 
   return (
     <>
-      <div key={gameDataProp.gameID} className="p-3 border-3">
+      <div className="w-full bg-white p-4 border rounded-lg shadow-sm">
         <div id="recent-game-date" className="text-center pb-6">
           <div>Date: {`${gameDataProp.date}`}</div>
         </div>
@@ -35,19 +35,24 @@ function GameCard({ gameDataProp }: GameDataProps) {
           "
         >
           <span className="flex">
-            <img className="size-10" src={gameDataProp.awayTeamLogo} />
+            <img
+              className="size-10 object-contain"
+              src={gameDataProp.awayTeamLogo}
+            />
             <div>{gameDataProp.awayTeamName}</div>
           </span>
           <div>{gameDataProp.awayTeamScore}</div>
-          <div></div>
+
           <div>{gameDataProp.homeTeamScore}</div>
           <span className="flex">
             <div>{gameDataProp.homeTeamName}</div>
-            <img className="size-10" src={gameDataProp.homeTeamLogo} />
+            <img
+              className="size-10 object-contain"
+              src={gameDataProp.homeTeamLogo}
+            />
           </span>
         </div>
         <div id="game-venue" className="text-center flex flex-col">
-          <div>{gameDataProp.startTime}</div>
           <div>{gameDataProp.gameVenue}</div>
           <div>{formatTimeUtil(gameDataProp.startTime)}</div>
         </div>
