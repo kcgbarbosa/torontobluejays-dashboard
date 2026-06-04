@@ -11,7 +11,7 @@ import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
 import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
 
-function SchedulePreview() {
+function PastGameResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
   const { isLoading, error } = useContext(AppStatusContext);
 
@@ -24,7 +24,8 @@ function SchedulePreview() {
 
   const pastGames = schedulePreviewData
     .filter((d) => new Date(d.date).getTime() < Date.now())
-    .reverse();
+    .reverse()
+    .slice(0, 6);
 
   return (
     <main id="component-container">
@@ -46,4 +47,4 @@ function SchedulePreview() {
   );
 }
 
-export default SchedulePreview;
+export default PastGameResultsCard;
