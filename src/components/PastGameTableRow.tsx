@@ -19,11 +19,11 @@ export function PastGameTableRow({ gameData }: GameProps) {
 
   if (awayTeamScore === undefined || homeTeamScore === undefined) {
     return (
-      <tr className="border-b border-slate-100 bg-white hover:bg-slate-50/50 transition-colors duration-150">
+      <tr className="border-b border-slate-100 bg-white hover:bg-slate-50/50 transition-colors duration-150 ">
         <td className="px-6 py-4 text-sm font-medium text-slate-500 whitespace-nowrap">
           {date}
         </td>
-        <td className="px-6 py-4 text-sm text-slate-400 font-medium">
+        <td className="px-6 py-4 text-base text-slate-400 font-medium">
           <div className="flex items-center gap-2">
             <img
               className="size-6 object-contain opacity-40"
@@ -58,11 +58,11 @@ export function PastGameTableRow({ gameData }: GameProps) {
       key={gameID}
       className={`border-b border-slate-100 transition-colors duration-200 ${
         isBlueJaysWinner
-          ? 'bg-blue-100/80 hover:bg-blue-100'
-          : 'bg-white hover:bg-slate-100/50'
+          ? 'bg-green-100/50 hover:bg-green-100'
+          : 'bg-slate-100/50 hover:bg-slate-100'
       }`}
     >
-      <td className="px-6 py-4 text-sm font-medium text-slate-500 whitespace-nowrap">
+      <td className="px-6 py-4 text-sm font-medium text-slate-500 whitespace-nowrap md:text-base">
         {date}
       </td>
       <td className="px-6 py-4 text-sm lg:text-base">
