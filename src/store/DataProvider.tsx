@@ -19,6 +19,7 @@ import {
   PlayerContext,
   RecentGameContext,
   ScheduleContext,
+  SeasonContext,
   StandingsContext,
 } from './contexts';
 import {
@@ -38,7 +39,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // #TODO-FEAT [May 14] : Improve performance while still maintaining correct order of operations
+  // # TODO FEAT [May 14] : Improve performance while still maintaining correct order of operations
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -78,19 +79,21 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppStatusContext.Provider value={{ isLoading, error }}>
-      <ScheduleContext.Provider value={scheduleData}>
-        <HeroGameContext.Provider value={heroGameData}>
-          <RecentGameContext.Provider value={recentGameData}>
-            <NextGameContext.Provider value={nextGameData}>
-              <StandingsContext.Provider value={standingsData}>
-                <PlayerContext.Provider value={playerData}>
-                  {children}
-                </PlayerContext.Provider>
-              </StandingsContext.Provider>
-            </NextGameContext.Provider>
-          </RecentGameContext.Provider>
-        </HeroGameContext.Provider>
-      </ScheduleContext.Provider>
+      <SeasonContext.Provider value={seasonData}>
+        <ScheduleContext.Provider value={scheduleData}>
+          <HeroGameContext.Provider value={heroGameData}>
+            <RecentGameContext.Provider value={recentGameData}>
+              <NextGameContext.Provider value={nextGameData}>
+                <StandingsContext.Provider value={standingsData}>
+                  <PlayerContext.Provider value={playerData}>
+                    {children}
+                  </PlayerContext.Provider>
+                </StandingsContext.Provider>
+              </NextGameContext.Provider>
+            </RecentGameContext.Provider>
+          </HeroGameContext.Provider>
+        </ScheduleContext.Provider>
+      </SeasonContext.Provider>
     </AppStatusContext.Provider>
   );
 };
