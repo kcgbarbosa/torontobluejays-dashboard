@@ -12,8 +12,10 @@ export const currentTimeStr = now.toLocaleDateString('en-CA', {
 });
 
 export const isGameInPast = (game: Game) => {
-  if (game.date < todayStr) return true;
-  if (game.date > todayStr) return false;
+  const todaysDate = new Date().toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
+
+  if (game.date < todaysDate) return true;
+  if (game.date > todaysDate) return false;
 
   return game.startTime < currentTimeStr;
 };
