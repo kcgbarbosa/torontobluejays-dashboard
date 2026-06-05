@@ -4,7 +4,6 @@ import {
   ScheduleContext,
   SeasonContext,
 } from '../store/contexts';
-import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
 import { PastGameTableRow } from './PastGameTableRow';
 import FutureGameTableRow from './FutureGameTableRow';
 
@@ -88,10 +87,10 @@ function ScheduleTable() {
             >
               <option value="">Select Season:</option>
               <option value="regularSeason">
-                {CURRENT_YEAR} Regular Season
+                {new Date().getFullYear()} Regular Season
               </option>
-              <option value="spring">{CURRENT_YEAR} Spring Training</option>
-              <option value="postSeason">{CURRENT_YEAR} Postseason</option>
+              <option value="spring">{new Date().getFullYear()} Spring Training</option>
+              <option value="postSeason">{new Date().getFullYear()} Postseason</option>
             </select>
           </div>
           <table className="w-full border-collapse">

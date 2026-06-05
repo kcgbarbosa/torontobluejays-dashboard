@@ -19,8 +19,6 @@
 
 import type { Game } from '../types/models/game.model';
 
-export const CURRENT_YEAR = new Date().getFullYear();
-
 export const isGameInPast = (game: Game) => {
   const todaysDate = new Date().toLocaleDateString('en-CA');
 
