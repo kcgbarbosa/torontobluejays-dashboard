@@ -12,10 +12,7 @@ import type {
 } from '../types/dto/mlb.dto';
 import type { Game } from '../types/models/game.model';
 
-import {
-  CURRENT_YEAR,
-  normalizeToLocalDateString,
-} from '../utils/dateAndTimeUtilities';
+import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
 import {
   alTeamRecordsDataModelMapper,
   gameModelMapper,
@@ -31,9 +28,8 @@ const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=20
 
 export async function fetchRecentGame(recentGameData: Game | null) {
   if (!recentGameData) return null;
-  const dateForURL = normalizeToLocalDateString(recentGameData.date);
   const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${recentGameData.date}`
   );
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
@@ -60,9 +56,8 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
 
 export async function fetchNextGame(nextGameData: Game | null) {
   if (!nextGameData) return null;
-  const dateForURL = normalizeToLocalDateString(nextGameData.date);
   const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${nextGameData.date}`
   );
   if (!response.ok) {
     throw new Error(`response status;: ${response.status}`);
@@ -74,9 +69,9 @@ export async function fetchNextGame(nextGameData: Game | null) {
 
 export async function fetchHeroGameData(heroGameData: Game | null) {
   if (!heroGameData) return null;
-  const dateForURL = normalizeToLocalDateString(heroGameData.date);
+
   const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${heroGameData.date}`
   );
   if (!response.ok) {
     throw new Error(`response status;: ${response.status}`);
