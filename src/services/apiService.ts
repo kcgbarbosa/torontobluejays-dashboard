@@ -40,19 +40,6 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
   return formattedResult;
 }
 
-export async function fetchNextGame(nextGameData: Game | null) {
-  if (!nextGameData) return null;
-  const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${new Date().getFullYear()}&teamId=141&date=${nextGameData.date}`
-  );
-  if (!response.ok) {
-    throw new Error(`response status;: ${response.status}`);
-  }
-  const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = gameModelMapper(result);
-  return formattedResult[0];
-}
-
 export async function fetchHeroGameData(heroGameData: Game | null) {
   if (!heroGameData) return null;
 
