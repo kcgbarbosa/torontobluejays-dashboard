@@ -46,7 +46,9 @@ export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
 
 // #NOTE [may 26] I suspect there will be complications with this when we get to rendering. Will require additional logic using the status field to determine which game should be displayed and at what time. Could be done on the front end but may be better to handle this in the service layer
 export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const todaysGame = scheduleData.find((d) => d.date === todayStr);
+  const todaysDate = new Date().toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
+
+  const todaysGame = scheduleData.find((d) => d.date === todaysDate);
   if (todaysGame) {
     return todaysGame;
   }
