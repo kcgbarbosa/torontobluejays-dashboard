@@ -56,3 +56,7 @@ export const formatTimeForDisplayUtil = (dateString: string): string => {
 
   return `${hours}:${minutes < 10 ? `0${minutes}` : minutes} ${AMorPM}`.toString();
 };
+
+// #TODO [June 5] Create date display formatting utility function
+
+// export const formatDateForDisplayUtil = (dateString: string): string => { }

@@ -6,12 +6,15 @@ import {
 } from '../store/contexts';
 import { PastGameTableRow } from './PastGameTableRow';
 import FutureGameTableRow from './FutureGameTableRow';
+import { isGameInPast } from '../utils/dateAndTimeUtilities';
 
 type ScheduleFilterType =
   | 'Remaining Games'
   | 'regularSeason'
   | 'spring'
   | 'postSeason';
+
+// #TODO NEXT [June 5] change it from showing the full season schedule to showing Completed Games (conditional check that the game(s) being filtered are on dates earlier than today )
 
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
@@ -28,13 +31,7 @@ function ScheduleTable() {
 
   const filteredGames = useMemo(() => {
     if (scheduleFilter === 'Remaining Games')
-      return scheduleData.filter((d) => {
-        const gameDate = new Date(d.date).getTime();
-        return (
-          gameDate > Date.now() &&
-          gameDate <= new Date(regularSeasonEndDate).getTime()
-        );
-      });
+      return scheduleData.filter((d) => !isGameInPast(d));
 
     if (scheduleFilter) {
       return scheduleData.filter((d) => {
@@ -63,7 +60,6 @@ function ScheduleTable() {
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm">
           <div className="border-b border-gray-100 px-4 py-4 flex items-center gap-2">
-            {/* # FIXME [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
             <button
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer ${
                 scheduleFilter === 'Remaining Games'
@@ -89,8 +85,12 @@ function ScheduleTable() {
               <option value="regularSeason">
                 {new Date().getFullYear()} Regular Season
               </option>
-              <option value="spring">{new Date().getFullYear()} Spring Training</option>
-              <option value="postSeason">{new Date().getFullYear()} Postseason</option>
+              <option value="spring">
+                {new Date().getFullYear()} Spring Training
+              </option>
+              <option value="postSeason">
+                {new Date().getFullYear()} Postseason
+              </option>
             </select>
           </div>
           <table className="w-full border-collapse">
