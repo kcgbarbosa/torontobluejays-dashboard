@@ -10,11 +10,9 @@ import { isGameInPast } from '../utils/dateAndTimeUtilities';
 
 type ScheduleFilterType =
   | 'Remaining Games'
-  | 'regularSeason'
+  | 'Completed Games'
   | 'spring'
   | 'postSeason';
-
-// #TODO NEXT [June 5] change it from showing the full season schedule to showing Completed Games (conditional check that the game(s) being filtered are on dates earlier than today )
 
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
@@ -33,15 +31,26 @@ function ScheduleTable() {
     if (scheduleFilter === 'Remaining Games')
       return scheduleData.filter((d) => !isGameInPast(d));
 
+    if (scheduleFilter === 'Completed Games')
+      return regularSeasonStartDate && regularSeasonEndDate
+        ? scheduleData.filter(
+            (d) =>
+              isGameInPast(d) &&
+              d.date >= regularSeasonStartDate &&
+              d.date <= regularSeasonEndDate
+          )
+        : [];
+
     if (scheduleFilter) {
+      const startTime = new Date(
+        seasonData[0][`${scheduleFilter}StartDate`]
+      ).getTime();
+      const endTime = new Date(
+        seasonData[0][`${scheduleFilter}EndDate`]
+      ).getTime();
       return scheduleData.filter((d) => {
-        const gameDate = new Date(d.date).getTime();
-        return (
-          gameDate >=
-            new Date(seasonData[0][`${scheduleFilter}StartDate`]).getTime() &&
-          gameDate <=
-            new Date(seasonData[0][`${scheduleFilter}EndDate`]).getTime()
-        );
+        const gameTime = new Date(d.date).getTime();
+        return gameTime >= startTime && gameTime <= endTime;
       });
     }
     return scheduleData;
@@ -72,7 +81,8 @@ function ScheduleTable() {
             </button>
             <select
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer ${
-                scheduleFilter !== 'Remaining Games' && scheduleFilter !== null
+                scheduleFilter !== 'Remaining Games' &&
+                (scheduleFilter as string) !== ''
                   ? 'bg-blue-600 text-white hover:bg-blue-700'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
@@ -82,8 +92,8 @@ function ScheduleTable() {
               }
             >
               <option value="">Select Season:</option>
-              <option value="regularSeason">
-                {new Date().getFullYear()} Regular Season
+              <option value="Completed Games">
+                {new Date().getFullYear()} Completed Games
               </option>
               <option value="spring">
                 {new Date().getFullYear()} Spring Training
@@ -96,7 +106,7 @@ function ScheduleTable() {
           <table className="w-full border-collapse">
             <thead>
               {scheduleFilter !== 'Remaining Games' &&
-              scheduleFilter !== null ? (
+              (scheduleFilter as string) !== '' ? (
                 <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
                   <td className="px-6 py-3">Date</td>
                   <td className="px-6 py-3">Result</td>
@@ -117,7 +127,7 @@ function ScheduleTable() {
                   </td>
                 </tr>
               ) : scheduleFilter !== 'Remaining Games' &&
-                scheduleFilter !== null ? (
+                (scheduleFilter as string) !== '' ? (
                 filteredGames.map((d) => <PastGameTableRow gameData={d} />)
               ) : (
                 filteredGames.map((d) => <FutureGameTableRow gameData={d} />)
