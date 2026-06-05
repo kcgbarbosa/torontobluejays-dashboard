@@ -58,7 +58,7 @@ export const formatTimeForDisplayUtil = (dateString: string): string => {
 };
 
 export const formatDateForDisplayLongUtil = (dateString: string): string => {
-  const date = new Date(dateString);
+  const date = new Date(dateString + 'T00:00:00');
 
   const formattedDate = date.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -71,7 +71,7 @@ export const formatDateForDisplayLongUtil = (dateString: string): string => {
 };
 
 export const formatDateForDisplayShortUtil = (dateString: string): string => {
-  const date = new Date(dateString);
+  const date = new Date(dateString + 'T00:00:00');
 
   const formattedDate = date.toLocaleDateString('en-US', {
     weekday: 'short',
