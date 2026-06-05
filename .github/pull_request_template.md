@@ -3,6 +3,7 @@
 ### Type of Change(s)
 
 - [ ] feat: A new feature
+- [ ] style: A design change or update
 - [ ] fix: A bug fix
 - [ ] refactor: Code change that neither fixes a bug or adds a feature
 - [ ] chore: Updating build tasks, package dependencies, or configuration
