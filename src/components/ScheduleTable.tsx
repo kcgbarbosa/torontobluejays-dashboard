@@ -4,11 +4,9 @@ import {
   ScheduleContext,
   SeasonContext,
 } from '../store/contexts';
-import { CURRENT_YEAR, formatTimeUtil } from '../utils/dateAndTimeUtilities';
+import { CURRENT_YEAR } from '../utils/dateAndTimeUtilities';
 import { PastGameTableRow } from './PastGameTableRow';
 import FutureGameTableRow from './FutureGameTableRow';
-
-// #FIXME: [June 1] - This component uses seasonStart and endDates to filter the schedule data. I need to update the SeasonDTO to include all of the dates for  regular season games vs pre season games vs playoffs, ect. Will also require i updated the Model.
 
 type ScheduleFilterType =
   | 'Remaining Games'
@@ -64,61 +62,51 @@ function ScheduleTable() {
   return (
     <div id="page-container" className="max-w-11/12 mx-auto px-4 py-8">
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
-        <main className="col-span-2 gap-4 p-2 bg-white rounded-2xl shadow">
-          <h1 className="border-b-2 border-gray-200 px-4 py-6 mb-2 ">
+        <main className="col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div className="border-b border-gray-100 px-4 py-4 flex items-center gap-2">
             {/* # FIXME [June 2] when user switches to 'Remaining Games', the table is adding a game from april 3rd between blue jays and white sox, duplicates every time you switch back and forth */}
-            <span className="flex items-center gap-2">
-              <button
-                className={`p-2 m-2 rounded-2xl transition-colors duration-100 ${
-                  scheduleFilter === 'Remaining Games'
-                    ? 'bg-blue-600 text-white font-semibold shadow-md'
-                    : 'bg-gray-200 '
-                } ${
-                  scheduleFilter === 'Remaining Games'
-                    ? 'hover:bg-blue-700 cursor-pointer'
-                    : 'hover:bg-gray-300 cursor-pointer'
-                }`}
-                onClick={() => handleSetScheduleFilter('Remaining Games')}
-              >
-                Remaining Games
-              </button>
-              <select
-                className={` 
-                  p-2 m-2 rounded-md transition-colors duration-100 shadow-sm 
-                  ${
-                    scheduleFilter !== 'Remaining Games' &&
-                    scheduleFilter !== null
-                      ? 'bg-blue-600 text-white font-semibold  hover:bg-blue-700 cursor-pointer'
-                      : 'bg-gray-200 text-gray-800 border-gray-300 hover:bg-gray-300 cursor-pointer'
-                  }
-                `}
-                value={scheduleFilter}
-                onChange={(e) =>
-                  handleSetScheduleFilter(e.target.value as ScheduleFilterType)
-                }
-              >
-                <option value="">Select Season:</option>
-                <option value="regularSeason">
-                  {CURRENT_YEAR} Regular Season
-                </option>
-                <option value="spring">{CURRENT_YEAR} Spring Training</option>
-                <option value="postSeason">{CURRENT_YEAR} Postseason</option>
-              </select>
-            </span>
-          </h1>
+            <button
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer ${
+                scheduleFilter === 'Remaining Games'
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+              onClick={() => handleSetScheduleFilter('Remaining Games')}
+            >
+              Remaining Games
+            </button>
+            <select
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer ${
+                scheduleFilter !== 'Remaining Games' && scheduleFilter !== null
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+              value={scheduleFilter}
+              onChange={(e) =>
+                handleSetScheduleFilter(e.target.value as ScheduleFilterType)
+              }
+            >
+              <option value="">Select Season:</option>
+              <option value="regularSeason">
+                {CURRENT_YEAR} Regular Season
+              </option>
+              <option value="spring">{CURRENT_YEAR} Spring Training</option>
+              <option value="postSeason">{CURRENT_YEAR} Postseason</option>
+            </select>
+          </div>
           <table className="w-full border-collapse">
             <thead>
               {scheduleFilter !== 'Remaining Games' &&
               scheduleFilter !== null ? (
-                <tr className="hover:bg-gray-100 transition-colors duration-200">
-                  <td className="p-4"> Date</td>
-                  <td className="p-4"> Result</td>
+                <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                  <td className="px-6 py-3">Date</td>
+                  <td className="px-6 py-3">Result</td>
                 </tr>
               ) : (
-                <tr className="hover:bg-gray-100 transition-colors duration-200">
-                  <td className="p-4"> Date</td>
-                  <td className="p-4"> Matchup</td>
-                  <td className="p-4"> First Pitch</td>
+                <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                  <td className="px-6 py-3">Date</td>
+                  <td className="px-6 py-3">Matchup</td>
+                  <td className="px-6 py-3">First Pitch</td>
                 </tr>
               )}
             </thead>

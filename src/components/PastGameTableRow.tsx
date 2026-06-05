@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Game } from '../types/models/game.model';
 
 type GameProps = {
@@ -19,11 +18,11 @@ export function PastGameTableRow({ gameData }: GameProps) {
 
   if (awayTeamScore === undefined || homeTeamScore === undefined) {
     return (
-      <tr className="border-b border-slate-100 bg-white hover:bg-slate-50/50 transition-colors duration-150 ">
-        <td className="px-6 py-4 text-sm font-medium text-slate-500 whitespace-nowrap">
+      <tr className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors duration-150 ">
+        <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
           {date}
         </td>
-        <td className="px-6 py-4 text-base text-slate-400 font-medium">
+        <td className="px-6 py-4 text-base text-gray-400 font-medium">
           <div className="flex items-center gap-2">
             <img
               className="size-6 object-contain opacity-40"
@@ -31,14 +30,14 @@ export function PastGameTableRow({ gameData }: GameProps) {
               alt={awayTeamName}
             />
             <span>{awayTeamName}</span>
-            <span className="text-slate-200">@</span>
+            <span className="text-gray-200">@</span>
             <img
               className="size-6 object-contain opacity-40"
               src={homeTeamLogo}
               alt={homeTeamName}
             />
             <span>{homeTeamName}</span>
-            <span className="ml-4 px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-xs font-semibold">
+            <span className="ml-4 px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full text-xs font-semibold">
               Postponed / TBD
             </span>
           </div>
@@ -56,19 +55,19 @@ export function PastGameTableRow({ gameData }: GameProps) {
   return (
     <tr
       key={gameID}
-      className={`border-b border-slate-100 transition-colors duration-200 ${
+      className={`border-b border-gray-100 transition-colors duration-150 ${
         isBlueJaysWinner
           ? 'bg-green-100/50 hover:bg-green-100'
-          : 'bg-slate-100/50 hover:bg-slate-100'
+          : 'bg-gray-100/50 hover:bg-gray-100'
       }`}
     >
-      <td className="px-6 py-4 text-sm font-medium text-slate-500 whitespace-nowrap md:text-base">
+      <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap md:text-base">
         {date}
       </td>
       <td className="px-6 py-4 text-sm lg:text-base">
         <div className="flex items-center gap-3">
           <div
-            className={`flex items-center gap-2 ${awayWon ? 'font-bold text-slate-900' : 'text-slate-500'}`}
+            className={`flex items-center gap-2 ${awayWon ? 'font-bold text-gray-900' : 'text-gray-500'}`}
           >
             <img
               className={`size-6 object-contain ${!awayWon && 'opacity-60'}`}
@@ -78,9 +77,9 @@ export function PastGameTableRow({ gameData }: GameProps) {
             <span>{awayTeamName}</span>
             <span className="text-base ml-1">{awayTeamScore}</span>
           </div>
-          <span className="text-slate-300 ml-1">@</span>
+          <span className="text-gray-300 ml-1">@</span>
           <div
-            className={`flex items-center gap-2 ${homeWon ? 'font-bold text-slate-900' : 'text-slate-500'}`}
+            className={`flex items-center gap-2 ${homeWon ? 'font-bold text-gray-900' : 'text-gray-500'}`}
           >
             <img
               className={`size-6 object-contain ${!homeWon && 'opacity-60'}`}
@@ -91,11 +90,11 @@ export function PastGameTableRow({ gameData }: GameProps) {
             <span className="text-base ml-1">{homeTeamScore}</span>
           </div>
           {isBlueJaysWinner ? (
-            <span className="ml-4 px-2 py-0.5 bg-blue-400 text-white rounded text-xs font-bold tracking-wider uppercase shadow-sm">
+            <span className="ml-4 px-2 py-0.5 bg-blue-600 text-white rounded-full text-xs font-bold tracking-wider uppercase">
               W
             </span>
           ) : (
-            <span className="ml-4 px-2 py-0.5 bg-red-400 text-white rounded text-xs font-bold tracking-wider uppercase shadow-sm">
+            <span className="ml-4 px-2 py-0.5 bg-red-500 text-white rounded-full text-xs font-bold tracking-wider uppercase">
               L
             </span>
           )}
