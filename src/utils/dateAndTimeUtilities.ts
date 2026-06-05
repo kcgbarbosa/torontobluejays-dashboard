@@ -13,6 +13,8 @@
  *  - can be extracted from ISOString fornat (YYYY-MM-DDTHH:mm:ss.sssZ)
  *    SYNTAX: new Date().toLocaleDateString('en-CA');
  *
+ * # TODO NEXT [Jun 5] Implement isGameInPast across all relevant components
+ *
  */
 
 import type { Game } from '../types/models/game.model';
@@ -26,30 +28,6 @@ export const isGameInPast = (game: Game) => {
   if (game.date > todaysDate) return false;
 
   return game.startTime < new Date().toISOString();
-};
-
-// # TODO [May 26] Change these 2 functions to 1 multi-use function for homepage hero
-
-export const getRecentGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const pastGames = scheduleData.filter((game) => isGameInPast(game));
-  if (pastGames.length === 0) return null;
-
-  return pastGames.reduce((prevGame, game) =>
-    new Date(game.date).getTime() > new Date(prevGame.date).getTime()
-      ? game
-      : prevGame
-  );
-};
-
-export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const upcomingGames = scheduleData.filter((game) => !isGameInPast(game));
-  if (upcomingGames.length === 0) return null;
-
-  return upcomingGames.reduce((nextGame, game) =>
-    new Date(game.date).getTime() < new Date(nextGame.date).getTime()
-      ? game
-      : nextGame
-  );
 };
 
 export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {

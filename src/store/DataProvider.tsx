@@ -4,33 +4,23 @@ import type { Player } from '../types/models/person.model';
 import type { ALRecords } from '../types/models/standings.model';
 
 import {
-  fetchRecentGame,
   fetchSeasonData,
   fetchSchedule,
   fetchALTeamRecords,
   fetchRosterData,
-  fetchNextGame,
   fetchHeroGameData,
 } from '../services/apiService';
 import {
   AppStatusContext,
   HeroGameContext,
-  NextGameContext,
   PlayerContext,
-  RecentGameContext,
   ScheduleContext,
   SeasonContext,
   StandingsContext,
 } from './contexts';
-import {
-  getHeroGameDateUtil,
-  getNextGameDateUtil,
-  getRecentGameDateUtil,
-} from '../utils/dateAndTimeUtilities';
+import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [recentGameData, setRecentGameData] = useState<Game | null>(null);
-  const [nextGameData, setNextGameData] = useState<Game | null>(null);
   const [heroGameData, setHeroGameData] = useState<Game | null>(null);
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
@@ -51,17 +41,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const schedule = await fetchSchedule(season);
         setScheduleData(schedule);
 
-        const recentGameDate = await getRecentGameDateUtil(schedule);
-        const recentGame = await fetchRecentGame(recentGameDate);
-        setRecentGameData(recentGame as Game | null);
-
-        const nextGameData = await getNextGameDateUtil(schedule);
-        const nextGame = await fetchNextGame(nextGameData);
-        setNextGameData(nextGame as Game | null);
-
         const heroGameData = await getHeroGameDateUtil(schedule);
         const heroGame = await fetchHeroGameData(heroGameData);
-        setHeroGameData(heroGameData as Game | null);
+        setHeroGameData(heroGame as Game | null);
 
         const standings = await fetchALTeamRecords();
         setStandingsData(standings);
@@ -82,15 +64,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       <SeasonContext.Provider value={seasonData}>
         <ScheduleContext.Provider value={scheduleData}>
           <HeroGameContext.Provider value={heroGameData}>
-            <RecentGameContext.Provider value={recentGameData}>
-              <NextGameContext.Provider value={nextGameData}>
-                <StandingsContext.Provider value={standingsData}>
-                  <PlayerContext.Provider value={playerData}>
-                    {children}
-                  </PlayerContext.Provider>
-                </StandingsContext.Provider>
-              </NextGameContext.Provider>
-            </RecentGameContext.Provider>
+            <StandingsContext.Provider value={standingsData}>
+              <PlayerContext.Provider value={playerData}>
+                {children}
+              </PlayerContext.Provider>
+            </StandingsContext.Provider>
           </HeroGameContext.Provider>
         </ScheduleContext.Provider>
       </SeasonContext.Provider>

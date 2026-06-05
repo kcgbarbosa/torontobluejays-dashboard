@@ -26,19 +26,6 @@ const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
 const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
 
-export async function fetchRecentGame(recentGameData: Game | null) {
-  if (!recentGameData) return null;
-  const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${recentGameData.date}`
-  );
-  if (!response.ok) {
-    throw new Error(`response status: ${response.status}`);
-  }
-  const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = gameModelMapper(result);
-  return formattedResult[0];
-}
-
 export async function fetchSchedule(seasonData: SeasonDTO[]) {
   const data = seasonData[0];
   if (data === undefined) {
