@@ -10,6 +10,7 @@ import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { getGameResult } from '../utils/gameResultUtils';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
 import WinLossBadge from './WinLossBadge';
+import { isGameInPast, formatDateForDisplayShortUtil } from '../utils/dateAndTimeUtilities';
 
 function PastGameResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
@@ -19,7 +20,7 @@ function PastGameResultsCard() {
   if (error) return <div>Error: {error}</div>;
 
   const pastGames = schedulePreviewData
-    .filter((d) => new Date(d.date).getTime() < Date.now())
+    .filter((d) => isGameInPast(d) === true)
     .reverse()
     .slice(0, 4);
 
@@ -74,9 +75,7 @@ function PastGameResultsCard() {
 
               <div className="flex items-center justify-center gap-2">
                 {scoresAvailable && <WinLossBadge won={bjWon} />}
-                <span className="text-xs text-gray-400">
-                  {new Date(d.date).toLocaleDateString()}
-                </span>
+                <span className="text-xs text-gray-400">{formatDateForDisplayShortUtil(d.date)}</span>
               </div>
             </div>
           );

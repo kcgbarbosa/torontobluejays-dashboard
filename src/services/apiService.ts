@@ -13,10 +13,6 @@ import type {
 import type { Game } from '../types/models/game.model';
 
 import {
-  CURRENT_YEAR,
-  normalizeToLocalDateString,
-} from '../utils/dateAndTimeUtilities';
-import {
   alTeamRecordsDataModelMapper,
   gameModelMapper,
   rosterDataModelMapper,
@@ -27,21 +23,6 @@ import {
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
-const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${CURRENT_YEAR})%3A%29`;
-
-export async function fetchRecentGame(recentGameData: Game | null) {
-  if (!recentGameData) return null;
-  const dateForURL = normalizeToLocalDateString(recentGameData.date);
-  const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
-  );
-  if (!response.ok) {
-    throw new Error(`response status: ${response.status}`);
-  }
-  const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = gameModelMapper(result);
-  return formattedResult[0];
-}
 
 export async function fetchSchedule(seasonData: SeasonDTO[]) {
   const data = seasonData[0];
@@ -58,25 +39,11 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
   return formattedResult;
 }
 
-export async function fetchNextGame(nextGameData: Game | null) {
-  if (!nextGameData) return null;
-  const dateForURL = normalizeToLocalDateString(nextGameData.date);
-  const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
-  );
-  if (!response.ok) {
-    throw new Error(`response status;: ${response.status}`);
-  }
-  const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = gameModelMapper(result);
-  return formattedResult[0];
-}
-
 export async function fetchHeroGameData(heroGameData: Game | null) {
   if (!heroGameData) return null;
-  const dateForURL = normalizeToLocalDateString(heroGameData.date);
+
   const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${CURRENT_YEAR}&teamId=141&date=${dateForURL}`
+    `${BASE_URL}/schedule/?sportId=1&season=${new Date().getFullYear()}&teamId=141&date=${heroGameData.date}`
   );
   if (!response.ok) {
     throw new Error(`response status;: ${response.status}`);
@@ -107,7 +74,9 @@ export async function fetchALTeamRecords() {
 }
 
 export async function fetchRosterData() {
-  const response = await fetch(ROSTER_DATA_URL);
+  const response = await fetch(
+    `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${new Date().getFullYear()})%3A%29`
+  );
 
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);

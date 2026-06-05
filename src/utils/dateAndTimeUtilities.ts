@@ -1,67 +1,37 @@
+/**
+ * @utils
+ *
+ * dataAndTimeUtilities.ts : Consolidation of all time and date utilities
+ *
+ * NOTES:
+ *
+ * Dates() read from an external state (system clock) which makes them IMPURE
+ * They return something different each time you call it, therefore, they SHOULD NOT BE CACHED. They should be called EXACTLY when needed.
+ *
+ *  YYYY-MM-DD
+ *  - typically used by apis as field values and as parameters
+ *  - can be extracted from ISOString fornat (YYYY-MM-DDTHH:mm:ss.sssZ)
+ *    SYNTAX: new Date().toLocaleDateString('en-CA');
+ *
+ * # TODO NEXT [Jun 5] Implement isGameInPast across all relevant components
+ *
+ */
+
 import type { Game } from '../types/models/game.model';
 
-export const CURRENT_YEAR = new Date().getFullYear();
-export const now = new Date();
-
-export const todayStr = now.toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
-export const currentTimeStr = now.toLocaleDateString('en-CA', {
-  // FORMAT: HH:MM AM/PM
-  hour: '2-digit',
-  minute: '2-digit',
-  hour12: true,
-});
-
-// # TODO Refactor [may 26] the newly fetched api date is already formatted correctly, so this should be able to be removed
-export function normalizeToLocalDateString(dateString: any): string {
-  if (!dateString) return '';
-
-  const dateStr = String(dateString).trim();
-
-  // early exit if the format is already proper
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return dateStr;
-  }
-  const parsedDate = new Date(dateStr);
-
-  if (isNaN(parsedDate.getTime())) return dateStr;
-
-  const year = parsedDate.getFullYear();
-  const month = String(parsedDate.getMonth() + 1).padStart(2, '0');
-  const day = String(parsedDate.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
 export const isGameInPast = (game: Game) => {
-  if (game.date < todayStr) return true;
-  if (game.date > todayStr) return false;
+  const todaysDate = new Date().toLocaleDateString('en-CA');
 
-  return game.startTime < currentTimeStr;
-};
+  if (game.date < todaysDate) return true;
+  if (game.date > todaysDate) return false;
 
-export const getRecentGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const pastGames = scheduleData.filter((game) => isGameInPast(game));
-  if (pastGames.length === 0) return null;
-
-  return pastGames.reduce((prevGame, game) =>
-    new Date(game.date).getTime() > new Date(prevGame.date).getTime()
-      ? game
-      : prevGame
-  );
-};
-
-export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const upcomingGames = scheduleData.filter((game) => !isGameInPast(game));
-  if (upcomingGames.length === 0) return null;
-
-  return upcomingGames.reduce((nextGame, game) =>
-    new Date(game.date).getTime() < new Date(nextGame.date).getTime()
-      ? game
-      : nextGame
-  );
+  return game.startTime < new Date().toISOString();
 };
 
 export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const todaysGame = scheduleData.find((d) => d.date === todayStr);
+  const todaysDate = new Date().toLocaleDateString('en-CA');
+
+  const todaysGame = scheduleData.find((d) => d.date === todaysDate);
   if (todaysGame) {
     return todaysGame;
   }
@@ -75,9 +45,9 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
   );
 };
 
-export const formatTimeUtil = (dateString: string): string => {
+export const formatTimeForDisplayUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
-  if (!stringToDate) return 'Date not found';
+  if (isNaN(stringToDate.getTime())) return 'Invalid date';
 
   let hours = stringToDate.getHours();
   let AMorPM = hours >= 12 ? 'pm' : 'am';
@@ -85,4 +55,29 @@ export const formatTimeUtil = (dateString: string): string => {
   let minutes = stringToDate.getMinutes();
 
   return `${hours}:${minutes < 10 ? `0${minutes}` : minutes} ${AMorPM}`.toString();
+};
+
+export const formatDateForDisplayLongUtil = (dateString: string): string => {
+  const date = new Date(dateString + 'T00:00:00');
+
+  const formattedDate = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+};
+
+export const formatDateForDisplayShortUtil = (dateString: string): string => {
+  const date = new Date(dateString + 'T00:00:00');
+
+  const formattedDate = date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  });
+
+  return formattedDate;
 };
