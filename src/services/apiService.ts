@@ -23,7 +23,6 @@ import {
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
-const ROSTER_DATA_URL = `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${new Date().getFullYear()})%3A%29`;
 
 export async function fetchSchedule(seasonData: SeasonDTO[]) {
   const data = seasonData[0];
@@ -75,7 +74,9 @@ export async function fetchALTeamRecords() {
 }
 
 export async function fetchRosterData() {
-  const response = await fetch(ROSTER_DATA_URL);
+  const response = await fetch(
+    `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${new Date().getFullYear()})%3A%29`
+  );
 
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
