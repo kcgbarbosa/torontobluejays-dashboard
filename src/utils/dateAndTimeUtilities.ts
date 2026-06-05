@@ -47,7 +47,7 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
 
 export const formatTimeForDisplayUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
-  if (!stringToDate) return 'Date not found';
+  if (isNaN(stringToDate.getTime())) return 'Invalid date';
 
   let hours = stringToDate.getHours();
   let AMorPM = hours >= 12 ? 'pm' : 'am';
