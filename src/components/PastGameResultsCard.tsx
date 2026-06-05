@@ -10,7 +10,7 @@ import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { getGameResult } from '../utils/gameResultUtils';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
 import WinLossBadge from './WinLossBadge';
-import { isGameInPast } from '../utils/dateAndTimeUtilities';
+import { isGameInPast, formatDateForDisplayShortUtil } from '../utils/dateAndTimeUtilities';
 
 function PastGameResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
@@ -75,7 +75,7 @@ function PastGameResultsCard() {
 
               <div className="flex items-center justify-center gap-2">
                 {scoresAvailable && <WinLossBadge won={bjWon} />}
-                <span className="text-xs text-gray-400">{d.date}</span>
+                <span className="text-xs text-gray-400">{formatDateForDisplayShortUtil(d.date)}</span>
               </div>
             </div>
           );

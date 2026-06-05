@@ -7,7 +7,10 @@
 import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 import type { Game } from '../types/models/game.model';
-import { formatTimeForDisplayUtil } from '../utils/dateAndTimeUtilities';
+import {
+  formatTimeForDisplayUtil,
+  formatDateForDisplayLongUtil,
+} from '../utils/dateAndTimeUtilities';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -25,7 +28,7 @@ function GameCard({ gameDataProp }: GameDataProps) {
     <>
       <div className="w-full bg-white p-4 border border-gray-200 rounded-xl shadow-sm">
         <div id="recent-game-date" className="text-center pb-6">
-          <div>Date: {`${gameDataProp.date}`}</div>
+          <div>{formatDateForDisplayLongUtil(gameDataProp.date)}</div>
         </div>
         <div
           id="game-main-details"
