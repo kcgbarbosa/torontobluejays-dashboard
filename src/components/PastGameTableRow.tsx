@@ -1,4 +1,6 @@
 import type { Game } from '../types/models/game.model';
+import { getGameResult } from '../utils/gameResultUtils';
+import WinLossBadge from './WinLossBadge';
 
 type GameProps = {
   gameData: Game;
@@ -46,11 +48,8 @@ export function PastGameTableRow({ gameData }: GameProps) {
     );
   }
 
-  const awayWon = awayTeamScore > homeTeamScore;
-  const homeWon = homeTeamScore > awayTeamScore;
-  const isBlueJaysWinner =
-    (awayWon && awayTeamName.includes('Blue Jays')) ||
-    (homeWon && homeTeamName.includes('Blue Jays'));
+  const { awayWon, bjWon: isBlueJaysWinner } = getGameResult(gameData);
+  const homeWon = !awayWon;
 
   return (
     <tr
@@ -89,15 +88,7 @@ export function PastGameTableRow({ gameData }: GameProps) {
             <span>{homeTeamName}</span>
             <span className="text-base ml-1">{homeTeamScore}</span>
           </div>
-          {isBlueJaysWinner ? (
-            <span className="ml-4 px-2 py-0.5 bg-blue-600 text-white rounded-full text-xs font-bold tracking-wider uppercase">
-              W
-            </span>
-          ) : (
-            <span className="ml-4 px-2 py-0.5 bg-red-500 text-white rounded-full text-xs font-bold tracking-wider uppercase">
-              L
-            </span>
-          )}
+          <WinLossBadge won={isBlueJaysWinner} />
         </div>
       </td>
     </tr>
