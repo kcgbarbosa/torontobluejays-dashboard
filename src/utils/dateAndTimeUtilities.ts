@@ -57,6 +57,27 @@ export const formatTimeForDisplayUtil = (dateString: string): string => {
   return `${hours}:${minutes < 10 ? `0${minutes}` : minutes} ${AMorPM}`.toString();
 };
 
-// #TODO [June 5] Create date display formatting utility function
+export const formatDateForDisplayLongUtil = (dateString: string): string => {
+  const date = new Date(dateString);
 
-// export const formatDateForDisplayUtil = (dateString: string): string => { }
+  const formattedDate = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+};
+
+export const formatDateForDisplayShortUtil = (dateString: string): string => {
+  const date = new Date(dateString);
+
+  const formattedDate = date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  });
+
+  return formattedDate;
+};
