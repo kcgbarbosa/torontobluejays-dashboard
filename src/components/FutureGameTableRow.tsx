@@ -1,4 +1,4 @@
-import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
+import { formatTimeForDisplayUtil } from '../utils/dateAndTimeUtilities';
 import type { Game } from '../types/models/game.model';
 type GameProps = {
   gameData: Game;
@@ -35,7 +35,7 @@ function FutureGameTableRow({ gameData }: GameProps) {
           <span>{homeTeamName}</span>
         </div>
       </td>
-      <td className="px-4 py-4">{formatTimeUtil(startTime)}</td>
+      <td className="px-4 py-4">{formatTimeForDisplayUtil(startTime)}</td>
     </tr>
   );
 }

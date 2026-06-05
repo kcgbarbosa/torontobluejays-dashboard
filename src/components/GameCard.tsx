@@ -7,7 +7,7 @@
 import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 import type { Game } from '../types/models/game.model';
-import { formatTimeUtil } from '../utils/dateAndTimeUtilities';
+import { formatTimeForDisplayUtil } from '../utils/dateAndTimeUtilities';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -54,7 +54,7 @@ function GameCard({ gameDataProp }: GameDataProps) {
         </div>
         <div id="game-venue" className="text-center flex flex-col">
           <div>{gameDataProp.gameVenue}</div>
-          <div>{formatTimeUtil(gameDataProp.startTime)}</div>
+          <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
         </div>
       </div>
     </>

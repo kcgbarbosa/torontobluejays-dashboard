@@ -1,23 +1,31 @@
+/**
+ * @utils
+ *
+ * dataAndTimeUtilities.ts : Consolidation of all time and date utilities
+ *
+ * NOTES:
+ *
+ * Dates() read from an external state (system clock) which makes them IMPURE
+ * They return something different each time you call it, therefore, they SHOULD NOT BE CACHED. They should be called EXACTLY when needed.
+ *
+ *  YYYY-MM-DD
+ *  - typically used by apis as field values and as parameters
+ *  - can be extracted from ISOString fornat (YYYY-MM-DDTHH:mm:ss.sssZ)
+ *    SYNTAX: new Date().toLocaleDateString('en-CA');
+ *
+ */
+
 import type { Game } from '../types/models/game.model';
 
 export const CURRENT_YEAR = new Date().getFullYear();
-export const now = new Date();
-
-export const todayStr = now.toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
-export const currentTimeStr = now.toLocaleDateString('en-CA', {
-  // FORMAT: HH:MM AM/PM
-  hour: '2-digit',
-  minute: '2-digit',
-  hour12: true,
-});
 
 export const isGameInPast = (game: Game) => {
-  const todaysDate = new Date().toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
+  const todaysDate = new Date().toLocaleDateString('en-CA');
 
   if (game.date < todaysDate) return true;
   if (game.date > todaysDate) return false;
 
-  return game.startTime < currentTimeStr;
+  return game.startTime < new Date().toISOString();
 };
 
 // # TODO [May 26] Change these 2 functions to 1 multi-use function for homepage hero
@@ -44,9 +52,8 @@ export const getNextGameDateUtil = (scheduleData: Game[]): Game | null => {
   );
 };
 
-// #NOTE [may 26] I suspect there will be complications with this when we get to rendering. Will require additional logic using the status field to determine which game should be displayed and at what time. Could be done on the front end but may be better to handle this in the service layer
 export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
-  const todaysDate = new Date().toLocaleDateString('en-CA'); // FORMAT :YYYY-MM-DD
+  const todaysDate = new Date().toLocaleDateString('en-CA');
 
   const todaysGame = scheduleData.find((d) => d.date === todaysDate);
   if (todaysGame) {
@@ -62,7 +69,7 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
   );
 };
 
-export const formatTimeUtil = (dateString: string): string => {
+export const formatTimeForDisplayUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
   if (!stringToDate) return 'Date not found';
 
