@@ -21,7 +21,7 @@ function HomePage() {
     (d) => d.hitting?.homeRuns ?? -1
   );
 
-  const hitsLeader = getStatLeader(playerData, (d) => d.hitting?.hits ?? -1);
+  const hitLeader = getStatLeader(playerData, (d) => d.hitting?.hits ?? -1);
 
   const opsLeader = getStatLeader(playerData, (d) =>
     parseFloat(d.hitting?.ops ?? '-1')
@@ -45,13 +45,35 @@ function HomePage() {
           </div>
           <div>
             <StatCard
-              statName="Home Run Leader"
+              statName="Home Runs"
               playerName={homeRunLeader?.fullName}
               playerID={homeRunLeader?.id}
               statValue={homeRunLeader?.hitting?.homeRuns}
               jerseyNumber={homeRunLeader?.jerseyNumber}
               positionAbbreviation={homeRunLeader?.positionAbbreviation}
               statAbbreviation="HR"
+            />
+          </div>
+          <div>
+            <StatCard
+              statName="Hits"
+              playerName={hitLeader?.fullName}
+              playerID={hitLeader?.id}
+              statValue={hitLeader?.hitting?.hits}
+              jerseyNumber={hitLeader?.jerseyNumber}
+              positionAbbreviation={hitLeader?.positionAbbreviation}
+              statAbbreviation="H"
+            />
+          </div>
+          <div>
+            <StatCard
+              statName="OPS"
+              playerName={opsLeader?.fullName}
+              playerID={opsLeader?.id}
+              statValue={opsLeader?.hitting?.ops}
+              jerseyNumber={opsLeader?.jerseyNumber}
+              positionAbbreviation={opsLeader?.positionAbbreviation}
+              statAbbreviation="OPS"
             />
           </div>
         </section>
