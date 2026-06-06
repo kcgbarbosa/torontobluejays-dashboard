@@ -34,12 +34,19 @@ function StatCard({
     if (error) return <div> Error : {error} </div>;
   }
 
+  // #TODO [June 5] create statisticUtilities.ts and below functions
+  // const hitLeaderID = // insert returned value from future getHitLeaderUtil
+  // const homeRunLeaderID = // insert returned value from future getHomeRunLeaderUtil
+  // const opsLeaderID = // insert returned value from future getOPSLeaderUtil
+
+  // const statID =
+
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
       <h2 className="text-base font-semibold text-gray-900 pb-4">{}</h2>
       <div className="flex items-center gap-4">
         <img
-          src={`https://midfield.mlbstatic.com/v1/people/665489/spots/120`}
+          src={`https://midfield.mlbstatic.com/v1/people/${statID}/spots/120`}
           className="size-20 rounded-lg object-contain bg-gray-50"
         />
         <div className="flex flex-col gap-1">
