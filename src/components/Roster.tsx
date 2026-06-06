@@ -32,11 +32,17 @@ function Roster({ onSelectPlayer }: RosterProps) {
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
                 <th className="text-left px-4 py-3">Player</th>
-                <th className="text-left px-4 py-3">Position</th>
-                <th className="text-left px-4 py-3">B/T</th>
-                <th className="text-left px-4 py-3">Age</th>
-                <th className="text-left px-4 py-3">HT</th>
-                <th className="text-left px-4 py-3">Wt</th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                  Position
+                </th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                  B/T
+                </th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                  Age
+                </th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">HT</th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">Wt</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 bg-white">
@@ -61,22 +67,31 @@ function Roster({ onSelectPlayer }: RosterProps) {
                           <div className="text-xs text-blue-400">
                             #{player.jerseyNumber}
                           </div>
+                          <div className="sm:hidden flex gap-4 mt-1 text-xs text-gray-600">
+                            <span>{player.positionAbbreviation}</span>
+                            <span>
+                              {player.batSideCode}/{player.pitchHandCode}
+                            </span>
+                            <span>{player.currentAge}y</span>
+                            <span>{player.height}</span>
+                            <span>{player.weight} lbs</span>
+                          </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600">
+                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
                       {player.positionName} / {player.positionAbbreviation}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600">
+                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
                       {player.batSideCode}/{player.pitchHandCode}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600">
+                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
                       {player.currentAge}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600">
+                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
                       {player.height}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600">
+                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
                       {player.weight} lbs
                     </td>
                   </tr>
