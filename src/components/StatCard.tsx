@@ -1,15 +1,30 @@
 /**
  * @components
  *
- * PlayerStatCard: Reusable component used for player headshot, name and statistic display
+ * HomePage: Website landing page, includes live game info, recent game results, team standings and various statistics
  *
  */
 
 import { useContext } from 'react';
-import { AppStatusContext, PlayerContext } from '../store/contexts';
+import { AppStatusContext } from '../store/contexts';
 
-function PlayerCard() {
-  const playerData = useContext(PlayerContext);
+type StatCardProps = {
+  title: string;
+  name: string;
+  value: number | string;
+  jerseyNumber?: number;
+  positionAbbreviation?: string;
+  statAbbreviation?: string;
+};
+
+function StatCard({
+  title,
+  name,
+  value,
+  jerseyNumber,
+  positionAbbreviation,
+  statAbbreviation,
+}: StatCardProps) {
   const { isLoading, error } = useContext(AppStatusContext);
 
   {
@@ -19,13 +34,9 @@ function PlayerCard() {
     if (error) return <div> Error : {error} </div>;
   }
 
-  const vladdyTest = playerData.find((p) => p.id === 665489);
-
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
-      <h2 className="text-base font-semibold text-gray-900 pb-4">
-        Vladdy Test v2
-      </h2>
+      <h2 className="text-base font-semibold text-gray-900 pb-4">{}</h2>
       <div className="flex items-center gap-4">
         <img
           src={`https://midfield.mlbstatic.com/v1/people/665489/spots/120`}
@@ -33,18 +44,16 @@ function PlayerCard() {
         />
         <div className="flex flex-col gap-1">
           <span className="text-sm font-semibold text-gray-900">
-            {vladdyTest?.fullName}{' '}
-            <span className="text-blue-600">#{vladdyTest?.jerseyNumber}</span>
+            {name}
+            <span className="text-blue-600">#{jerseyNumber}</span>
           </span>
           <span className="text-xs text-gray-500 uppercase tracking-wider">
-            {vladdyTest?.positionAbbreviation}
+            {positionAbbreviation}
           </span>
           <div className="flex items-baseline gap-1 mt-2">
-            <span className="text-2xl font-bold text-gray-900">
-              {vladdyTest?.hitting?.homeRuns}
-            </span>
+            <span className="text-2xl font-bold text-gray-900">{value}</span>
             <span className="text-xs text-gray-400 uppercase tracking-wider">
-              HR
+              {statAbbreviation}
             </span>
           </div>
         </div>
@@ -53,4 +62,4 @@ function PlayerCard() {
   );
 }
 
-export default PlayerCard;
+export default StatCard;
