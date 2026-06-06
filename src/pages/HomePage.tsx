@@ -39,8 +39,8 @@ function HomePage() {
           </div>
         </div>
 
-        <section className="lg:col-span-1">
-          <div>
+        <section className="lg:col-span-1 flex flex-col gap-6">
+          <div className="pb-4">
             <ALEastStandings />
           </div>
           <div>
