@@ -1,9 +1,3 @@
-/**
- * @page
- * HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics *
- *
- */
-
 import GameCard from '../components/GameCard';
 import ALEastStandings from '../components/ALEastStandings';
 import StatCard from '../components/StatCard';
