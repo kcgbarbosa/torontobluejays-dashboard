@@ -28,13 +28,6 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
   const [rosterFilter, setRosterFilter] =
     useState<RosterFilterType>('lastNameAToZ');
 
-  const outFieldPlayers = playerData.filter(
-    (p) => p.positionType === 'outfield'
-  );
-  const infieldPlayers = playerData.filter((p) => p.positionType === 'infield');
-  const catchers = playerData.filter((p) => p.positionType === 'catcher');
-  const pitchers = playerData.filter((p) => p.isPitcher);
-
   const toInches = (h: string) => {
     const [ft, ins] = h.replace('"', '').split("' ").map(Number);
     return ft * 12 + ins;
