@@ -38,7 +38,30 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-800"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col gap-3">
+        {/* # TODO STYLES [June 6]: Review following elements:
+         * - Stat table headers
+         * - Text-size scaling */}
+        <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
+          <button
+            onClick={onClose}
+            className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            ← Roster
+          </button>
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+            Player Profile
+          </span>
+          <button
+            onClick={onClose}
+            className="text-lg text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        {/*  # TODO REFACTOR [May 30] - refactor statistics table into reusable
+        component */}
+        <div className="bg-blue-600 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
           <img
             src={selectedPlayerData?.imageUrl}
             alt={selectedPlayerData?.fullName}
