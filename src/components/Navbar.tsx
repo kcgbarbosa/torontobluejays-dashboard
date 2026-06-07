@@ -8,10 +8,7 @@ const navLinkInfo = [
 
 function Navbar() {
   return (
-    <div className="flex w-full justify-between items-center border-b border-gray-200 bg-white px-10 py-5">
-      <h1 className="text-2xl text-blue-600 font-semibold">
-        Blue Jays Dashboard
-      </h1>
+    <div className="flex w-full justify-between border-b border-gray-300 bg-blue-50 px-10 py-5">
       <nav className="flex items-center gap-10 text-base">
         {navLinkInfo.map((d) => (
           <Link
