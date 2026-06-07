@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { AppStatusContext, PlayerContext } from '../store/contexts';
 
-// # TODO [May 30] - refactor statistics table into reusable component
-
 type PlayerInfoModalProps = {
   playerID: number | null;
   isOpen: boolean;
@@ -135,51 +133,49 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             </div>
           </div>
         </div>
-        <div id="player-stats-block" className="md:col-span-2 mt-2">
+        <div className="p-10">
           {selectedPlayerData?.hitting === undefined &&
           !selectedPlayerData?.isPitcher ? (
-            <div className="text-center py-6 bg-gray-50 rounded-xl border">
-              <p className="text-gray-500 font-medium">
-                No hitting statistics available.
-              </p>
-            </div>
+            <p className="text-center py-6 text-gray-400 font-medium text-sm">
+              No statistics available.
+            </p>
           ) : (
             selectedPlayerData?.positionName !== 'Pitcher' && (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div>
-                  <h3 className="text-base font-bold mb-2 text-gray-900">
-                    2026 Standard Statistics
+                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    {new Date().getFullYear()} Standard Statistics
                   </h3>
-                  <div className="overflow-x-auto border rounded-xl">
+                  <div className="overflow-x-auto rounded-xl border border-gray-200">
                     <table className="w-full text-center text-sm">
-                      <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b">
+                      <thead className="bg-blue-600 text-white font-semibold uppercase text-xs">
                         <tr>
-                          <th className="px-3 py-2.5">AB</th>
-                          <th className="px-3 py-2.5">AVG</th>
-                          <th className="px-3 py-2.5">H</th>
-                          <th className="px-3 py-2.5">RBI</th>
-                          <th className="px-3 py-2.5">SB</th>
-                          <th className="px-3 py-2.5">OPS</th>
+                          <th className="px-4 py-3">AB</th>
+                          <th className="px-4 py-3">AVG</th>
+                          <th className="px-4 py-3">H</th>
+                          <th className="px-4 py-3">RBI</th>
+                          <th className="px-4 py-3">SB</th>
+                          <th className="px-4 py-3">OPS</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y font-medium text-gray-900">
+                      <tbody className="divide-y divide-gray-100 font-medium text-gray-900">
                         <tr>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.atBats}
                           </td>
-                          <td className="px-3 py-3 text-blue-600 font-bold">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.avg}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.hits}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.rbi}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.stolenBases}
                           </td>
-                          <td className="px-3 py-3 font-bold">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.ops}
                           </td>
                         </tr>
@@ -189,39 +185,39 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold mb-2 text-gray-900">
-                    2026 Additional Statistics
+                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    {new Date().getFullYear()} Additional Statistics
                   </h3>
-                  <div className="overflow-x-auto border rounded-xl">
+                  <div className="overflow-x-auto rounded-xl border border-gray-300">
                     <table className="w-full text-center text-sm">
-                      <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b">
+                      <thead className="bg-blue-600 text-white font-semibold uppercase text-xs">
                         <tr>
-                          <th className="px-3 py-2.5">BB</th>
-                          <th className="px-3 py-2.5">2B</th>
-                          <th className="px-3 py-2.5">3B</th>
-                          <th className="px-3 py-2.5">HR</th>
-                          <th className="px-3 py-2.5">OBP</th>
-                          <th className="px-3 py-2.5">SLG</th>
+                          <th className="px-4 py-3">BB</th>
+                          <th className="px-4 py-3">2B</th>
+                          <th className="px-4 py-3">3B</th>
+                          <th className="px-4 py-3">HR</th>
+                          <th className="px-4 py-3">OBP</th>
+                          <th className="px-4 py-3">SLG</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y font-medium text-gray-900">
+                      <tbody className="divide-y divide-gray-100 font-medium text-gray-900">
                         <tr>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.baseOnBalls}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.doubles}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.triples}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.homeRuns}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.obp}
                           </td>
-                          <td className="px-3 py-3">
+                          <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.slg}
                           </td>
                         </tr>
@@ -232,42 +228,43 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
               </div>
             )
           )}
+          {/* # TODO FEAT [June 6] Add additional statistics for pitchers */}
           {selectedPlayerData?.isPitcher && (
             <div>
-              <h3 className="text-base font-bold mb-2 text-gray-900">
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                 2026 Pitching Statistics
               </h3>
-              <div className="overflow-x-auto border rounded-xl">
+              <div className="overflow-x-auto rounded-xl border border-gray-300">
                 <table className="w-full text-center text-sm">
-                  <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs border-b">
+                  <thead className="bg-blue-600 text-white font-semibold uppercase text-xs">
                     <tr>
-                      <th className="px-3 py-2.5">G</th>
-                      <th className="px-3 py-2.5">W-L</th>
-                      <th className="px-3 py-2.5">ERA</th>
-                      <th className="px-3 py-2.5">IP</th>
-                      <th className="px-3 py-2.5">K/9</th>
-                      <th className="px-3 py-2.5">WHIP</th>
+                      <th className="px-4 py-3">G</th>
+                      <th className="px-4 py-3">W-L</th>
+                      <th className="px-4 py-3">ERA</th>
+                      <th className="px-4 py-3">IP</th>
+                      <th className="px-4 py-3">K/9</th>
+                      <th className="px-4 py-3">WHIP</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y font-medium text-gray-900">
+                  <tbody className="divide-y divide-gray-100 font-medium text-gray-900">
                     <tr>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.gamesPitched}
                       </td>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.wins}-
                         {selectedPlayerData?.pitching?.losses}
                       </td>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.era}
                       </td>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.inningsPitched}
                       </td>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.strikeoutsPer9}
                       </td>
-                      <td className="px-3 py-3 font-bold">
+                      <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.whip}
                       </td>
                     </tr>

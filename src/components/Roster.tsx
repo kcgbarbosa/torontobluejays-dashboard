@@ -27,6 +27,7 @@ function Roster({ onSelectPlayer }: RosterProps) {
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : (
+         // # TODO FEAT [June 6] Add filtering from table header by each column
         <div className="border border-gray-300 rounded-xl overflow-hidden shadow-sm">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">

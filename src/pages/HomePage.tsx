@@ -1,12 +1,3 @@
-/**
- * @page
- * HomePage - Displays the main Toronto Blue Jays dashboard layout with various statistics *
- *
- * #TODO STYLES [June 6] Styling language for website has been determined, implement across all components for consistency 
-   //  <div className="bg-white border border-gray-200 border-t-4 border-t-blue-600 rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow duration-200"> 
- *  // transitions may be replaced with framer motion animations 
- */
-
 import GameCard from '../components/GameCard';
 import ALEastStandings from '../components/ALEastStandings';
 import StatCard from '../components/StatCard';
