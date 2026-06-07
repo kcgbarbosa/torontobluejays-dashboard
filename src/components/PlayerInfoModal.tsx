@@ -232,7 +232,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
           {selectedPlayerData?.isPitcher && (
             <div>
               <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                2026 Pitching Statistics
+                {new Date().getFullYear()} Pitching Statistics
               </h3>
               <div className="overflow-x-auto rounded-xl border border-gray-300">
                 <table className="w-full text-center text-sm">

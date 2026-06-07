@@ -27,7 +27,7 @@ function Roster({ onSelectPlayer }: RosterProps) {
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : (
-         // # TODO FEAT [June 6] Add filtering from table header by each column
+        // # TODO FEAT [June 6] Add filtering from table header by each column
         <div className="border border-gray-300 rounded-xl overflow-hidden shadow-sm">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
@@ -51,11 +51,11 @@ function Roster({ onSelectPlayer }: RosterProps) {
                 return (
                   <tr
                     key={player.id}
-                    className="hover:bg-blue-50 transition-colors duration-150"
+                    className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
                     onClick={() => onSelectPlayer(player.id)}
                   >
                     <td className="px-4 py-3">
-                      <div className="flex items-center gap-3 hover:cursor-pointer">
+                      <div className="flex items-center gap-3 ">
                         <img
                           src={player.imageUrl}
                           alt={player.fullName}
