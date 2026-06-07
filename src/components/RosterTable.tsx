@@ -84,6 +84,10 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
     }
   }, [playerData, rosterFilter]);
 
+  const resetFilter = () => setRosterFilter('lastNameAToZ');
+  const handleSelectFilter = (selectedFilter: RosterFilterType) =>
+    setRosterFilter(selectedFilter);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
