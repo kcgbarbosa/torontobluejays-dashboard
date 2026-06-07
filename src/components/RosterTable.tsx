@@ -84,10 +84,11 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
     }
   }, [playerData, rosterFilter]);
 
-  const resetFilter = () => setRosterFilter('lastNameAToZ');
   const handleSelectFilter = (selectedFilter: RosterFilterType) =>
     setRosterFilter(selectedFilter);
 
+  // #TODO REFACTOR [June 7] Extract for use on SchedulePage
+  // #TODO STYLE [June 7] Add indicator for selected filter. Text? Highlighted label?
   const ColumnSortButtons = ({
     label,
     asc,
@@ -127,32 +128,52 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : (
-        // # TODO FEAT [June 6] Add filtering from table header by each column
         <div className="border border-gray-300 rounded-xl overflow-hidden shadow-sm">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
                 <th className="text-left px-4 py-3">
-                  Player
-                  <button className=" px-2 border-2 rounded-full font-mono hover:cursor-pointer">
-                    SORT
-                  </button>
+                  <ColumnSortButtons
+                    label="Player"
+                    asc="lastNameAToZ"
+                    desc="lastNameZToA"
+                  />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  Position
+                  <ColumnSortButtons
+                    label="Position"
+                    asc="positionAToZ"
+                    desc="positionZToA"
+                  />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  B/T
+                  <ColumnSortButtons
+                    label="B/T"
+                    asc="batSideAToZ"
+                    desc="batSideZToA"
+                  />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  Age
+                  <ColumnSortButtons label="Age" asc="ageAsc" desc="ageDesc" />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">HT</th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">Wt</th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                  <ColumnSortButtons
+                    label="HT"
+                    asc="heightAsc"
+                    desc="heightDesc"
+                  />
+                </th>
+                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                  <ColumnSortButtons
+                    label="WT"
+                    asc="weightAsc"
+                    desc="weightDesc"
+                  />
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 bg-white">
-              {playerData.map((player) => {
+              {filteredRoster.map((player) => {
                 return (
                   <tr
                     key={player.id}
