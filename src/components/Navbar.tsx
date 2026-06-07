@@ -9,6 +9,12 @@ const navLinkInfo = [
 function Navbar() {
   return (
     <div className="flex w-full justify-between border-b border-gray-300 bg-blue-50 px-10 py-5">
+      <Link
+        to={'/'}
+        className="text-3xl text-blue-600 font-semibold tracking-tighter"
+      >
+        Jays Hub
+      </Link>
       <nav className="flex items-center gap-10 text-base">
         {navLinkInfo.map((d) => (
           <Link
