@@ -27,6 +27,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
     .join(', ');
 
   return (
+    // # FIXME [June 6] ESC key doesnt close modal
     <div
       id="playerModal"
       className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
@@ -35,7 +36,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-800"
+        className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* # TODO STYLES [June 6]: Review following elements:
@@ -65,66 +66,73 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
           <img
             src={selectedPlayerData?.imageUrl}
             alt={selectedPlayerData?.fullName}
-            className="w-full max-w-70 h-auto rounded-xl bg-gray-100 border border-gray-200 self-center md:self-start"
+            className="w-50 h-auto rounded-full ring-2 ring-white/75 shrink-0 md:self-end"
           />
-          <div>
-            <h2 className="text-3xl font-extrabold tracking-tight">
-              {selectedPlayerData?.fullName}{' '}
-              <span className="text-blue-600 text-2xl">
-                #{selectedPlayerData?.jerseyNumber}
-              </span>
-            </h2>
-            <p className="text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">
-              {selectedPlayerData?.positionAbbreviation} - B/T:{' '}
+          <div className="text-white min-w-0 pb-1 text-center md:text-left">
+            <p className="text-sm font-semibold text-blue-100 uppercase tracking-widest mb-2">
+              {selectedPlayerData?.positionName} &middot; B/T:{' '}
               {selectedPlayerData?.batSideCode}/
               {selectedPlayerData?.pitchHandCode}
             </p>
-            <p className="text-sm text-gray-600 mt-0.5">
-              {selectedPlayerData?.height} | {selectedPlayerData?.weight}lbs |
-              Age: {selectedPlayerData?.currentAge}
+            <h2 className="text-3xl font-extrabold tracking-tight leading-tight">
+              {selectedPlayerData?.fullName}{' '}
+              <span className="text-white/60">
+                {/*  # FIXME [June 6] - Handle empty states (example: no placeholder is being displayed right now for Willie) */}
+                #{selectedPlayerData?.jerseyNumber}
+              </span>
+            </h2>
+            <p className="text-base text-white/75 mt-1.5">
+              {selectedPlayerData?.height} &middot; {selectedPlayerData?.weight}
+              lbs &middot; Age {selectedPlayerData?.currentAge}
             </p>
-          </div>
-        </div>
-        <div className="flex flex-col justify-start bg-gray-50 p-4 rounded-xl border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900 border-b pb-2 mb-3">
-            Biography
-          </h3>
-          <div className="text-sm space-y-2 text-gray-700">
-            <p>
-              <span className="font-semibold text-gray-500">Born:</span>{' '}
-              {selectedPlayerData?.birthDate}
-            </p>
-            <p>
-              <span className="font-semibold text-gray-500">Location:</span>{' '}
-              {[
-                selectedPlayerData?.birthCity,
-                selectedPlayerData?.birthStateProvince,
-                selectedPlayerData?.birthCountry,
-              ]
-                .filter(Boolean)
-                .join(', ')}
-            </p>
-            <p>
-              {selectedPlayerData?.draftYear !== undefined ? (
-                <>
-                  <span className="font-semibold text-gray-500">Drafted:</span>{' '}
-                  {selectedPlayerData?.draftYear}
-                </>
-              ) : (
-                <>
-                  <span className="font-semibold text-gray-500">
-                    MLB Debut:
-                  </span>{' '}
-                  {selectedPlayerData?.mlbDebutDate}
-                </>
+            <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-6 text-sm border-t border-white/25 pt-6">
+              <span>
+                <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                  Born{' '}
+                </span>
+                <span className="text-white">
+                  {selectedPlayerData?.birthDate}
+                </span>
+              </span>
+              {birthLocation && (
+                <span>
+                  <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                    From{' '}
+                  </span>
+                  <span className="text-white">{birthLocation}</span>
+                </span>
               )}
-            </p>
-            <p>
-              <span className="font-semibold text-gray-500">
-                Active Status:
-              </span>{' '}
-              {selectedPlayerData?.active ? 'Active' : 'Inactive'}
-            </p>
+              <span>
+                {selectedPlayerData?.draftYear !== undefined ? (
+                  <>
+                    <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                      Drafted{' '}
+                    </span>
+                    <span className="text-white">
+                      {selectedPlayerData?.draftYear}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                      Debut{' '}
+                    </span>
+                    <span className="text-white">
+                      {selectedPlayerData?.mlbDebutDate}
+                    </span>
+                  </>
+                )}
+              </span>
+              <span
+                className={
+                  selectedPlayerData?.active
+                    ? 'text-green-300 font-semibold'
+                    : 'text-red-300 font-semibold'
+                }
+              >
+                {selectedPlayerData?.active ? 'Active' : 'Inactive'}
+              </span>
+            </div>
           </div>
         </div>
         <div id="player-stats-block" className="md:col-span-2 mt-2">
