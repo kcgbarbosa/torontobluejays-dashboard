@@ -18,6 +18,14 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const birthLocation = [
+    selectedPlayerData?.birthCity,
+    selectedPlayerData?.birthStateProvince,
+    selectedPlayerData?.birthCountry,
+  ]
+    .filter(Boolean)
+    .join(', ');
+
   return (
     <div
       id="playerModal"
