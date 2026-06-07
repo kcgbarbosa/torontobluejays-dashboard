@@ -88,6 +88,34 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
   const handleSelectFilter = (selectedFilter: RosterFilterType) =>
     setRosterFilter(selectedFilter);
 
+  const ColumnSortButtons = ({
+    label,
+    asc,
+    desc,
+  }: {
+    label: string;
+    asc: RosterFilterType;
+    desc: RosterFilterType;
+  }) => (
+    <span className="inline-flex items-center gap-2">
+      {label}
+      <span className="inline-flex gap-1">
+        <button
+          onClick={() => handleSelectFilter(asc)}
+          className={`px-2 py-1 rounded text-base font-bold transition-opacity cursor-pointer ${rosterFilter === asc ? 'opacity-100' : 'opacity-30 hover:opacity-70'}`}
+        >
+          ↑
+        </button>
+        <button
+          onClick={() => handleSelectFilter(desc)}
+          className={`px-2 py-1 rounded text-base font-bold transition-opacity cursor-pointer ${rosterFilter === desc ? 'opacity-100' : 'opacity-30 hover:opacity-70'}`}
+        >
+          ↓
+        </button>
+      </span>
+    </span>
+  );
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
