@@ -1,20 +1,88 @@
-/**
- * @components
- *
- * Roster: Displays each player on the blue jays roster and their basic information.
- *
- */
-
-import { useContext } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { AppStatusContext, PlayerContext } from '../store/contexts';
+import type { Player } from '../types/models/person.model';
 
 type RosterProps = {
   onSelectPlayer: (id: number) => void;
 };
 
-function Roster({ onSelectPlayer }: RosterProps) {
+type RosterFilterType =
+  | 'firstNameAToZ'
+  | 'firstNameZToA'
+  | 'lastNameAToZ'
+  | 'lastNameZToA'
+  | 'positionAToZ'
+  | 'positionZToA'
+  | 'batSideAToZ'
+  | 'batSideZToA'
+  | 'ageAsc'
+  | 'ageDesc'
+  | 'heightAsc'
+  | 'heightDesc'
+  | 'weightAsc'
+  | 'weightDesc';
+
+function RosterTable({ onSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
   const { isLoading, error } = useContext(AppStatusContext);
+  const [rosterFilter, setRosterFilter] =
+    useState<RosterFilterType>('lastNameAToZ');
+
+  const outFieldPlayers = playerData.filter(
+    (p) => p.positionType === 'outfield'
+  );
+  const infieldPlayers = playerData.filter((p) => p.positionType === 'infield');
+  const catchers = playerData.filter((p) => p.positionType === 'catcher');
+  const pitchers = playerData.filter((p) => p.isPitcher);
+
+  const toInches = (h: string) => {
+    const [ft, ins] = h.replace('"', '').split("' ").map(Number);
+    return ft * 12 + ins;
+  };
+
+  const filteredRoster = useMemo(() => {
+    const sorted = [...playerData];
+    switch (rosterFilter) {
+      case 'firstNameAToZ':
+        return sorted.sort((a, b) => a.firstName.localeCompare(b.firstName));
+      case 'firstNameZToA':
+        return sorted.sort((a, b) => b.firstName.localeCompare(a.firstName));
+      case 'lastNameAToZ':
+        return sorted.sort((a, b) => a.lastName.localeCompare(b.lastName));
+      case 'lastNameZToA':
+        return sorted.sort((a, b) => b.lastName.localeCompare(a.lastName));
+      case 'positionAToZ':
+        return sorted.sort((a, b) =>
+          a.positionName.localeCompare(b.positionName)
+        );
+      case 'positionZToA':
+        return sorted.sort((a, b) =>
+          b.positionName.localeCompare(a.positionName)
+        );
+      case 'batSideAToZ':
+        return sorted.sort((a, b) =>
+          a.batSideCode.localeCompare(b.batSideCode)
+        );
+      case 'batSideZToA':
+        return sorted.sort((a, b) =>
+          b.batSideCode.localeCompare(a.batSideCode)
+        );
+      case 'ageAsc':
+        return sorted.sort((a, b) => a.currentAge - b.currentAge);
+      case 'ageDesc':
+        return sorted.sort((a, b) => b.currentAge - a.currentAge);
+      case 'heightAsc':
+        return sorted.sort((a, b) => toInches(a.height) - toInches(b.height));
+      case 'heightDesc':
+        return sorted.sort((a, b) => toInches(b.height) - toInches(a.height));
+      case 'weightAsc':
+        return sorted.sort((a, b) => a.weight - b.weight);
+      case 'weightDesc':
+        return sorted.sort((a, b) => b.weight - a.weight);
+      default:
+        return sorted;
+    }
+  }, [playerData, rosterFilter]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -32,7 +100,12 @@ function Roster({ onSelectPlayer }: RosterProps) {
           <table className="w-full border-collapse text-sm">
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
-                <th className="text-left px-4 py-3">Player</th>
+                <th className="text-left px-4 py-3">
+                  Player
+                  <button className=" px-2 border-2 rounded-full font-mono hover:cursor-pointer">
+                    SORT
+                  </button>
+                </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
                   Position
                 </th>
@@ -106,4 +179,4 @@ function Roster({ onSelectPlayer }: RosterProps) {
   );
 }
 
-export default Roster;
+export default RosterTable;
