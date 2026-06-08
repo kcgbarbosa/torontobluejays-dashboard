@@ -2,7 +2,7 @@
  * @types
  */
 
-// #TODO [June 5] Add more info for the HomePage hero (inning number, pitcher, ect)
+// #TODO FEAT [June 5] Add more info for the HomePage hero (inning number, pitcher, ect)
 export type Game = {
   keyID: string;
   date: string;

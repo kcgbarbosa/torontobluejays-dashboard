@@ -14,7 +14,7 @@ type TeamScoreDTO = {
   team: TeamInfoDTO;
 };
 
-// #TODO [June 5] implement usage of status for hero game
+// #TODO FEAT [June 5] implement usage of status for hero game
 type StatusDTO = {
   abstractGameState: string;
   detailedState: string;

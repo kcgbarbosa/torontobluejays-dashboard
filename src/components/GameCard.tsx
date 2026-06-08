@@ -1,9 +1,3 @@
-/**
- * @component
- * Game: Displays various key statistics and general game information.
- *
- */
-
 import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 import type { Game } from '../types/models/game.model';

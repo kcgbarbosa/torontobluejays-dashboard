@@ -1,22 +1,3 @@
-/**
- * @utils
- *
- * dataAndTimeUtilities.ts : Consolidation of all time and date utilities
- *
- * NOTES:
- *
- * Dates() read from an external state (system clock) which makes them IMPURE
- * They return something different each time you call it, therefore, they SHOULD NOT BE CACHED. They should be called EXACTLY when needed.
- *
- *  YYYY-MM-DD
- *  - typically used by apis as field values and as parameters
- *  - can be extracted from ISOString fornat (YYYY-MM-DDTHH:mm:ss.sssZ)
- *    SYNTAX: new Date().toLocaleDateString('en-CA');
- *
- * # TODO NEXT [Jun 5] Implement isGameInPast across all relevant components
- *
- */
-
 import type { Game } from '../types/models/game.model';
 
 export const isGameInPast = (game: Game) => {
