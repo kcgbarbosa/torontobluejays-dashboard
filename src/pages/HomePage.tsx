@@ -10,7 +10,6 @@ import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 function HomePage() {
   const scheduleData = useContext(ScheduleContext);
   const playerData = useContext(PlayerContext);
-
   const heroGameData = getHeroGameDateUtil(scheduleData);
 
   const homeRunLeader = getStatLeader(
