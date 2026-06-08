@@ -4,10 +4,14 @@ import type {
   SeasonResponseDTO,
   RecordsResponseDTO,
   RosterResponseDTO,
+  GameDTO,
 } from '../types/dto/mlb.dto';
+import type { Game } from '../types/models/game.model';
+import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 import {
   alTeamRecordsDataModelMapper,
+  gameModelMapper,
   rosterDataModelMapper,
   scheduleDataModelMapper,
   seasonDataModelMapper,
@@ -16,6 +20,16 @@ import {
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
+
+export async function fetchSeasonData() {
+  const response = await fetch(SEASON_DATA_URL);
+  if (!response.ok) {
+    throw new Error(`response status: ${response.status}`);
+  }
+  const result = (await response.json()) as SeasonResponseDTO;
+  const formattedResult = seasonDataModelMapper(result);
+  return formattedResult;
+}
 
 export async function fetchSchedule(seasonData: SeasonDTO[]) {
   const data = seasonData[0];
@@ -32,14 +46,41 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
   return formattedResult;
 }
 
-export async function fetchSeasonData() {
-  const response = await fetch(SEASON_DATA_URL);
+async function fetchGameData(url: string) {
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`response status: ${response.status}`);
+    return `response status: ${response.status}`;
   }
-  const result = (await response.json()) as SeasonResponseDTO;
-  const formattedResult = seasonDataModelMapper(result);
+  const result = (await response.json()) as GameResponseDTO;
+  const formattedResult = gameModelMapper(result);
   return formattedResult;
+}
+
+export async function fetchHeroGameData(scheduleData: Game[]) {
+  const heroGame = getHeroGameDateUtil(scheduleData);
+  const PRE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=probablePitcher`;
+  const LIVE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=linescore`;
+  const POST_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=decisions`;
+  switch (heroGame?.abstractGameState) {
+    case 'Preview': {
+      const previewData = await fetchGameData(PRE_GAME_DATA);
+      return previewData;
+    }
+    case 'Live': {
+      const liveData = await fetchGameData(LIVE_GAME_DATA);
+      return liveData;
+    }
+    case 'Final': {
+      const finalData = await fetchGameData(POST_GAME_DATA);
+      return finalData;
+    }
+    default: {
+      console.warn(
+        `Unexpected abstractGameState: ${heroGame?.abstractGameState}`
+      );
+      return null;
+    }
+  }
 }
 
 export async function fetchALTeamRecords() {
