@@ -2,7 +2,8 @@
  * @types
  */
 
-// #TODO FEAT [June 5] Add more info for the HomePage hero (inning number, pitcher, ect)
+import type { Decisions, Linescore, ProbablePitchers } from './linescore.model';
+
 export type Game = {
   keyID: string;
   date: string;
@@ -18,6 +19,9 @@ export type Game = {
   awayTeamScore?: number;
   homeTeamScore?: number;
   gameVenue: string;
+  linescore?: Linescore;
+  decisions?: Decisions;
+  probablePitchers?: ProbablePitchers;
 };
 
 export type Season = {
