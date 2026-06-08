@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const navLinkInfo = [
   { id: 1, name: 'Home', href: '/' },
@@ -8,25 +8,31 @@ const navLinkInfo = [
 
 function Navbar() {
   return (
-    <div className="flex w-full justify-between border-b border-gray-300 bg-blue-50 px-10 py-5">
+    <nav className="flex w-full justify-between border-b border-gray-300 bg-blue-50 px-10 py-5">
       <Link
         to={'/'}
         className="text-3xl text-blue-600 font-semibold tracking-tighter"
       >
         Jays Hub
       </Link>
-      <nav className="flex items-center gap-10 text-base">
+      <div className="flex items-center gap-8">
         {navLinkInfo.map((d) => (
-          <Link
+          <NavLink
             key={d.id}
             to={d.href}
-            className="text-gray-600 hover:text-blue-600 transition-colors duration-150"
+            className={({ isActive }) =>
+              `py-2 text-base font-medium transition-colors duration-200 ${
+                isActive
+                  ? 'text-blue-600 font-semibold border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-blue-400'
+              }`
+            }
           >
             {d.name}
-          </Link>
+          </NavLink>
         ))}
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 }
 
