@@ -1,4 +1,4 @@
-import Roster from '../components/Roster';
+import RosterTable from '../components/RosterTable';
 import PlayerInfoModal from '../components/PlayerInfoModal';
 import { useContext, useState } from 'react';
 import { AppStatusContext } from '../store/contexts';
@@ -27,7 +27,7 @@ function RosterPage() {
           onClose={() => setIsOpen(false)}
         />
       )}
-      <Roster onSelectPlayer={handleSelectPlayer} />
+      <RosterTable onSelectPlayer={handleSelectPlayer} />
     </div>
   );
 }
