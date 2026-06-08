@@ -4,8 +4,8 @@ export type Game = {
   keyID: string;
   date: string;
   startTime: string;
-  gameID: number;
-  abstractGameState: string;
+  gamePk: number;
+  abstractGameState: string; // Preview, Live, Final
   detailedState: string;
   statusCode: string;
   awayTeamLogo: string;
