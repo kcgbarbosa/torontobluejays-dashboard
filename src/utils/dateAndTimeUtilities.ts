@@ -26,6 +26,10 @@ export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
   );
 };
 
+//
+// UI Time & Date Formatting Utils
+//
+
 export const formatTimeForDisplayUtil = (dateString: string): string => {
   const stringToDate = new Date(dateString);
   if (isNaN(stringToDate.getTime())) return 'Invalid date';

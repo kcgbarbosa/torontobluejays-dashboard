@@ -8,20 +8,16 @@ import {
   fetchSchedule,
   fetchALTeamRecords,
   fetchRosterData,
-  fetchHeroGameData,
 } from '../services/apiService';
 import {
   AppStatusContext,
-  HeroGameContext,
   PlayerContext,
   ScheduleContext,
   SeasonContext,
   StandingsContext,
 } from './contexts';
-import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [heroGameData, setHeroGameData] = useState<Game | null>(null);
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
@@ -41,10 +37,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const schedule = await fetchSchedule(season);
         setScheduleData(schedule);
 
-        const heroGameData = await getHeroGameDateUtil(schedule);
-        const heroGame = await fetchHeroGameData(heroGameData);
-        setHeroGameData(heroGame as Game | null);
-
         const standings = await fetchALTeamRecords();
         setStandingsData(standings);
 
@@ -63,13 +55,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     <AppStatusContext.Provider value={{ isLoading, error }}>
       <SeasonContext.Provider value={seasonData}>
         <ScheduleContext.Provider value={scheduleData}>
-          <HeroGameContext.Provider value={heroGameData}>
-            <StandingsContext.Provider value={standingsData}>
-              <PlayerContext.Provider value={playerData}>
-                {children}
-              </PlayerContext.Provider>
-            </StandingsContext.Provider>
-          </HeroGameContext.Provider>
+          <StandingsContext.Provider value={standingsData}>
+            <PlayerContext.Provider value={playerData}>
+              {children}
+            </PlayerContext.Provider>
+          </StandingsContext.Provider>
         </ScheduleContext.Provider>
       </SeasonContext.Provider>
     </AppStatusContext.Provider>
