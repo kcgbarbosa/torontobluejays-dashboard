@@ -1,37 +1,23 @@
 import { useContext, useMemo, useState } from 'react';
 import { AppStatusContext, PlayerContext } from '../store/contexts';
-import type { Player } from '../types/models/person.model';
+import SortingArrowButton, {
+  type RosterFilterType,
+} from './SortingArrowButton';
 
 type RosterProps = {
   onSelectPlayer: (id: number) => void;
 };
 
-type RosterFilterType =
-  | 'firstNameAToZ'
-  | 'firstNameZToA'
-  | 'lastNameAToZ'
-  | 'lastNameZToA'
-  | 'positionAToZ'
-  | 'positionZToA'
-  | 'batSideAToZ'
-  | 'batSideZToA'
-  | 'ageAsc'
-  | 'ageDesc'
-  | 'heightAsc'
-  | 'heightDesc'
-  | 'weightAsc'
-  | 'weightDesc';
+const toInches = (h: string) => {
+  const [ft, ins] = h.replace('"', '').split("' ").map(Number);
+  return ft * 12 + ins;
+};
 
 function RosterTable({ onSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
   const { isLoading, error } = useContext(AppStatusContext);
   const [rosterFilter, setRosterFilter] =
     useState<RosterFilterType>('lastNameAToZ');
-
-  const toInches = (h: string) => {
-    const [ft, ins] = h.replace('"', '').split("' ").map(Number);
-    return ft * 12 + ins;
-  };
 
   const filteredRoster = useMemo(() => {
     const sorted = [...playerData];
@@ -77,39 +63,6 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
     }
   }, [playerData, rosterFilter]);
 
-  const handleSelectFilter = (selectedFilter: RosterFilterType) =>
-    setRosterFilter(selectedFilter);
-
-  // #TODO REFACTOR [June 7] Extract for use on SchedulePage
-  // #TODO STYLE [June 7] Add indicator for selected filter. Text? Highlighted label?
-  const ColumnSortButtons = ({
-    label,
-    asc,
-    desc,
-  }: {
-    label: string;
-    asc: RosterFilterType;
-    desc: RosterFilterType;
-  }) => (
-    <span className="inline-flex items-center gap-2">
-      {label}
-      <span className="inline-flex gap-1">
-        <button
-          onClick={() => handleSelectFilter(asc)}
-          className={`px-2 py-1 rounded text-base font-bold transition-opacity cursor-pointer ${rosterFilter === asc ? 'opacity-100' : 'opacity-30 hover:opacity-70'}`}
-        >
-          ↑
-        </button>
-        <button
-          onClick={() => handleSelectFilter(desc)}
-          className={`px-2 py-1 rounded text-base font-bold transition-opacity cursor-pointer ${rosterFilter === desc ? 'opacity-100' : 'opacity-30 hover:opacity-70'}`}
-        >
-          ↓
-        </button>
-      </span>
-    </span>
-  );
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -126,41 +79,57 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
                 <th className="text-left px-4 py-3">
-                  <ColumnSortButtons
+                  <SortingArrowButton
                     label="Player"
                     asc="lastNameAToZ"
                     desc="lastNameZToA"
+                    activeFilter={rosterFilter}
+                    onSelect={setRosterFilter}
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  <ColumnSortButtons
+                  <SortingArrowButton
                     label="Position"
                     asc="positionAToZ"
                     desc="positionZToA"
+                    activeFilter={rosterFilter}
+                    onSelect={setRosterFilter}
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  <ColumnSortButtons
+                  <SortingArrowButton
                     label="B/T"
                     asc="batSideAToZ"
                     desc="batSideZToA"
+                    activeFilter={rosterFilter}
+                    onSelect={setRosterFilter}
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  <ColumnSortButtons label="Age" asc="ageAsc" desc="ageDesc" />
+                  <SortingArrowButton
+                    label="Age"
+                    asc="ageAsc"
+                    desc="ageDesc"
+                    activeFilter={rosterFilter}
+                    onSelect={setRosterFilter}
+                  />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  <ColumnSortButtons
+                  <SortingArrowButton
                     label="HT"
                     asc="heightAsc"
                     desc="heightDesc"
+                    activeFilter={rosterFilter}
+                    onSelect={setRosterFilter}
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden sm:table-cell">
-                  <ColumnSortButtons
+                  <SortingArrowButton
                     label="WT"
                     asc="weightAsc"
                     desc="weightDesc"
+                    activeFilter={rosterFilter}
+                    onSelect={setRosterFilter}
                   />
                 </th>
               </tr>
