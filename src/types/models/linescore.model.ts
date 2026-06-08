@@ -1,7 +1,3 @@
-/**
- * @types
- */
-
 export type PersonRef = {
   id: number;
   fullName: string;

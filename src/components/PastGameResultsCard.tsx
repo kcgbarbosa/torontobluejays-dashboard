@@ -1,10 +1,3 @@
-/**
- * @components
- *
- * SchedulePreview: Displays upcoming games in a compact format, presents key details and invites user to visit schedule page for more info.
- *
- */
-
 import { useContext } from 'react';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { getGameResult } from '../utils/gameResultUtils';

@@ -1,8 +1,3 @@
-/**
- * @types
- *
- */
-
 type TeamInfoDTO = {
   id: number;
   name: string;

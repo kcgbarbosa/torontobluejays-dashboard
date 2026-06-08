@@ -1,7 +1,3 @@
-/**
- * @types
- */
-
 export type ALRecords = {
   keyID: string;
   divisionId: number;

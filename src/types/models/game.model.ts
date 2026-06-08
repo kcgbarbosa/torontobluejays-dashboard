@@ -1,7 +1,3 @@
-/**
- * @types
- */
-
 import type { Decisions, Linescore, ProbablePitchers } from './linescore.model';
 
 export type Game = {

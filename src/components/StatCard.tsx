@@ -1,10 +1,3 @@
-/**
- * @components
- *
- * HomePage: Website landing page, includes live game info, recent game results, team standings and various statistics
- *
- */
-
 import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 type StatCardProps = {

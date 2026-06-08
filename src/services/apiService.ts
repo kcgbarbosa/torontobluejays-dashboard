@@ -1,8 +1,3 @@
-/**
- * @services
- *
- */
-
 import type {
   GameResponseDTO,
   SeasonDTO,
@@ -10,11 +5,9 @@ import type {
   RecordsResponseDTO,
   RosterResponseDTO,
 } from '../types/dto/mlb.dto';
-import type { Game } from '../types/models/game.model';
 
 import {
   alTeamRecordsDataModelMapper,
-  gameModelMapper,
   rosterDataModelMapper,
   scheduleDataModelMapper,
   seasonDataModelMapper,
