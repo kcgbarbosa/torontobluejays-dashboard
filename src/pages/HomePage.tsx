@@ -1,4 +1,4 @@
-import GameCard from '../components/GameCard';
+import HeroGameCard from '../components/HeroGameCard';
 import ALEastStandings from '../components/ALEastStandings';
 import StatCard from '../components/StatCard';
 import PastGameResultsCard from '../components/PastGameResultsCard';
@@ -28,7 +28,7 @@ function HomePage() {
       <main className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div>
-            <GameCard gameDataProp={heroGameData} />
+            <HeroGameCard gameDataProp={heroGameData} />
           </div>
           <div>
             <PastGameResultsCard />

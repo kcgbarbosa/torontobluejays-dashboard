@@ -10,7 +10,7 @@ type GameDataProps = {
   gameDataProp: Game | null;
 };
 
-function GameCard({ gameDataProp }: GameDataProps) {
+function HeroGameCard({ gameDataProp }: GameDataProps) {
   const { isLoading, error } = useContext(AppStatusContext);
 
   if (isLoading) return <div>Loading...</div>;
@@ -58,4 +58,4 @@ function GameCard({ gameDataProp }: GameDataProps) {
   );
 }
 
-export default GameCard;
+export default HeroGameCard;
