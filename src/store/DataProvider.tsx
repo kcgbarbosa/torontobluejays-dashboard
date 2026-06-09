@@ -8,6 +8,7 @@ import {
   fetchSchedule,
   fetchALTeamRecords,
   fetchRosterData,
+  fetchHeroGameData,
 } from '../services/apiService';
 import {
   AppStatusContext,
@@ -21,6 +22,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
+  const [heroGameData, setHeroGameData] = useState<Game | null>();
   const [playerData, setPlayerData] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +38,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
         const schedule = await fetchSchedule(season);
         setScheduleData(schedule);
+
+        const heroGame = await fetchHeroGameData(schedule);
+        setHeroGameData(heroGame);
 
         const standings = await fetchALTeamRecords();
         setStandingsData(standings);

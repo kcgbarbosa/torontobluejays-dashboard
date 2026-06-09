@@ -6,7 +6,7 @@ import type {
   RosterResponseDTO,
   GameDTO,
 } from '../types/dto/mlb.dto';
-import type { Game } from '../types/models/game.model';
+import type { Game, Season } from '../types/models/game.model';
 import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 import {
@@ -31,7 +31,7 @@ export async function fetchSeasonData() {
   return formattedResult;
 }
 
-export async function fetchSchedule(seasonData: SeasonDTO[]) {
+export async function fetchSchedule(seasonData: Season[]) {
   const data = seasonData[0];
   if (data === undefined) {
     console.log(`Error: seasonData is undefined`);
@@ -49,11 +49,11 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
 async function fetchGameData(url: string) {
   const response = await fetch(url);
   if (!response.ok) {
-    return `response status: ${response.status}`;
+    throw new Error(`response status: ${response.status}`);
   }
   const result = (await response.json()) as GameResponseDTO;
   const formattedResult = gameModelMapper(result);
-  return formattedResult;
+  return formattedResult[0];
 }
 
 export async function fetchHeroGameData(scheduleData: Game[]) {
