@@ -3,14 +3,17 @@ import ALEastStandings from '../components/ALEastStandings';
 import StatCard from '../components/StatCard';
 import PastGameResultsCard from '../components/PastGameResultsCard';
 import { useContext } from 'react';
-import { ScheduleContext, PlayerContext } from '../store/contexts';
+import {
+  ScheduleContext,
+  PlayerContext,
+  HeroGameContext,
+} from '../store/contexts';
 import { getStatLeader } from '../utils/statisticUtilities';
-import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 function HomePage() {
   const scheduleData = useContext(ScheduleContext);
   const playerData = useContext(PlayerContext);
-  const heroGameData = getHeroGameDateUtil(scheduleData);
+  const heroGameData = useContext(HeroGameContext);
 
   const homeRunLeader = getStatLeader(
     playerData,

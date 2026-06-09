@@ -12,6 +12,7 @@ import {
 } from '../services/apiService';
 import {
   AppStatusContext,
+  HeroGameContext,
   PlayerContext,
   ScheduleContext,
   SeasonContext,
@@ -60,11 +61,13 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     <AppStatusContext.Provider value={{ isLoading, error }}>
       <SeasonContext.Provider value={seasonData}>
         <ScheduleContext.Provider value={scheduleData}>
-          <StandingsContext.Provider value={standingsData}>
-            <PlayerContext.Provider value={playerData}>
-              {children}
-            </PlayerContext.Provider>
-          </StandingsContext.Provider>
+          <HeroGameContext.Provider value={heroGameData}>
+            <StandingsContext.Provider value={standingsData}>
+              <PlayerContext.Provider value={playerData}>
+                {children}
+              </PlayerContext.Provider>
+            </StandingsContext.Provider>
+          </HeroGameContext.Provider>
         </ScheduleContext.Provider>
       </SeasonContext.Provider>
     </AppStatusContext.Provider>
