@@ -20,7 +20,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
 
   return (
     <>
-      <div className="w-full min-h-115 bg-white p-4 border border-gray-200 rounded-xl shadow-sm">
+      <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
         <div id="recent-game-date" className="text-center pb-6">
           <div>{formatDateForDisplayLongUtil(gameDataProp.date)}</div>
         </div>
