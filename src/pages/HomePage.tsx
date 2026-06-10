@@ -48,7 +48,7 @@ function HomePage() {
               playerName={homeRunLeader?.fullName}
               playerID={homeRunLeader?.id}
               statValue={homeRunLeader?.hitting?.homeRuns}
-              jerseyNumber={homeRunLeader?.jerseyNumber}
+              jerseyNumber={`#${homeRunLeader?.jerseyNumber}`}
               positionAbbreviation={homeRunLeader?.positionAbbreviation}
               statAbbreviation="HR"
             />
@@ -59,7 +59,7 @@ function HomePage() {
               playerName={hitLeader?.fullName}
               playerID={hitLeader?.id}
               statValue={hitLeader?.hitting?.hits}
-              jerseyNumber={hitLeader?.jerseyNumber}
+              jerseyNumber={`#${hitLeader?.jerseyNumber}`}
               positionAbbreviation={hitLeader?.positionAbbreviation}
               statAbbreviation="H"
             />
@@ -70,7 +70,7 @@ function HomePage() {
               playerName={opsLeader?.fullName}
               playerID={opsLeader?.id}
               statValue={opsLeader?.hitting?.ops}
-              jerseyNumber={opsLeader?.jerseyNumber}
+              jerseyNumber={`#${opsLeader?.jerseyNumber}`}
               positionAbbreviation={opsLeader?.positionAbbreviation}
               statAbbreviation="OPS"
             />
