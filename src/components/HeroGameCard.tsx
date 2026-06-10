@@ -46,37 +46,48 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
   return (
     <>
       <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
-        <div id="recent-game-date" className="text-center pb-6">
-          <div>{formatDateForDisplayLongUtil(gameDataProp.date)}</div>
-        </div>
-        <div
-          id="game-main-details"
-          className="
+        {/* Game Preview - Game Info Placeholder */}
+        <div id="game-preview">
+          <div className="text-center pb-6">
+            <div>{formatDateForDisplayLongUtil(gameDataProp.date)}</div>
+          </div>
+          <div
+            id="game-main-details"
+            className="
             flex justify-center
             gap-20
           "
-        >
-          <span className="flex">
-            <img
-              className="size-10 object-contain"
-              src={gameDataProp.awayTeamLogo}
-            />
-            <div>{gameDataProp.awayTeamName}</div>
-          </span>
-          <div>{gameDataProp.awayTeamScore}</div>
+          >
+            <span className="flex">
+              <img
+                className="size-10 object-contain"
+                src={gameDataProp.awayTeamLogo}
+              />
+              <div>{gameDataProp.awayTeamName}</div>
+            </span>
+            <div>
+              {gameDataProp.abstractGameState === 'Preview'
+                ? '-'
+                : gameDataProp.awayTeamScore}
+            </div>
 
-          <div>{gameDataProp.homeTeamScore}</div>
-          <span className="flex">
-            <div>{gameDataProp.homeTeamName}</div>
-            <img
-              className="size-10 object-contain"
-              src={gameDataProp.homeTeamLogo}
-            />
-          </span>
-        </div>
-        <div className="text-center flex flex-col">
-          <div>{gameDataProp.gameVenue}</div>
-          <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
+            <div>
+              {gameDataProp.abstractGameState === 'Preview'
+                ? '-'
+                : gameDataProp.homeTeamScore}
+            </div>
+            <span className="flex">
+              <div>{gameDataProp.homeTeamName}</div>
+              <img
+                className="size-10 object-contain"
+                src={gameDataProp.homeTeamLogo}
+              />
+            </span>
+          </div>
+          <div className="text-center flex flex-col">
+            <div>{gameDataProp.gameVenue}</div>
+            <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
+          </div>
         </div>
 
         {/* Game Preview - Probable Pitchers Matchup Display  */}
