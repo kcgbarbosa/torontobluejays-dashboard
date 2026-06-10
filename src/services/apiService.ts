@@ -1,10 +1,8 @@
 import type {
   GameResponseDTO,
-  SeasonDTO,
   SeasonResponseDTO,
   RecordsResponseDTO,
   RosterResponseDTO,
-  GameDTO,
 } from '../types/dto/mlb.dto';
 import type { Game, Season } from '../types/models/game.model';
 import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
@@ -46,33 +44,44 @@ export async function fetchSchedule(seasonData: Season[]) {
   return formattedResult;
 }
 
-async function fetchGameData(url: string) {
+async function fetchGameData(url: string): Promise<Game | null> {
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`response status: ${response.status}`);
+    console.log(`response status: ${response.status}`);
+    return null;
   }
   const result = (await response.json()) as GameResponseDTO;
   const formattedResult = gameModelMapper(result);
   return formattedResult[0];
 }
 
-export async function fetchHeroGameData(scheduleData: Game[]) {
+export async function fetchHeroGameData(
+  scheduleData: Game[]
+): Promise<Game | null> {
+  if (scheduleData === undefined) {
+    console.log(`Error: scheduleData is undefined`);
+    return null;
+  }
   const heroGame = getHeroGameDateUtil(scheduleData);
+  if (heroGame?.gamePk === undefined) {
+    console.log(`Error: no gamePk found`);
+    return null;
+  }
   const PRE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=probablePitcher`;
   const LIVE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=linescore`;
   const POST_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=decisions`;
   switch (heroGame?.abstractGameState) {
     case 'Preview': {
-      const previewData = await fetchGameData(PRE_GAME_DATA);
-      return previewData;
+      let gamePreviewData = await fetchGameData(PRE_GAME_DATA);
+      return gamePreviewData;
     }
     case 'Live': {
-      const liveData = await fetchGameData(LIVE_GAME_DATA);
-      return liveData;
+      const gameLiveData = await fetchGameData(LIVE_GAME_DATA);
+      return gameLiveData;
     }
     case 'Final': {
-      const finalData = await fetchGameData(POST_GAME_DATA);
-      return finalData;
+      const gameFinalResultData = await fetchGameData(POST_GAME_DATA);
+      return gameFinalResultData;
     }
     default: {
       console.warn(

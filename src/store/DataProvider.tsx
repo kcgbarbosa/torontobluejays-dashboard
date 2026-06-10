@@ -23,7 +23,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
-  const [heroGameData, setHeroGameData] = useState<Game | null>();
+  const [heroGameData, setHeroGameData] = useState<Game | null>(null);
   const [playerData, setPlayerData] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

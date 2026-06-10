@@ -52,7 +52,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
         <div id="game-venue" className="text-center flex flex-col">
           <div>{gameDataProp.gameVenue}</div>
           <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
-          <div>{gameDataProp.probablePitchers?.away}</div>
+          <div>{gameDataProp.probablePitchers?.away.fullName}</div>
         </div>
       </div>
     </>
