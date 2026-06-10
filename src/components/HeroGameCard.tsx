@@ -1,9 +1,3 @@
-/**
- * @component
- * Game: Displays various key statistics and general game information.
- *
- */
-
 import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 import type { Game } from '../types/models/game.model';
@@ -16,7 +10,7 @@ type GameDataProps = {
   gameDataProp: Game | null;
 };
 
-function GameCard({ gameDataProp }: GameDataProps) {
+function HeroGameCard({ gameDataProp }: GameDataProps) {
   const { isLoading, error } = useContext(AppStatusContext);
 
   if (isLoading) return <div>Loading...</div>;
@@ -26,7 +20,7 @@ function GameCard({ gameDataProp }: GameDataProps) {
 
   return (
     <>
-      <div className="w-full bg-white p-4 border border-gray-200 rounded-xl shadow-sm">
+      <div className="w-full min-h-115 bg-white p-4 border border-gray-200 rounded-xl shadow-sm">
         <div id="recent-game-date" className="text-center pb-6">
           <div>{formatDateForDisplayLongUtil(gameDataProp.date)}</div>
         </div>
@@ -64,4 +58,4 @@ function GameCard({ gameDataProp }: GameDataProps) {
   );
 }
 
-export default GameCard;
+export default HeroGameCard;

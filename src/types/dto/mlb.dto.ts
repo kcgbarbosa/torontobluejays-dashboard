@@ -1,24 +1,70 @@
-/**
- * @types
- *
- */
-
 type TeamInfoDTO = {
   id: number;
   name: string;
   link: string;
 };
 
+type LinescorePersonRefDTO = {
+  id: number;
+  fullName: string;
+  link: string;
+};
+
 type TeamScoreDTO = {
   score: number;
   team: TeamInfoDTO;
+  probablePitcher?: LinescorePersonRefDTO;
 };
 
-// #TODO [June 5] implement usage of status for hero game
+// #TODO FEAT [June 5] implement usage of status for hero game0
 type StatusDTO = {
   abstractGameState: string;
   detailedState: string;
   statusCode: string;
+};
+
+type LinescoreInningHalfDTO = {
+  runs?: number;
+  hits: number;
+  errors: number;
+  leftOnBase: number;
+};
+
+type LinescoreInningDTO = {
+  num: number;
+  ordinalNum: string;
+  home: LinescoreInningHalfDTO;
+  away: LinescoreInningHalfDTO;
+};
+
+type LinescoreTeamTotalsDTO = {
+  runs: number;
+  hits: number;
+  errors: number;
+  leftOnBase: number;
+  isWinner: boolean;
+};
+
+export type LinescoreDTO = {
+  currentInning: number;
+  currentInningOrdinal: string;
+  inningState: string;
+  isTopInning: boolean;
+  scheduledInnings: number;
+  innings: LinescoreInningDTO[];
+  teams: {
+    home: LinescoreTeamTotalsDTO;
+    away: LinescoreTeamTotalsDTO;
+  };
+  balls: number;
+  strikes: number;
+  outs: number;
+};
+
+export type DecisionsDTO = {
+  winner: LinescorePersonRefDTO;
+  loser: LinescorePersonRefDTO;
+  save?: LinescorePersonRefDTO;
 };
 
 export type GameInfoDTO = {
@@ -31,6 +77,8 @@ export type GameInfoDTO = {
     home: TeamScoreDTO;
   };
   status: StatusDTO;
+  linescore?: LinescoreDTO;
+  decisions?: DecisionsDTO;
 };
 
 export type GameDTO = {

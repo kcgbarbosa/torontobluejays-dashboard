@@ -18,13 +18,12 @@ import {
   SeasonContext,
   StandingsContext,
 } from './contexts';
-import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [heroGameData, setHeroGameData] = useState<Game | null>(null);
   const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
   const [seasonData, setSeasonData] = useState<Season[]>([]);
   const [scheduleData, setScheduleData] = useState<Game[]>([]);
+  const [heroGameData, setHeroGameData] = useState<Game | null>(null);
   const [playerData, setPlayerData] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,9 +40,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const schedule = await fetchSchedule(season);
         setScheduleData(schedule);
 
-        const heroGameData = await getHeroGameDateUtil(schedule);
-        const heroGame = await fetchHeroGameData(heroGameData);
-        setHeroGameData(heroGame as Game | null);
+        const heroGame = await fetchHeroGameData(schedule);
+        setHeroGameData(heroGame);
 
         const standings = await fetchALTeamRecords();
         setStandingsData(standings);

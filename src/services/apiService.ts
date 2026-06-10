@@ -1,16 +1,11 @@
-/**
- * @services
- *
- */
-
 import type {
   GameResponseDTO,
-  SeasonDTO,
   SeasonResponseDTO,
   RecordsResponseDTO,
   RosterResponseDTO,
 } from '../types/dto/mlb.dto';
-import type { Game } from '../types/models/game.model';
+import type { Game, Season } from '../types/models/game.model';
+import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 import {
   alTeamRecordsDataModelMapper,
@@ -24,7 +19,17 @@ const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
 const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
 const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
 
-export async function fetchSchedule(seasonData: SeasonDTO[]) {
+export async function fetchSeasonData() {
+  const response = await fetch(SEASON_DATA_URL);
+  if (!response.ok) {
+    throw new Error(`response status: ${response.status}`);
+  }
+  const result = (await response.json()) as SeasonResponseDTO;
+  const formattedResult = seasonDataModelMapper(result);
+  return formattedResult;
+}
+
+export async function fetchSchedule(seasonData: Season[]) {
   const data = seasonData[0];
   if (data === undefined) {
     console.log(`Error: seasonData is undefined`);
@@ -39,28 +44,52 @@ export async function fetchSchedule(seasonData: SeasonDTO[]) {
   return formattedResult;
 }
 
-export async function fetchHeroGameData(heroGameData: Game | null) {
-  if (!heroGameData) return null;
-
-  const response = await fetch(
-    `${BASE_URL}/schedule/?sportId=1&season=${new Date().getFullYear()}&teamId=141&date=${heroGameData.date}`
-  );
+async function fetchGameData(url: string): Promise<Game | null> {
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`response status;: ${response.status}`);
+    console.log(`response status: ${response.status}`);
+    return null;
   }
   const result = (await response.json()) as GameResponseDTO;
   const formattedResult = gameModelMapper(result);
   return formattedResult[0];
 }
 
-export async function fetchSeasonData() {
-  const response = await fetch(SEASON_DATA_URL);
-  if (!response.ok) {
-    throw new Error(`response status: ${response.status}`);
+export async function fetchHeroGameData(
+  scheduleData: Game[]
+): Promise<Game | null> {
+  if (scheduleData === undefined) {
+    console.log(`Error: scheduleData is undefined`);
+    return null;
   }
-  const result = (await response.json()) as SeasonResponseDTO;
-  const formattedResult = seasonDataModelMapper(result);
-  return formattedResult;
+  const heroGame = getHeroGameDateUtil(scheduleData);
+  if (heroGame?.gamePk === undefined) {
+    console.log(`Error: no gamePk found`);
+    return null;
+  }
+  const PRE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=probablePitcher`;
+  const LIVE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=linescore`;
+  const POST_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=decisions`;
+  switch (heroGame?.abstractGameState) {
+    case 'Preview': {
+      let gamePreviewData = await fetchGameData(PRE_GAME_DATA);
+      return gamePreviewData;
+    }
+    case 'Live': {
+      const gameLiveData = await fetchGameData(LIVE_GAME_DATA);
+      return gameLiveData;
+    }
+    case 'Final': {
+      const gameFinalResultData = await fetchGameData(POST_GAME_DATA);
+      return gameFinalResultData;
+    }
+    default: {
+      console.warn(
+        `Unexpected abstractGameState: ${heroGame?.abstractGameState}`
+      );
+      return null;
+    }
+  }
 }
 
 export async function fetchALTeamRecords() {

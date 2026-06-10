@@ -1,14 +1,9 @@
-/**
- * @utils
- *
- * dtoToModelMappers - Functions which handle the mapping of raw JSON response to match it's correct model shape
- *
- */
-
 import type {
+  DecisionsDTO,
   GameDTO,
   GameInfoDTO,
   GameResponseDTO,
+  LinescoreDTO,
   RecordsResponseDTO,
   RosterMemberDTO,
   RosterResponseDTO,
@@ -17,15 +12,79 @@ import type {
   TeamRecordsDTO,
   TeamRecordsInfoDTO,
 } from '../types/dto/mlb.dto';
+import type {
+  Decisions,
+  Linescore,
+  ProbablePitchers,
+} from '../types/models/linescore.model';
+
+export function linescoreModelMapper(dto: LinescoreDTO): Linescore {
+  return {
+    currentInning: dto.currentInning,
+    currentInningOrdinal: dto.currentInningOrdinal,
+    inningState: dto.inningState,
+    isTopInning: dto.isTopInning,
+    scheduledInnings: dto.scheduledInnings,
+    innings: dto.innings.map((inning) => ({
+      num: inning.num,
+      home: {
+        runs: inning.home.runs,
+        hits: inning.home.hits,
+        errors: inning.home.errors,
+      },
+      away: {
+        runs: inning.away.runs,
+        hits: inning.away.hits,
+        errors: inning.away.errors,
+      },
+    })),
+    home: {
+      runs: dto.teams.home.runs,
+      hits: dto.teams.home.hits,
+      errors: dto.teams.home.errors,
+    },
+    away: {
+      runs: dto.teams.away.runs,
+      hits: dto.teams.away.hits,
+      errors: dto.teams.away.errors,
+    },
+    balls: dto.balls,
+    strikes: dto.strikes,
+    outs: dto.outs,
+  };
+}
+
+export function decisionsModelMapper(dto: DecisionsDTO): Decisions {
+  return {
+    winner: { id: dto.winner.id, fullName: dto.winner.fullName },
+    loser: { id: dto.loser.id, fullName: dto.loser.fullName },
+    save: dto.save
+      ? { id: dto.save.id, fullName: dto.save.fullName }
+      : undefined,
+  };
+}
 
 export function gameModelMapper(result: GameResponseDTO) {
   const formattedResult = result.dates.flatMap((data: GameDTO) => {
     return data.games.map((subData: GameInfoDTO) => {
+      const probablePitchers: ProbablePitchers | undefined =
+        subData.teams.away.probablePitcher && subData.teams.home.probablePitcher
+          ? {
+              away: {
+                id: subData.teams.away.probablePitcher.id,
+                fullName: subData.teams.away.probablePitcher.fullName,
+              },
+              home: {
+                id: subData.teams.home.probablePitcher.id,
+                fullName: subData.teams.home.probablePitcher.fullName,
+              },
+            }
+          : undefined;
       return {
         keyID: crypto.randomUUID(),
         date: subData.officialDate,
         startTime: subData.gameDate,
-        gameID: subData.gamePk,
+        gamePk: subData.gamePk,
         abstractGameState: subData.status.abstractGameState,
         detailedState: subData.status.detailedState,
         statusCode: subData.status.statusCode,
@@ -36,6 +95,13 @@ export function gameModelMapper(result: GameResponseDTO) {
         homeTeamName: subData.teams.home.team.name,
         homeTeamScore: subData.teams.home.score,
         gameVenue: subData.venue.name,
+        linescore: subData.linescore
+          ? linescoreModelMapper(subData.linescore)
+          : undefined,
+        decisions: subData.decisions
+          ? decisionsModelMapper(subData.decisions)
+          : undefined,
+        probablePitchers,
       };
     });
   });
@@ -63,11 +129,24 @@ export function seasonDataModelMapper(result: SeasonResponseDTO) {
 export function scheduleDataModelMapper(result: GameResponseDTO) {
   const formattedResult = result.dates.flatMap((data: GameDTO) => {
     return data.games.map((subData: GameInfoDTO) => {
+      const probablePitchers: ProbablePitchers | undefined =
+        subData.teams.away.probablePitcher && subData.teams.home.probablePitcher
+          ? {
+              away: {
+                id: subData.teams.away.probablePitcher.id,
+                fullName: subData.teams.away.probablePitcher.fullName,
+              },
+              home: {
+                id: subData.teams.home.probablePitcher.id,
+                fullName: subData.teams.home.probablePitcher.fullName,
+              },
+            }
+          : undefined;
       return {
         keyID: crypto.randomUUID(),
         date: subData.officialDate,
         startTime: subData.gameDate,
-        gameID: subData.gamePk,
+        gamePk: subData.gamePk,
         abstractGameState: subData.status.abstractGameState,
         detailedState: subData.status.detailedState,
         statusCode: subData.status.statusCode,
@@ -78,6 +157,13 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
         homeTeamName: subData.teams.home.team.name,
         homeTeamScore: subData.teams.home.score,
         gameVenue: subData.venue.name,
+        linescore: subData.linescore
+          ? linescoreModelMapper(subData.linescore)
+          : undefined,
+        decisions: subData.decisions
+          ? decisionsModelMapper(subData.decisions)
+          : undefined,
+        probablePitchers,
       };
     });
   });

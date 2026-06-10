@@ -67,6 +67,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
   if (error) return <div>Error: {error}</div>;
 
   return (
+    // #TODO FEAT [June 8] Add player search bar inline with header at end
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest">
         Current Roster

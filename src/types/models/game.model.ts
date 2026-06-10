@@ -1,14 +1,11 @@
-/**
- * @types
- */
+import type { Decisions, Linescore, ProbablePitchers } from './linescore.model';
 
-// #TODO [June 5] Add more info for the HomePage hero (inning number, pitcher, ect)
 export type Game = {
   keyID: string;
   date: string;
   startTime: string;
-  gameID: number;
-  abstractGameState: string;
+  gamePk: number;
+  abstractGameState: string; // Preview, Live, Final
   detailedState: string;
   statusCode: string;
   awayTeamLogo: string;
@@ -18,6 +15,9 @@ export type Game = {
   awayTeamScore?: number;
   homeTeamScore?: number;
   gameVenue: string;
+  linescore?: Linescore;
+  decisions?: Decisions;
+  probablePitchers?: ProbablePitchers;
 };
 
 export type Season = {

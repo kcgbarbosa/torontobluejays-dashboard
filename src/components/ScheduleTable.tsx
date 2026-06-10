@@ -65,6 +65,7 @@ function ScheduleTable() {
   if (error) return <div>Error: {error}</div>;
 
   return (
+    // #FIXME [June 8] Resolve lack of responsiveness
     <div id="page-container" className="max-w-11/12 mx-auto px-4 py-8">
       <div id="grid-layout" className="grid grid-cols-3 gap-4">
         <main className="col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm">
@@ -115,7 +116,7 @@ function ScheduleTable() {
                 <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
                   <td className="px-6 py-3">Date</td>
                   <td className="px-6 py-3">Matchup</td>
-                  <td className="px-6 py-3">First Pitch</td>
+                  <td className="px-3 py-3">First Pitch</td>
                 </tr>
               )}
             </thead>

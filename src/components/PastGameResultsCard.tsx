@@ -1,16 +1,12 @@
-/**
- * @components
- *
- * SchedulePreview: Displays upcoming games in a compact format, presents key details and invites user to visit schedule page for more info.
- *
- */
-
 import { useContext } from 'react';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { getGameResult } from '../utils/gameResultUtils';
 import { AppStatusContext, ScheduleContext } from '../store/contexts';
 import WinLossBadge from './WinLossBadge';
-import { isGameInPast, formatDateForDisplayShortUtil } from '../utils/dateAndTimeUtilities';
+import {
+  isGameInPast,
+  formatDateForDisplayShortUtil,
+} from '../utils/dateAndTimeUtilities';
 
 function PastGameResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
@@ -26,6 +22,7 @@ function PastGameResultsCard() {
 
   return (
     <div>
+      {/* # TODO STYLE [June 8] Reduce footprint */}
       <h2 className="text-base font-semibold text-gray-900 py-4">Past Games</h2>
       <div className="grid md:grid-cols-2 gap-4">
         {pastGames.map((d) => {
@@ -75,7 +72,9 @@ function PastGameResultsCard() {
 
               <div className="flex items-center justify-center gap-2">
                 {scoresAvailable && <WinLossBadge won={bjWon} />}
-                <span className="text-xs text-gray-400">{formatDateForDisplayShortUtil(d.date)}</span>
+                <span className="text-xs text-gray-400">
+                  {formatDateForDisplayShortUtil(d.date)}
+                </span>
               </div>
             </div>
           );

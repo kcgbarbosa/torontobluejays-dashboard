@@ -58,7 +58,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             ✕
           </button>
         </div>
-        {/*  # TODO REFACTOR [May 30] - refactor statistics table into reusable
+        {/*  # TODO REFACTOR [May 30] - extract statistics table into reusable
         component */}
         <div className="bg-blue-600 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
           <img

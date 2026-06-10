@@ -1,14 +1,19 @@
-import GameCard from '../components/GameCard';
+import HeroGameCard from '../components/HeroGameCard';
 import ALEastStandings from '../components/ALEastStandings';
 import StatCard from '../components/StatCard';
 import PastGameResultsCard from '../components/PastGameResultsCard';
 import { useContext } from 'react';
-import { HeroGameContext, PlayerContext } from '../store/contexts';
+import {
+  ScheduleContext,
+  PlayerContext,
+  HeroGameContext,
+} from '../store/contexts';
 import { getStatLeader } from '../utils/statisticUtilities';
 
 function HomePage() {
-  const heroGame = useContext(HeroGameContext);
+  const scheduleData = useContext(ScheduleContext);
   const playerData = useContext(PlayerContext);
+  const heroGameData = useContext(HeroGameContext);
 
   const homeRunLeader = getStatLeader(
     playerData,
@@ -26,7 +31,7 @@ function HomePage() {
       <main className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div>
-            <GameCard gameDataProp={heroGame} />
+            <HeroGameCard gameDataProp={heroGameData} />
           </div>
           <div>
             <PastGameResultsCard />
