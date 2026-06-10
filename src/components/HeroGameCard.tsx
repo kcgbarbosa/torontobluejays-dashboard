@@ -100,23 +100,26 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
           </div>
         </div>
 
-        {/* Game Preview - Probable Pitchers Matchup Display  */}
+        {/* Game Final - Decisions Pitchers Display  */}
         {/* TEMPORARY COMMENT OUT FOR DEVELOPMENT. USE BELOW FOR DEPLOYMENT */}
-        {/* {gameDataProp.abstractGameState === 'Preview' && ( */}
-        {gameDataProp.abstractGameState === 'Live' && (
+        {gameDataProp.abstractGameState === 'Final' && (
           <div className="flex flex-row p-10  ">
             <div>
               <StatCard
-                playerName={gameDataProp.probablePitchers?.away.fullName}
-                playerID={gameDataProp.probablePitchers?.away.id}
-                statAbbreviation="SP"
+                statName="Win"
+                // #TODO FEAT [June 10] write logic to match the decision winner with the correct pitcher so that i can display the pitcher with all of the information displayed in the stat card.
+                playerName={gameDataProp.decisions?.winner.fullName}
+                playerID={gameDataProp.decisions?.winner.id}
+                statAbbreviation="W"
               />
             </div>
             <div>
               <StatCard
-                playerName={gameDataProp.probablePitchers?.home.fullName}
-                playerID={gameDataProp.probablePitchers?.home.id}
-                statAbbreviation="SP"
+                statName="Loss"
+                // #TODO FEAT [June 10] write logic to match the decision loser with the correct pitcher so that i can display the pitcher with all of the information displayed in the stat card.
+                playerName={gameDataProp.decisions?.loser.fullName}
+                playerID={gameDataProp.decisions?.loser.id}
+                statAbbreviation="L"
               />
             </div>
           </div>
