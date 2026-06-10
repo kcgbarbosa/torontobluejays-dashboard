@@ -49,7 +49,12 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
         {/* Game Preview - Game Info Placeholder */}
         <div id="game-preview">
           <div className="text-center pb-6">
-            <div>{formatDateForDisplayLongUtil(gameDataProp.date)}</div>
+            {gameDataProp.abstractGameState !== 'Preview' && (
+              <div>Live 🔴 </div>
+            )}
+            <div className="pt-4">
+              {formatDateForDisplayLongUtil(gameDataProp.date)}
+            </div>
           </div>
           <div
             id="game-main-details"
