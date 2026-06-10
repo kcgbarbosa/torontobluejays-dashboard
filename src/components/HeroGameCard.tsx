@@ -90,6 +90,11 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             </span>
           </div>
           <div className="text-center flex flex-col">
+            <div>
+              {gameDataProp.abstractGameState !== 'Preview'
+                ? gameDataProp.linescore?.currentInning
+                : formatTimeForDisplayUtil(gameDataProp.startTime)}
+            </div>
             <div>{gameDataProp.gameVenue}</div>
             <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
           </div>
