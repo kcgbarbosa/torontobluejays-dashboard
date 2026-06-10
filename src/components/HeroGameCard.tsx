@@ -46,7 +46,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
   return (
     <>
       <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
-        {/* Game Preview - Game Info Placeholder */}
+        {/* Game Main Details */}
         <div id="game-preview">
           <div className="text-center pb-6">
             {gameDataProp.abstractGameState !== 'Preview' && (
@@ -96,7 +96,12 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 : formatTimeForDisplayUtil(gameDataProp.startTime)}
             </div>
             <div>{gameDataProp.gameVenue}</div>
-            <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
+            {gameDataProp.abstractGameState === 'Preview' && (
+              <span className="text-left pl-10">
+                {gameDataProp.probablePitchers?.away.fullName} vs.{' '}
+                {gameDataProp.probablePitchers?.home.fullName}
+              </span>
+            )}
           </div>
         </div>
 
