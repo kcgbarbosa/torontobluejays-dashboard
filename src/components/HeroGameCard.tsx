@@ -5,6 +5,7 @@ import {
   formatTimeForDisplayUtil,
   formatDateForDisplayLongUtil,
 } from '../utils/dateAndTimeUtilities';
+import { teamAbbreviator } from '../utils/teamAbbreviator';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -49,9 +50,19 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             />
           </span>
         </div>
-        <div id="game-venue" className="text-center flex flex-col">
+        <div className="text-center flex flex-col">
           <div>{gameDataProp.gameVenue}</div>
           <div>{formatTimeForDisplayUtil(gameDataProp.startTime)}</div>
+        </div>
+        <div className="flex flex-col ">
+          <span>
+            {gameDataProp.probablePitchers?.home.fullName}{' '}
+            {teamAbbreviator(gameDataProp.homeTeamName)}
+          </span>
+          <span>
+            {gameDataProp.probablePitchers?.away.fullName}{' '}
+            {teamAbbreviator(gameDataProp.awayTeamName)}
+          </span>
         </div>
       </div>
     </>

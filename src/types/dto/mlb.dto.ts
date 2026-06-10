@@ -4,7 +4,7 @@ type TeamInfoDTO = {
   link: string;
 };
 
-type LinescorePersonRefDTO = {
+type LinescorePitcherRefDTO = {
   id: number;
   fullName: string;
   link: string;
@@ -13,7 +13,7 @@ type LinescorePersonRefDTO = {
 type TeamScoreDTO = {
   score: number;
   team: TeamInfoDTO;
-  probablePitcher?: LinescorePersonRefDTO;
+  probablePitcher?: LinescorePitcherRefDTO;
 };
 
 // #TODO FEAT [June 5] implement usage of status for hero game0
@@ -62,9 +62,9 @@ export type LinescoreDTO = {
 };
 
 export type DecisionsDTO = {
-  winner: LinescorePersonRefDTO;
-  loser: LinescorePersonRefDTO;
-  save?: LinescorePersonRefDTO;
+  winner: LinescorePitcherRefDTO;
+  loser: LinescorePitcherRefDTO;
+  save?: LinescorePitcherRefDTO;
 };
 
 export type GameInfoDTO = {
