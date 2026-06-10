@@ -123,44 +123,46 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
         )}
 
         {/* Linescore Table */}
-        <div className="w-full mt-6 overflow-x-auto">
-          <table className="w-full border-collapse border border-gray-200 text-sm">
-            <thead>
-              <tr>
-                <th className={headerCell}>Team</th>
-                {inningNumbers.map((n) => (
-                  <th key={n} className={headerCell}>
-                    {n}
-                  </th>
-                ))}
-                <th className={headerCell}>R</th>
-                <th className={headerCell}>H</th>
-                <th className={headerCell}>E</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(({ label, side, totals }) => (
-                <tr key={side}>
-                  <td className={`${cell} font-medium text-left`}>{label}</td>
+        {gameDataProp.abstractGameState !== 'Preview' && (
+          <div className="w-full mt-6 overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-200 text-sm">
+              <thead>
+                <tr>
+                  <th className={headerCell}>Team</th>
                   {inningNumbers.map((n) => (
-                    <td key={n} className={cell}>
-                      {inningMap[n]?.[side].runs ?? '-'}
-                    </td>
+                    <th key={n} className={headerCell}>
+                      {n}
+                    </th>
                   ))}
-                  <td className={`${cell} font-semibold`}>
-                    {totals?.runs ?? '-'}
-                  </td>
-                  <td className={`${cell} font-semibold`}>
-                    {totals?.hits ?? '-'}
-                  </td>
-                  <td className={`${cell} font-semibold`}>
-                    {totals?.errors ?? '-'}
-                  </td>
+                  <th className={headerCell}>R</th>
+                  <th className={headerCell}>H</th>
+                  <th className={headerCell}>E</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map(({ label, side, totals }) => (
+                  <tr key={side}>
+                    <td className={`${cell} font-medium text-left`}>{label}</td>
+                    {inningNumbers.map((n) => (
+                      <td key={n} className={cell}>
+                        {inningMap[n]?.[side].runs ?? '-'}
+                      </td>
+                    ))}
+                    <td className={`${cell} font-semibold`}>
+                      {totals?.runs ?? '-'}
+                    </td>
+                    <td className={`${cell} font-semibold`}>
+                      {totals?.hits ?? '-'}
+                    </td>
+                    <td className={`${cell} font-semibold`}>
+                      {totals?.errors ?? '-'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );
