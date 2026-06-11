@@ -29,8 +29,8 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
     inningMap[inn.num] = inn;
   });
 
-  const cell = 'border border-gray-200 px-3 py-2 text-center text-sm';
-  const headerCell = `${cell} bg-gray-50 font-semibold text-gray-500 text-xs uppercase`;
+  const cell = 'px-3 py-4 text-center text-sm';
+  const headerCell = `${cell} bg-white font-semibold text-gray-900 text-xs uppercase`;
 
   const rows = [
     {
@@ -147,8 +147,8 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
 
         {/* Linescore Table */}
         {gameDataProp.abstractGameState !== 'Preview' && (
-          <div className="w-full mt-6 overflow-x-auto">
-            <table className="w-full border-collapse border border-gray-200 text-sm">
+          <div className="hidden w-full mt-6 overflow-x-auto sm:block">
+            <table className="w-full border-collapse border border-gray-100 text-sm">
               <thead>
                 <tr>
                   <th className={headerCell}>Team</th>
@@ -165,11 +165,11 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
               <tbody>
                 {rows.map(({ label, side, totals }) => (
                   <tr key={side}>
-                    <td className={`${cell} font-medium text-center`}>
+                    <td className={`${cell} font-bold text-center`}>
                       {teamAbbreviator(label)}
                     </td>
                     {inningNumbers.map((n) => (
-                      <td key={n} className={cell}>
+                      <td key={n} className={`${cell} font-medium`}>
                         {inningMap[n]?.[side].runs ?? '-'}
                       </td>
                     ))}
