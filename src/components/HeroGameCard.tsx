@@ -6,6 +6,8 @@ import {
   formatDateForDisplayLongUtil,
 } from '../utils/dateAndTimeUtilities';
 import StatCard from './StatCard';
+import { teamAbbreviator } from '../utils/teamAbbreviator';
+import { getGameResult } from '../utils/gameResultUtils';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -42,6 +44,8 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
       totals: gameDataProp.linescore?.home,
     },
   ];
+
+  const { awayWon, bjWon: isBlueJaysWinner } = getGameResult(gameDataProp);
 
   return (
     <>
@@ -109,25 +113,22 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
         </div>
 
         {/* Game Final - Decisions Pitchers Display  */}
-        {/* TEMPORARY COMMENT OUT FOR DEVELOPMENT. USE BELOW FOR DEPLOYMENT */}
         {gameDataProp.abstractGameState === 'Final' && (
           <div className="flex flex-row p-10  ">
             <div>
               <StatCard
-                statName="Win"
-                // #TODO FEAT [June 10] write logic to match the decision winner with the correct pitcher so that i can display the pitcher with all of the information displayed in the stat card.
+                statName={awayWon ? 'Win' : 'Loss'}
                 playerName={gameDataProp.decisions?.winner.fullName}
                 playerID={gameDataProp.decisions?.winner.id}
-                statAbbreviation="W"
+                statAbbreviation={awayWon ? 'W' : 'L'}
               />
             </div>
             <div>
               <StatCard
-                statName="Loss"
-                // #TODO FEAT [June 10] write logic to match the decision loser with the correct pitcher so that i can display the pitcher with all of the information displayed in the stat card.
+                statName={awayWon ? 'Loss' : 'Win'}
                 playerName={gameDataProp.decisions?.loser.fullName}
                 playerID={gameDataProp.decisions?.loser.id}
-                statAbbreviation="L"
+                statAbbreviation={awayWon ? 'L' : 'W'}
               />
             </div>
           </div>
