@@ -23,15 +23,17 @@ function PastGameResultsCard() {
   return (
     <div>
       {/* # TODO STYLE [June 8] Reduce footprint */}
-      <h2 className="text-base font-semibold text-gray-900 py-4">Past Games</h2>
-      <div className="grid md:grid-cols-2 gap-4">
+      <h2 className="text-base font-semibold text-gray-900 py-4">
+        Past Results
+      </h2>
+      <div>
         {pastGames.map((d) => {
           const { bjWon, scoresAvailable, awayWon } = getGameResult(d);
 
           return (
             <div
               key={d.keyID}
-              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-6 flex flex-col gap-3 border-l-4 
+              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-4 flex flex-col  border-l-4 
                 ${bjWon ? 'border-l-blue-600' : 'border-l-gray-200'}`}
             >
               <div className="flex items-center justify-between">
