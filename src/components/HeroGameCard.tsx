@@ -77,13 +77,13 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 {gameDataProp.awayTeamName}
               </div>
             </span>
-            <div>
+            <div className="flex items-center">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.awayTeamScore}
             </div>
 
-            <div>
+            <div className="flex items-center">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.homeTeamScore}
