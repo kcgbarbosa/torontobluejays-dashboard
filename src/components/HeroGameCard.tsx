@@ -103,12 +103,15 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 : formatTimeForDisplayUtil(gameDataProp.startTime)}
             </div>
             <div>{gameDataProp.gameVenue}</div>
-            {gameDataProp.abstractGameState === 'Preview' && (
-              <span className="text-left pl-10">
-                {gameDataProp.probablePitchers?.away.fullName} vs.{' '}
-                {gameDataProp.probablePitchers?.home.fullName}
-              </span>
-            )}
+
+            {/* Probable Pitchers Display */}
+            {gameDataProp.abstractGameState === 'Preview' &&
+              gameDataProp.probablePitchers && (
+                <span className="text-left pl-10">
+                  {gameDataProp.probablePitchers?.away.fullName} vs.{' '}
+                  {gameDataProp.probablePitchers?.home.fullName}
+                </span>
+              )}
           </div>
         </div>
 
