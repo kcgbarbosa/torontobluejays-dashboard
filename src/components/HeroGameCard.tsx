@@ -153,7 +153,9 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
               <tbody>
                 {rows.map(({ label, side, totals }) => (
                   <tr key={side}>
-                    <td className={`${cell} font-medium text-left`}>{label}</td>
+                    <td className={`${cell} font-medium text-center`}>
+                      {teamAbbreviator(label)}
+                    </td>
                     {inningNumbers.map((n) => (
                       <td key={n} className={cell}>
                         {inningMap[n]?.[side].runs ?? '-'}
