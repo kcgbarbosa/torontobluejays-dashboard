@@ -52,13 +52,13 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
       <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
         {/* Game Main Details */}
         <div id="game-preview">
-          <div className="text-center pb-6">
+          <div className="text-center pb-6 flex flex-col items-center justify-center">
+            <span className="text-medium text-gray-600">
+              {formatDateForDisplayLongUtil(gameDataProp.date)}
+            </span>
             {gameDataProp.abstractGameState !== 'Preview' && (
               <div>Live 🔴 </div>
             )}
-            <div className="pt-4">
-              {formatDateForDisplayLongUtil(gameDataProp.date)}
-            </div>
           </div>
           <div
             id="game-main-details"
@@ -67,12 +67,15 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             gap-20
           "
           >
-            <span className="flex">
-              <img
-                className="size-10 object-contain"
-                src={gameDataProp.awayTeamLogo}
-              />
-              <div>{gameDataProp.awayTeamName}</div>
+            <span className="flex flex-col items-center gap-2">
+              <div
+                className={`border-2 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+              >
+                <img className="w-10 h-10" src={gameDataProp.awayTeamLogo} />
+              </div>
+              <div className="text-xl font-medium text-gray-700">
+                {gameDataProp.awayTeamName}
+              </div>
             </span>
             <div>
               {gameDataProp.abstractGameState === 'Preview'
@@ -85,12 +88,15 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 ? '-'
                 : gameDataProp.homeTeamScore}
             </div>
-            <span className="flex">
-              <div>{gameDataProp.homeTeamName}</div>
-              <img
-                className="size-10 object-contain"
-                src={gameDataProp.homeTeamLogo}
-              />
+            <span className="flex flex-col items-center gap-2">
+              <div
+                className={`border-2 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+              >
+                <img className="w-10 h-10" src={gameDataProp.homeTeamLogo} />
+              </div>
+              <div className="text-xl font-medium text-gray-700">
+                {gameDataProp.homeTeamName}
+              </div>
             </span>
           </div>
           <div className="text-center flex flex-col">
