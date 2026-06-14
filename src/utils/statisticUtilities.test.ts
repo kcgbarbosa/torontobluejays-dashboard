@@ -32,4 +32,23 @@ describe('retrieve leader of given statistic', () => {
       }
     );
   });
+
+  it('retrieve home run leader from array with a single player', () => {
+    const playerData = [
+      {
+        firstName: 'DefaultDude',
+        hitting: {
+          homeRuns: 325,
+        },
+      },
+    ] as Player[];
+    expect(getStatLeader(playerData, (d) => d.hitting?.homeRuns ?? -1)).toEqual(
+      {
+        firstName: 'DefaultDude',
+        hitting: {
+          homeRuns: 325,
+        },
+      }
+    );
+  });
 });
