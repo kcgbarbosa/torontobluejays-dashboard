@@ -1,21 +1,34 @@
 import type { Game } from '../types/models/game.model';
 import { isGameInPast } from './dateAndTimeUtilities';
 
-// #TODO NEXT [June 13] Write tests for the other paths
 describe('isGameInPast', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    // set controlled current time to make tests deterministic
+    vi.setSystemTime(new Date('2026-06-14T20:00:00Z'));
+  });
   it('returns true for a game in the past ', () => {
-    // #NOTE [June 13] define game object which contains only the required isGameInPast arguments
-    const game = {
+    const gameFromPast = {
       date: '2024-01-01',
       startTime: '2024-01-01T18:00:00Z',
-    } as Game; // #NOTE [June 13] 'as Game' to make TS happy. the arg im passing is Game' shaped i swear <3
-    expect(isGameInPast(game)).toBe(true);
+    } as Game;
+    expect(isGameInPast(gameFromPast)).toBe(true);
   });
   it('returns false if game is not in past', () => {
-    const game = {
+    const gameInFuture = {
       date: '2027-01-01',
       startTime: '2024-01-01T18:00:00Z',
     } as Game;
-    expect(isGameInPast(game)).toBe(false);
+    expect(isGameInPast(gameInFuture)).toBe(false);
+  });
+  it('returns true if game is on the current date and the current time is past the game startTime', () => {
+    const gameTodayThatHasStarted = {
+      date: '2026-06-14',
+      startTime: '2026-06-14T19:07:00Z',
+    } as Game;
+    expect(isGameInPast(gameTodayThatHasStarted)).toBe(true);
+  });
+  afterEach(() => {
+    vi.useRealTimers(); // cleanup
   });
 });
