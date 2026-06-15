@@ -21,8 +21,9 @@ export function useMLBData() {
 
   useEffect(() => {
     const fetchAllData = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
-        setIsLoading(true);
         const [season, standings, players] = await Promise.all([
           fetchSeasonData(),
           fetchALTeamRecords(),
