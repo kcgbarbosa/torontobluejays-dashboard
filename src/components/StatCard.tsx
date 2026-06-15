@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 type StatCardProps = {
-  statName: string | undefined;
-  playerName: string | undefined;
-  playerID: number | undefined;
-  statValue: number | string | undefined;
+  statName?: string | undefined;
+  playerName?: string | undefined;
+  playerID?: number | undefined;
+  statValue?: number | string | undefined;
   jerseyNumber?: string | undefined;
   positionAbbreviation?: string;
   statAbbreviation?: string;
@@ -30,7 +30,7 @@ function StatCard({
 
   return (
     // #TODO FEAT [June 6] Player Card act as links straight to roster page table location
-    <div className="bg-white border border-gray-200 border-t-4 border-t-blue-600 rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
+    <div className="bg-white border border-y-amber-900 rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
       <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-widest pb-3">
         {statName}
       </h2>
@@ -42,7 +42,7 @@ function StatCard({
         <div className="flex flex-col gap-1">
           <span className="text-base font-semibold text-gray-900">
             {playerName}
-            <span className="text-blue-600"> #{jerseyNumber}</span>
+            <span className="text-blue-600"> {jerseyNumber}</span>
           </span>
           <span className="text-sm text-gray-400 uppercase tracking-wider">
             {positionAbbreviation}

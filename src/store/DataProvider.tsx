@@ -1,15 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import type { Game, Season } from '../types/models/game.model';
-import type { Player } from '../types/models/person.model';
-import type { ALRecords } from '../types/models/standings.model';
-
-import {
-  fetchSeasonData,
-  fetchSchedule,
-  fetchALTeamRecords,
-  fetchRosterData,
-  fetchHeroGameData,
-} from '../services/apiService';
+import type { ReactNode } from 'react';
 import {
   AppStatusContext,
   HeroGameContext,
@@ -18,44 +7,18 @@ import {
   SeasonContext,
   StandingsContext,
 } from './contexts';
+import { useMLBData } from '../hooks/useMLBData';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [standingsData, setStandingsData] = useState<ALRecords[]>([]);
-  const [seasonData, setSeasonData] = useState<Season[]>([]);
-  const [scheduleData, setScheduleData] = useState<Game[]>([]);
-  const [heroGameData, setHeroGameData] = useState<Game | null>(null);
-  const [playerData, setPlayerData] = useState<Player[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // # TODO FEAT [May 14] : Improve performance while still maintaining correct order of operations
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        setIsLoading(true);
-
-        const season = await fetchSeasonData();
-        setSeasonData(season);
-
-        const schedule = await fetchSchedule(season);
-        setScheduleData(schedule);
-
-        const heroGame = await fetchHeroGameData(schedule);
-        setHeroGameData(heroGame);
-
-        const standings = await fetchALTeamRecords();
-        setStandingsData(standings);
-
-        const players = await fetchRosterData();
-        setPlayerData(players);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : String(err));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchAllData();
-  }, []);
+  const {
+    standingsData,
+    seasonData,
+    scheduleData,
+    heroGameData,
+    playerData,
+    isLoading,
+    error,
+  } = useMLBData();
 
   return (
     <AppStatusContext.Provider value={{ isLoading, error }}>

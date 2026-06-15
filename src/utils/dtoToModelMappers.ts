@@ -134,6 +134,7 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
           ? {
               away: {
                 id: subData.teams.away.probablePitcher.id,
+                // #TODO NEXT - Add additional stats for the probable pitchers Preview Game display
                 fullName: subData.teams.away.probablePitcher.fullName,
               },
               home: {

@@ -1,4 +1,4 @@
-export type PersonRef = {
+export type PitcherRef = {
   id: number;
   fullName: string;
 };
@@ -30,12 +30,12 @@ export type Linescore = {
 };
 
 export type Decisions = {
-  winner: PersonRef;
-  loser: PersonRef;
-  save?: PersonRef;
+  winner: PitcherRef;
+  loser: PitcherRef;
+  save?: PitcherRef;
 };
 
 export type ProbablePitchers = {
-  away: PersonRef;
-  home: PersonRef;
+  away: PitcherRef;
+  home: PitcherRef;
 };
