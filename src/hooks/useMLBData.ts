@@ -23,21 +23,21 @@ export function useMLBData() {
     const fetchAllData = async () => {
       try {
         setIsLoading(true);
+        const [season, standings, players] = await Promise.all([
+          fetchSeasonData(),
+          fetchALTeamRecords(),
+          fetchRosterData(),
+        ]);
 
-        const season = await fetchSeasonData();
         setSeasonData(season);
+        setStandingsData(standings);
+        setPlayerData(players);
 
         const schedule = await fetchSchedule(season);
         setScheduleData(schedule);
 
         const heroGame = await fetchHeroGameData(schedule);
         setHeroGameData(heroGame);
-
-        const standings = await fetchALTeamRecords();
-        setStandingsData(standings);
-
-        const players = await fetchRosterData();
-        setPlayerData(players);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
