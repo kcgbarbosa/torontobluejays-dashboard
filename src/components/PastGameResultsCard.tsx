@@ -18,7 +18,7 @@ function PastGameResultsCard() {
   const pastGames = schedulePreviewData
     .filter((d) => isGameInPast(d) === true)
     .reverse()
-    .slice(0, 4);
+    .slice(0, 7);
 
   return (
     <div>
