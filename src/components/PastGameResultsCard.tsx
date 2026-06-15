@@ -33,7 +33,7 @@ function PastGameResultsCard() {
           return (
             <div
               key={d.keyID}
-              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-4 flex flex-col  border-l-4 
+              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3 flex flex-col  border-l-4 
                 ${bjWon ? 'border-l-blue-600' : 'border-l-gray-200'}`}
             >
               <div className="flex items-center justify-between">
@@ -42,7 +42,7 @@ function PastGameResultsCard() {
                     src={d.awayTeamLogo}
                     className="w-10 h-10 object-contain"
                   />
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="hidden sm:inline text-sm font-medium text-gray-700">
                     {teamAbbreviator(d.awayTeamName)}
                   </span>
                 </div>
@@ -59,10 +59,14 @@ function PastGameResultsCard() {
                   >
                     {d.homeTeamScore ?? '–'}
                   </span>
+                  {scoresAvailable && <WinLossBadge won={bjWon} />}
+                  <span className="hidden sm:inline text-xs text-gray-400">
+                    {formatDateForDisplayShortUtil(d.date)}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="hidden sm:inline text-sm font-medium text-gray-700">
                     {teamAbbreviator(d.homeTeamName)}
                   </span>
                   <img
@@ -70,13 +74,6 @@ function PastGameResultsCard() {
                     className="w-10 h-10 object-contain"
                   />
                 </div>
-              </div>
-
-              <div className="flex items-center justify-center gap-2">
-                {scoresAvailable && <WinLossBadge won={bjWon} />}
-                <span className="text-xs text-gray-400">
-                  {formatDateForDisplayShortUtil(d.date)}
-                </span>
               </div>
             </div>
           );
