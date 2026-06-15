@@ -62,19 +62,22 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
           </div>
           <div
             id="game-main-details"
-            className="
-            flex justify-center
-            gap-20
-          "
+            className="flex justify-center items-center gap-10 md:gap-20"
           >
-            <span className="flex flex-col items-center gap-2">
+            <span className="flex flex-col items-center gap-2 shrink-0">
               <div
-                className={`border-2 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`border-4 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
-                <img className="w-10 h-10" src={gameDataProp.awayTeamLogo} />
+                <img
+                  className="w-15 h-15 rounded-full"
+                  src={gameDataProp.awayTeamLogo}
+                />
               </div>
-              <div className="text-xl font-medium text-gray-700">
+              <div className="hidden text-xl font-medium text-gray-700 md:block">
                 {gameDataProp.awayTeamName}
+              </div>
+              <div className="text-xl font-medium text-gray-700 md:hidden">
+                {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
             <div className="flex items-center">
@@ -88,14 +91,20 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 ? '-'
                 : gameDataProp.homeTeamScore}
             </div>
-            <span className="flex flex-col items-center gap-2">
+            <span className="flex flex-col items-center gap-2 shrink-0">
               <div
-                className={`border-2 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`border-4 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
-                <img className="w-10 h-10" src={gameDataProp.homeTeamLogo} />
+                <img
+                  className="w-15 h-15 rounded-full"
+                  src={gameDataProp.homeTeamLogo}
+                />
               </div>
-              <div className="text-xl font-medium text-gray-700">
+              <div className="hidden text-xl font-medium text-gray-700 md:block">
                 {gameDataProp.homeTeamName}
+              </div>
+              <div className="text-xl font-medium text-gray-700 md:hidden">
+                {teamAbbreviator(gameDataProp.homeTeamName)}
               </div>
             </span>
           </div>
