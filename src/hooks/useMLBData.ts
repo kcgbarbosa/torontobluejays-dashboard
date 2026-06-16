@@ -20,6 +20,7 @@ export function useMLBData() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let timeoutID: number;
     const fetchAllData = async () => {
       setIsLoading(true);
       setError(null);
@@ -39,6 +40,16 @@ export function useMLBData() {
 
         const heroGame = await fetchHeroGameData(schedule);
         setHeroGameData(heroGame);
+
+        const pollGameData = () => {
+          timeoutID = setTimeout(async () => {
+            const heroGame = await fetchHeroGameData(schedule);
+            setHeroGameData(heroGame);
+            pollGameData();
+          }, 30000);
+        };
+        pollGameData();
+        return () => clearTimeout(timeoutID);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
