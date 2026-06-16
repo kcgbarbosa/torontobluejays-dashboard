@@ -6,7 +6,7 @@ type GameProps = {
 
 function FutureGameTableRow({ gameData }: GameProps) {
   const {
-    gameID,
+    keyID,
     date,
     homeTeamName,
     awayTeamName,
@@ -17,7 +17,7 @@ function FutureGameTableRow({ gameData }: GameProps) {
 
   return (
     <tr
-      key={gameID}
+      key={keyID}
       className={`border-b border-gray-100 transition-colors duration-150 $`}
     >
       <td
