@@ -59,7 +59,6 @@ export const formatDateForDisplayShortUtil = (dateString: string): string => {
   const date = new Date(dateString + 'T00:00:00');
 
   const formattedDate = date.toLocaleDateString('en-US', {
-    weekday: 'short',
     month: 'short',
     day: 'numeric',
   });
