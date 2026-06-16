@@ -55,12 +55,12 @@ function PastGameResultsCard() {
                   </span>
                   <span className="text-gray-300 text-sm">–</span>
                   <span
-                    className={`text-xl font-bold ${!awayWon && scoresAvailable ? 'text-gray-900' : 'text-gray-400'}`}
+                    className={`text-xl font-bold pr-2 ${!awayWon && scoresAvailable ? 'text-gray-900' : 'text-gray-400'}`}
                   >
                     {d.homeTeamScore ?? '–'}
                   </span>
                   {scoresAvailable && <WinLossBadge won={bjWon} />}
-                  <span className="hidden sm:inline text-xs text-gray-400">
+                  <span className="hidden sm:inline text-xs text-gray-400 pl-1">
                     {formatDateForDisplayShortUtil(d.date)}
                   </span>
                 </div>
