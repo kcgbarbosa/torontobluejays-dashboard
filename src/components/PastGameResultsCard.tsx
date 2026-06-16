@@ -33,10 +33,10 @@ function PastGameResultsCard() {
           return (
             <div
               key={d.keyID}
-              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3 flex flex-col  border-l-4 
+              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3 flex flex-col border-l-4
                 ${bjWon ? 'border-l-blue-600' : 'border-l-gray-200'}`}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex relative items-center justify-between ">
                 <div className="flex items-center gap-2">
                   <img
                     src={d.awayTeamLogo}
@@ -47,7 +47,7 @@ function PastGameResultsCard() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
                   <span
                     className={`text-xl font-bold ${awayWon ? 'text-gray-900' : 'text-gray-400'}`}
                   >
