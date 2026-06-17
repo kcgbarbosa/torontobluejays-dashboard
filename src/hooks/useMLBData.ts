@@ -41,15 +41,16 @@ export function useMLBData() {
         const heroGame = await fetchHeroGameData(schedule);
         setHeroGameData(heroGame);
 
-        const pollGameData = () => {
-          timeoutID = setTimeout(async () => {
-            const heroGame = await fetchHeroGameData(schedule);
-            setHeroGameData(heroGame);
-            pollGameData();
-            console.log('poll fired at', new Date().toISOString());
-          }, 5000);
-        };
-        pollGameData();
+        if (heroGame?.abstractGameState === 'Preview') {
+          const pollGameData = () => {
+            timeoutID = setTimeout(async () => {
+              const heroGame = await fetchHeroGameData(schedule);
+              setHeroGameData(heroGame);
+              pollGameData();
+            }, 15000);
+          };
+          pollGameData();
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
