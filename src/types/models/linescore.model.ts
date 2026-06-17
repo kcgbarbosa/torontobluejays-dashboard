@@ -1,7 +1,8 @@
 export type PitcherRef = {
   id: number;
   fullName: string;
-  imageUrl: string;
+  playerHeadshotUrl: string;
+  playerActionShotUrl: string;
 };
 
 export type InningScore = {

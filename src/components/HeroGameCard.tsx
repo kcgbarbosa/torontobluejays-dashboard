@@ -8,6 +8,7 @@ import {
 import StatCard from './StatCard';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { getGameResult } from '../utils/gameResultUtils';
+import PitcherMatchupCard from './PitcherMatchupCard';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -120,13 +121,14 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             <div className="text-medium text-gray-600">
               {gameDataProp.gameVenue}
             </div>
-
+            <PitcherMatchupCard/>
             {/* Probable Pitchers Display */}
+            {/* TEMPORARY for testing purposes -  */}
             {gameDataProp.abstractGameState === 'Preview' &&
               gameDataProp.probablePitchers && (
                 <span className="text-left pl-10">
                   <img
-                    src={gameDataProp.probablePitchers?.away.imageUrl}
+                    src={gameDataProp.probablePitchers?.away.playerHeadshotUrl}
                     alt={gameDataProp.probablePitchers?.away.fullName}
                     className="w-40 h-auto rounded-full shrink-0"
                   />
@@ -135,7 +137,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                   {gameDataProp.probablePitchers?.home.fullName}
                   {/* TEMPORARY for testing purposes -  */}
                   <img
-                    src={gameDataProp.probablePitchers?.home.imageUrl}
+                    src={gameDataProp.probablePitchers?.home.playerHeadshotUrl}
                     alt={gameDataProp.probablePitchers?.home.fullName}
                     className="w-40 h-auto roundexwd-full shrink-0"
                   />

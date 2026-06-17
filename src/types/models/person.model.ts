@@ -10,7 +10,8 @@ export type Player = {
   lastInitName: string;
 
   jerseyNumber: string;
-  imageUrl: string; // created for player headshots
+  playerHeadshotUrl: string;
+  playerActionShotUrl: string;
   primaryNumber: string;
   birthDate: string;
   currentAge: number;

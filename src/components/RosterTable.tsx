@@ -146,7 +146,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3 ">
                         <img
-                          src={player.imageUrl}
+                          src={player.playerHeadshotUrl}
                           alt={player.fullName}
                           className="h-8 w-8 rounded-full object-cover bg-gray-100"
                         />
