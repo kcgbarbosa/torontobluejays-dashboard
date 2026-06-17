@@ -125,8 +125,20 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             {gameDataProp.abstractGameState === 'Preview' &&
               gameDataProp.probablePitchers && (
                 <span className="text-left pl-10">
-                  {gameDataProp.probablePitchers?.away.fullName} vs.{' '}
+                  <img
+                    src={gameDataProp.probablePitchers?.away.imageUrl}
+                    alt={gameDataProp.probablePitchers?.away.fullName}
+                    className="w-40 h-auto rounded-full shrink-0"
+                  />
+                  {gameDataProp.probablePitchers?.away.fullName}
+                  vs.
                   {gameDataProp.probablePitchers?.home.fullName}
+                  {/* TEMPORARY for testing purposes -  */}
+                  <img
+                    src={gameDataProp.probablePitchers?.home.imageUrl}
+                    alt={gameDataProp.probablePitchers?.home.fullName}
+                    className="w-40 h-auto roundexwd-full shrink-0"
+                  />
                 </span>
               )}
           </div>
