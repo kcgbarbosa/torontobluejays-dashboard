@@ -46,10 +46,10 @@ export function useMLBData() {
             const heroGame = await fetchHeroGameData(schedule);
             setHeroGameData(heroGame);
             pollGameData();
-          }, 30000);
+            console.log('poll fired at', new Date().toISOString());
+          }, 5000);
         };
         pollGameData();
-        return () => clearTimeout(timeoutID);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
@@ -57,6 +57,9 @@ export function useMLBData() {
       }
     };
     fetchAllData();
+    return () => {
+      clearTimeout(timeoutID);
+    };
   }, []);
   return {
     standingsData,
