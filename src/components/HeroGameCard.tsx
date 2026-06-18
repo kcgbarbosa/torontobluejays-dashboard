@@ -168,7 +168,6 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             <div className="text-medium text-gray-600">
               {gameDataProp.gameVenue}
             </div>
-            {/* Probable Pitchers Display */}
           </div>
         </div>
         {/* Pitcher Linescore Container */}

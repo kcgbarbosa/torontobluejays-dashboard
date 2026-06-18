@@ -63,6 +63,17 @@ const PitcherMatchupCard = ({
           />
         </div>
       </div>
+
+      {pitcherC && (
+        <div className="text-center mt-3 pt-3 border-t border-gray-100">
+          <span className="text-xs text-gray-400 uppercase tracking-wider">
+            Save —{' '}
+          </span>
+          <span className="text-xs font-medium text-gray-700">
+            {pitcherC.fullName}
+          </span>
+        </div>
+      )}
     </div>
   );
 };
