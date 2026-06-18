@@ -139,13 +139,13 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
-            <div className="flex items-center text-2xl mr-2 font-bold ">
+            <div className="flex items-center text-6xl font-extrabold ">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.awayTeamScore}
             </div>
 
-            <div className="flex items-center text-2xl mr-2 font-bold ">
+             <div className="flex items-center text-6xl font-extrabold ">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.homeTeamScore}

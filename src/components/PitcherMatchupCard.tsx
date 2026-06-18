@@ -15,7 +15,7 @@ const PitcherMatchupCard = ({
   pitcherC,
 }: PitcherMatchupCardProps) => {
   return (
-    <div className="w-11/12 mx-auto bg-white border-2 rounded-xl p-3">
+    <div className="w-11/12 mx-auto bg-white  rounded-xl p-2 m-3 border-t-2 border-gray-100">
       <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest text-center mb-3">
         {gameStatus === 'Preview' ? 'Probable Pitchers' : 'Game Decisions'}
       </h3>
