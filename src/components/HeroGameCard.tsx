@@ -170,17 +170,20 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
           {/* Inning StartTime Venue */}
           <div className="text-center flex flex-col">
             <div className="text-medium text-gray-600 pt-4">
-              {gameDataProp.abstractGameState !== 'Preview'
-                ? gameDataProp.linescore?.inningState.slice(0, 3) +
+              {gameDataProp.abstractGameState === 'Live' &&
+                gameDataProp.linescore?.inningState.slice(0, 3) +
                   ' ' +
-                  gameDataProp.linescore?.currentInningOrdinal
-                : formatTimeForDisplayUtil(gameDataProp.startTime)}
+                  gameDataProp.linescore?.currentInningOrdinal}
+              {gameDataProp.abstractGameState === 'Preview' &&
+                formatTimeForDisplayUtil(gameDataProp.startTime)}
             </div>
-            <div>
+            <div className="pb-1">
               {gameDataProp.abstractGameState === 'Live' && (
                 <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
               )}
-              {gameDataProp.abstractGameState === 'Final' && <h3>Final</h3>}
+              {gameDataProp.abstractGameState === 'Final' && (
+                <h3 className="text-gray-700">Final</h3>
+              )}
             </div>
             <div className="text-medium text-gray-600">
               {gameDataProp.gameVenue}
