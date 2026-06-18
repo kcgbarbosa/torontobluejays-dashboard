@@ -32,7 +32,14 @@ const PitcherMatchupCard = () => {
   return (
     <div className="bg-white">
       <div className="flex justify-around gap-4">
-        <img src={mockPitcherA.playerActionShotUrl} className="w-75 h-auto" />
+        <img
+          src={mockPitcherA.playerActionShotUrl}
+          className="size-30 rounded-full object- object-cover bg-gray-400/90"
+        />
+        <img
+          src={mockPitcherB.playerActionShotUrl}
+          className="size-30 rounded-full object- object-cover bg-gray-400/90"
+        />
       </div>
     </div>
   );
