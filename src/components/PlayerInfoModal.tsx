@@ -27,7 +27,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
   return (
     // # FIXME [June 6] ESC key doesnt close modal
     <div
-      id="playerModal"
       className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
         isOpen ? 'visible bg-black/40' : 'visible'
       }`}
