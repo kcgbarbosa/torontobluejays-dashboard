@@ -5,9 +5,7 @@ import {
   formatTimeForDisplayUtil,
   formatDateForDisplayLongUtil,
 } from '../utils/dateAndTimeUtilities';
-import StatCard from './StatCard';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
-import { getGameResult } from '../utils/gameResultUtils';
 import PitcherMatchupCard from './PitcherMatchupCard';
 import type { Linescore } from '../types/models/linescore.model';
 
@@ -97,13 +95,13 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
   if (!gameDataProp || !gameDataProp.date)
     return <div>No game data available</div>;
 
-  const { awayWon, bjWon: isBlueJaysWinner } = getGameResult(gameDataProp);
-
   return (
     <>
+      {/* Card Container */}
       <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
-        {/* Game Main Details */}
+        {/* Scoreboard Container */}
         <div>
+          {/* Date Status */}
           <div className="text-center pb-6 flex flex-col items-center justify-center">
             <span className="text-medium text-gray-600">
               {formatDateForDisplayLongUtil(gameDataProp.date)}
@@ -112,6 +110,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
               <div>Live 🔴 </div>
             )}
           </div>
+          {/* Names Logo Scores */}
           <div className="flex justify-center items-center gap-10 md:gap-20">
             <span className="flex flex-col items-center gap-2 shrink-0">
               <div
@@ -157,8 +156,8 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
               </div>
             </span>
           </div>
+          {/* Inning StartTime Venue */}
           <div className="text-center flex flex-col">
-            {/* Current Inning Display / Start Time Display */}
             <div className="text-medium text-gray-600 pt-4">
               {gameDataProp.abstractGameState !== 'Preview'
                 ? gameDataProp.linescore?.inningState.slice(0, 3) +
@@ -172,38 +171,33 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             {/* Probable Pitchers Display */}
           </div>
         </div>
-        <PitcherMatchupCard />
-
-        {/* Game Final - Decisions Pitchers Display  */}
-        {gameDataProp.abstractGameState === 'Final' && (
-          <div className="flex flex-row p-10  ">
-            <div>
-              <StatCard
-                statName={awayWon ? 'Win' : 'Loss'}
-                playerName={gameDataProp.decisions?.winner.fullName}
-                playerID={gameDataProp.decisions?.winner.id}
-                statAbbreviation={awayWon ? 'W' : 'L'}
+        {/* Pitcher Linescore Container */}
+        <div>
+          {gameDataProp.abstractGameState === 'Preview' &&
+            gameDataProp.probablePitchers && (
+              <PitcherMatchupCard
+                gameStatus={gameDataProp.abstractGameState}
+                pitcherA={gameDataProp.probablePitchers.away}
+                pitcherB={gameDataProp.probablePitchers.home}
               />
-            </div>
-            <div>
-              <StatCard
-                statName={awayWon ? 'Loss' : 'Win'}
-                playerName={gameDataProp.decisions?.loser.fullName}
-                playerID={gameDataProp.decisions?.loser.id}
-                statAbbreviation={awayWon ? 'L' : 'W'}
+            )}
+          {gameDataProp.abstractGameState !== 'Preview' &&
+            gameDataProp.linescore && (
+              <LinescoreTable
+                linescore={gameDataProp.linescore}
+                homeTeamName={gameDataProp.homeTeamName}
+                awayTeamName={gameDataProp.awayTeamName}
               />
-            </div>
-          </div>
-        )}
-
-        {gameDataProp.abstractGameState !== 'Preview' &&
-          gameDataProp.linescore && (
-            <LinescoreTable
-              linescore={gameDataProp.linescore}
-              homeTeamName={gameDataProp.homeTeamName}
-              awayTeamName={gameDataProp.awayTeamName}
+            )}
+          {gameDataProp.decisions && (
+            <PitcherMatchupCard
+              gameStatus={gameDataProp.abstractGameState}
+              pitcherA={gameDataProp.decisions.winner}
+              pitcherB={gameDataProp.decisions.loser}
+              pitcherC={gameDataProp.decisions.save}
             />
           )}
+        </div>
       </div>
     </>
   );
