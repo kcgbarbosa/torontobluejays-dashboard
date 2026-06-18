@@ -87,6 +87,19 @@ function LinescoreTable({
   );
 }
 
+function OutsIndicator({ outs }: { outs: number }) {
+  return (
+    <div className="flex items-center gap-2 ">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className={`size-3 rounded-full ${i < outs ? 'bg-blue-600' : 'bg-gray-200'}`}
+        />
+      ))}
+    </div>
+  );
+}
+
 function HeroGameCard({ gameDataProp }: GameDataProps) {
   const { isLoading, error } = useContext(AppStatusContext);
 
@@ -106,9 +119,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             <span className="text-medium text-gray-600">
               {formatDateForDisplayLongUtil(gameDataProp.date)}
             </span>
-            {gameDataProp.abstractGameState !== 'Preview' && (
-              <div>Live 🔴 </div>
-            )}
+            {gameDataProp.abstractGameState === 'Live' && <div>Live 🔴 </div>}
           </div>
           {/* Names Logo Scores */}
           <div className="flex justify-center items-center gap-10 md:gap-20">
@@ -128,13 +139,13 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
-            <div className="flex items-center">
+            <div className="flex items-center text-2xl mr-2 font-bold ">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.awayTeamScore}
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center text-2xl mr-2 font-bold ">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.homeTeamScore}
@@ -164,6 +175,12 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                   ' ' +
                   gameDataProp.linescore?.currentInningOrdinal
                 : formatTimeForDisplayUtil(gameDataProp.startTime)}
+            </div>
+            <div>
+              {gameDataProp.abstractGameState === 'Live' && (
+                <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
+              )}
+              {gameDataProp.abstractGameState === 'Final' && <h3>Final</h3>}
             </div>
             <div className="text-medium text-gray-600">
               {gameDataProp.gameVenue}
