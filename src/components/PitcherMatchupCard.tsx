@@ -35,9 +35,14 @@ const PitcherMatchupCard = ({
             <span className="text-sm font-semibold text-gray-900">
               {pitcherA?.fullName}
             </span>
-            {/* if gameStatus === Preview ? 'Away' or 'Home' : 'W' or 'L' */}
-            <span className="text-xs text-gray-400 uppercase">Away</span>
-            <span className="text-xs text-gray-300">-- - --</span>
+            {gameStatus === 'Preview' && (
+              <span className="text-xs text-gray-400 uppercase">Away</span>
+            )}
+            {gameStatus === 'Final' && (
+              <span className="font-bold text-2xl text-green-500">W</span>
+            )}
+            {/* stats to be include here in future */}
+            {/* <span className="text-xs text-gray-300">-- - --</span> */}
           </div>
         </div>
 
@@ -49,9 +54,14 @@ const PitcherMatchupCard = ({
             <span className="text-sm font-semibold text-gray-900">
               {pitcherB?.fullName}
             </span>
-            {/* if gameStatus === Preview ? 'Away' or 'Home' : 'W' or 'L (styled green or red)' */}
-            <span className="text-xs text-gray-400 uppercase">Home</span>
-            <span className="text-xs text-gray-300">-- - --</span>
+            {gameStatus === 'Preview' && (
+              <span className="text-xs text-gray-400 uppercase">Home</span>
+            )}
+            {gameStatus === 'Final' && (
+              <span className="font-bold text-2xl text-red-500">L</span>
+            )}
+            {/* stats to be include here in future */}
+            {/* <span className="text-xs text-gray-300">-- - --</span> */}
           </div>
           <img
             src={
