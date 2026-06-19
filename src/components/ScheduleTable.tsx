@@ -74,7 +74,7 @@ function ScheduleTable() {
     'text-amber-200 hover:text-white hover:bg-amber-700';
 
   return (
-    <div className="py-6 sm:py-8 :px-4 sm:max-w-11/12 sm:mx-auto">
+    <div className="sm:py-8 :px-4 sm:max-w-11/12 sm:mx-auto">
       <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-3 uppercase tracking-widest px-4 sm:px-0">
         {new Date().getFullYear()} Schedule
       </h1>
