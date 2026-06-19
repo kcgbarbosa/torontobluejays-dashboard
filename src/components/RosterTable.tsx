@@ -68,14 +68,14 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
 
   return (
     // #TODO FEAT [June 8] Add player search bar inline with header at end
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest">
+    <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">
+      <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest px-4 sm:px-0">
         Current Roster
       </h1>
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : (
-        <div className="border border-gray-300 rounded-xl overflow-hidden shadow-sm">
+        <div className="-mx-4 sm:mx-0 border-y sm:border border-gray-300 sm:rounded-xl overflow-hidden shadow-sm">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
