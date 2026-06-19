@@ -88,7 +88,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="Position"
                     asc="positionAToZ"
@@ -97,7 +97,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="B/T"
                     asc="batSideAToZ"
@@ -106,7 +106,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="Age"
                     asc="ageAsc"
@@ -115,7 +115,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="HT"
                     asc="heightAsc"
@@ -124,7 +124,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="WT"
                     asc="weightAsc"
@@ -157,7 +157,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                           <div className="text-xs text-blue-400">
                             #{player.jerseyNumber}
                           </div>
-                          <div className="sm:hidden flex gap-4 mt-1 text-xs text-gray-600">
+                          <div className="lg:hidden flex gap-4 mt-1 text-xs text-gray-600">
                             <span>{player.positionAbbreviation}</span>
                             <span>
                               {player.batSideCode}/{player.pitchHandCode}
@@ -169,19 +169,19 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.positionName} / {player.positionAbbreviation}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.batSideCode}/{player.pitchHandCode}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.currentAge}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.height}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.weight} lbs
                     </td>
                   </tr>
