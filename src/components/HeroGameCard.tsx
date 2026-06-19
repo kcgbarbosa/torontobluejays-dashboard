@@ -32,7 +32,7 @@ function LinescoreTable({
     inningMap[inn.num] = inn;
   });
 
-  const cell = 'px-3 py-4 text-center text-sm';
+  const cell = 'px-3 py-4 text-center text-sm border border-gray-100';
   const headerCell = `${cell} bg-white font-semibold text-gray-900 text-xs uppercase`;
 
   const rows = [
@@ -113,7 +113,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
       {/* Card Container */}
       <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
         {/* Scoreboard Container */}
-        <div>
+        <div className="w-full flex flex-col">
           {/* Date Status */}
           <span className="text-medium text-gray-600 flex justify-between pb-2">
             {gameDataProp.abstractGameState === 'Live' && (
@@ -174,7 +174,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             </span>
           </div>
           {/* Inning StartTime Venue */}
-          <div className="text-center flex flex-col">
+          <div className="items-center flex flex-col">
             <div className="text-medium text-gray-600 pt-4">
               {gameDataProp.abstractGameState === 'Live' &&
                 gameDataProp.linescore?.inningState.slice(0, 3) +
@@ -183,7 +183,8 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
               {gameDataProp.abstractGameState === 'Preview' &&
                 formatTimeForDisplayUtil(gameDataProp.startTime)}
             </div>
-            <div className="pb-1">
+            <div className="py-2">
+              {/* future location for strikes-balls counter and runners-on-base-diagram  */}
               {gameDataProp.abstractGameState === 'Live' && (
                 <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
               )}
@@ -197,7 +198,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
           </div>
         </div>
         {/* Pitcher Linescore Container */}
-        <div>
+        <div className="w-full">
           {gameDataProp.abstractGameState === 'Preview' &&
             gameDataProp.probablePitchers && (
               <PitcherMatchupCard
