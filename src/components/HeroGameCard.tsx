@@ -115,12 +115,18 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
         {/* Scoreboard Container */}
         <div>
           {/* Date Status */}
-          <div className="text-center pb-6 flex flex-col items-center justify-center">
-            <span className="text-medium text-gray-600">
-              {formatDateForDisplayLongUtil(gameDataProp.date)}
-            </span>
-            {gameDataProp.abstractGameState === 'Live' && <div>Live 🔴 </div>}
-          </div>
+          <span className="text-medium text-gray-600 flex justify-between pb-2">
+            {gameDataProp.abstractGameState === 'Live' && (
+              <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-red-700 ">
+                Live
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+                </span>
+              </span>
+            )}
+            {formatDateForDisplayLongUtil(gameDataProp.date)}
+          </span>
           {/* Names Logo Scores */}
           <div className="flex justify-center items-center gap-10 md:gap-20">
             <span className="flex flex-col items-center gap-2 shrink-0">
