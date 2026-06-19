@@ -41,7 +41,7 @@ export function useMLBData() {
         const heroGame = await fetchHeroGameData(schedule);
         setHeroGameData(heroGame);
 
-        if (heroGame?.abstractGameState === 'Preview') {
+        if (heroGame?.abstractGameState === 'Live') {
           const pollGameData = () => {
             timeoutID = setTimeout(async () => {
               const heroGame = await fetchHeroGameData(schedule);
