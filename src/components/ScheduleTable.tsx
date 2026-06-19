@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import {
   AppStatusContext,
   ScheduleContext,
@@ -64,78 +64,85 @@ function ScheduleTable() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const isCompleted =
+    scheduleFilter !== 'Remaining Games' && (scheduleFilter as string) !== '';
+
+  const filterBtnBase =
+    'px-3 py-1.5 rounded text-sm font-medium transition-colors duration-150 cursor-pointer';
+  const filterBtnActive = 'bg-amber-100 text-amber-900 hover:bg-amber-200';
+  const filterBtnInactive =
+    'text-amber-200 hover:text-white hover:bg-amber-700';
+
   return (
-    // #FIXME [June 8] Resolve lack of responsiveness
-    <div className="max-w-11/12 mx-auto px-4 py-8">
-      <div className="grid grid-cols-3 gap-4">
-        <main className="col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm">
-          <div className="border-b border-gray-100 px-4 py-4 flex items-center gap-2">
-            <button
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer ${
-                scheduleFilter === 'Remaining Games'
-                  ? 'bg-blue-600 text-white hover:bg-blue-700'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-              onClick={() => handleSetScheduleFilter('Remaining Games')}
-            >
-              Remaining Games
-            </button>
-            <select
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer ${
-                scheduleFilter !== 'Remaining Games' &&
-                (scheduleFilter as string) !== ''
-                  ? 'bg-blue-600 text-white hover:bg-blue-700'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-              value={scheduleFilter}
-              onChange={(e) =>
-                handleSetScheduleFilter(e.target.value as ScheduleFilterType)
-              }
-            >
-              <option value="">Select Season:</option>
-              <option value="Completed Games">
-                {new Date().getFullYear()} Completed Games
-              </option>
-              <option value="spring">
-                {new Date().getFullYear()} Spring Training
-              </option>
-              <option value="postSeason">
-                {new Date().getFullYear()} Postseason
-              </option>
-            </select>
-          </div>
-          <table className="w-full border-collapse">
-            <thead>
-              {scheduleFilter !== 'Remaining Games' &&
-              (scheduleFilter as string) !== '' ? (
-                <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
-                  <td className="px-6 py-3">Date</td>
-                  <td className="px-6 py-3">Result</td>
-                </tr>
-              ) : (
-                <tr className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100">
-                  <td className="px-6 py-3">Date</td>
-                  <td className="px-6 py-3">Matchup</td>
-                  <td className="px-3 py-3">First Pitch</td>
-                </tr>
-              )}
-            </thead>
-            <tbody>
-              {filteredGames.length === 0 ? (
-                <tr>
-                  <td colSpan={3} className="text-center p-4">
-                    No games found for the selected filter.
-                  </td>
-                </tr>
-              ) : scheduleFilter !== 'Remaining Games' &&
-                (scheduleFilter as string) !== '' ? (
-                filteredGames.map((d) => <PastGameTableRow gameData={d} />)
-              ) : (
-                filteredGames.map((d) => <FutureGameTableRow gameData={d} />)
-              )}
-            </tbody>
-          </table>
-        </main>
+    <div className="sm:py-8 :px-4 sm:max-w-11/12 sm:mx-auto">
+      <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-3 uppercase tracking-widest px-4 sm:px-0">
+        {new Date().getFullYear()} Schedule
+      </h1>
+      <div className="-mx-4 sm:mx-0 border-y sm:border border-gray-300 sm:rounded-xl overflow-hidden shadow-sm">
+        <div className="bg-amber-800 px-4 py-3 flex items-center gap-2">
+          <button
+            className={`${filterBtnBase} ${scheduleFilter === 'Remaining Games' ? filterBtnActive : filterBtnInactive}`}
+            onClick={() => handleSetScheduleFilter('Remaining Games')}
+          >
+            Remaining Games
+          </button>
+          <select
+            className={`${filterBtnBase} ${isCompleted ? filterBtnActive : filterBtnInactive}`}
+            value={scheduleFilter}
+            onChange={(e) =>
+              handleSetScheduleFilter(e.target.value as ScheduleFilterType)
+            }
+          >
+            <option value="">View Season:</option>
+            <option value="Completed Games">
+              {new Date().getFullYear()} Completed Games
+            </option>
+            <option value="spring">
+              {new Date().getFullYear()} Spring Training
+            </option>
+            <option value="postSeason">
+              {new Date().getFullYear()} Postseason
+            </option>
+          </select>
+        </div>
+        <table className="w-full border-collapse">
+          <thead className="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-200">
+            {isCompleted ? (
+              <tr>
+                <th className="px-4 py-3 text-left">Date</th>
+                <th className="px-4 py-3 text-left sm:text-center">Result</th>
+              </tr>
+            ) : (
+              <tr>
+                <th className="px-4 py-3 text-left">Date</th>
+                <th className="px-4 py-3 text-left sm:text-center">Matchup</th>
+                <th className="px-4 py-3 text-left hidden sm:table-cell">
+                  First Pitch
+                </th>
+              </tr>
+            )}
+          </thead>
+          <tbody className="divide-y divide-gray-100 bg-white">
+            {filteredGames.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={3}
+                  className="text-center p-4 text-gray-400 text-sm"
+                >
+                  No games found.
+                </td>
+              </tr>
+            ) : isCompleted ? (
+              filteredGames.map((d) => (
+                <PastGameTableRow key={d.keyID} gameData={d} />
+              ))
+            ) : (
+              filteredGames.map((d) => (
+                <FutureGameTableRow key={d.keyID} gameData={d} />
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
