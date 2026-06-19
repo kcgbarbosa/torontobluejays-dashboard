@@ -56,10 +56,25 @@ export function linescoreModelMapper(dto: LinescoreDTO): Linescore {
 
 export function decisionsModelMapper(dto: DecisionsDTO): Decisions {
   return {
-    winner: { id: dto.winner.id, fullName: dto.winner.fullName },
-    loser: { id: dto.loser.id, fullName: dto.loser.fullName },
+    winner: {
+      id: dto.winner.id,
+      fullName: dto.winner.fullName,
+      playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${dto.winner.id}/spots/240`,
+      playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${dto.winner.id}.jpg`,
+    },
+    loser: {
+      id: dto.loser.id,
+      fullName: dto.loser.fullName,
+      playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${dto.loser.id}/spots/240`,
+      playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${dto.loser.id}.jpg`,
+    },
     save: dto.save
-      ? { id: dto.save.id, fullName: dto.save.fullName }
+      ? {
+          id: dto.save.id,
+          fullName: dto.save.fullName,
+          playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${dto.save.id}/spots/240`,
+          playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${dto.save.id}.jpg`,
+        }
       : undefined,
   };
 }
@@ -73,10 +88,14 @@ export function gameModelMapper(result: GameResponseDTO) {
               away: {
                 id: subData.teams.away.probablePitcher.id,
                 fullName: subData.teams.away.probablePitcher.fullName,
+                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.away.probablePitcher.id}/spots/240`,
+                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.away.probablePitcher.id}.jpg`,
               },
               home: {
                 id: subData.teams.home.probablePitcher.id,
                 fullName: subData.teams.home.probablePitcher.fullName,
+                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.home.probablePitcher.id}/spots/240`,
+                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.home.probablePitcher.id}.jpg`,
               },
             }
           : undefined;
@@ -132,14 +151,18 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
       const probablePitchers: ProbablePitchers | undefined =
         subData.teams.away.probablePitcher && subData.teams.home.probablePitcher
           ? {
+              // #TODO NEXT - Add additional stats for the probable pitchers Preview Game display
               away: {
                 id: subData.teams.away.probablePitcher.id,
-                // #TODO NEXT - Add additional stats for the probable pitchers Preview Game display
                 fullName: subData.teams.away.probablePitcher.fullName,
+                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.away.probablePitcher.id}/spots/240`,
+                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.away.probablePitcher.id}.jpg`,
               },
               home: {
                 id: subData.teams.home.probablePitcher.id,
                 fullName: subData.teams.home.probablePitcher.fullName,
+                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.home.probablePitcher.id}/spots/240`,
+                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.home.probablePitcher.id}.jpg`,
               },
             }
           : undefined;
@@ -224,8 +247,8 @@ export function rosterDataModelMapper(result: RosterResponseDTO) {
       lastInitName: data.person.lastInitName,
 
       jerseyNumber: data.jerseyNumber,
-      // setting image size default to 240px, subject to change
-      imageUrl: `https://midfield.mlbstatic.com/v1/people/${data.person.id}/spots/240`,
+      playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${data.person.id}/spots/240`,
+      playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${data.person.id}.jpg`,
       primaryNumber: data.person.primaryNumber,
       birthDate: data.person.birthDate,
       currentAge: data.person.currentAge,

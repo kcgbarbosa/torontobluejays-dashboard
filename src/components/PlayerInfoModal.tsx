@@ -27,7 +27,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
   return (
     // # FIXME [June 6] ESC key doesnt close modal
     <div
-      id="playerModal"
       className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
         isOpen ? 'visible bg-black/40' : 'visible'
       }`}
@@ -62,7 +61,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         component */}
         <div className="bg-blue-600 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
           <img
-            src={selectedPlayerData?.imageUrl}
+            src={selectedPlayerData?.playerHeadshotUrl}
             alt={selectedPlayerData?.fullName}
             className="w-50 h-auto rounded-full ring-2 ring-white/75 shrink-0 md:self-end"
           />

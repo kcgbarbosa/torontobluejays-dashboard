@@ -66,8 +66,8 @@ function ScheduleTable() {
 
   return (
     // #FIXME [June 8] Resolve lack of responsiveness
-    <div id="page-container" className="max-w-11/12 mx-auto px-4 py-8">
-      <div id="grid-layout" className="grid grid-cols-3 gap-4">
+    <div className="max-w-11/12 mx-auto px-4 py-8">
+      <div className="grid grid-cols-3 gap-4">
         <main className="col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm">
           <div className="border-b border-gray-100 px-4 py-4 flex items-center gap-2">
             <button

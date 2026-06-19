@@ -27,7 +27,7 @@ function HomePage() {
   );
 
   return (
-    <div id="page-container" className="bg-gray-50 min-h-screen w-full p-4">
+    <div className="bg-gray-50 min-h-screen w-full p-4">
       <main className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div>
