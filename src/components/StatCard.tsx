@@ -29,7 +29,7 @@ function StatCard({
   }
 
   return (
-    // #TODO FEAT [June 6] Player Card act as links straight to roster page table location
+ 
     <div className="bg-white border border-y-amber-900 rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
       <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-widest pb-3">
         {statName}

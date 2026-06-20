@@ -37,7 +37,6 @@ export type Decisions = {
   save?: PitcherRef;
 };
 
-// #TODO CHORE [June 17] Extract probable pitchers to individual type file
 export type ProbablePitchers = {
   away: PitcherRef;
   home: PitcherRef;

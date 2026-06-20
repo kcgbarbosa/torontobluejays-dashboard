@@ -18,7 +18,6 @@ function RosterPage() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   return (
-    // #TODO FEAT [June 10] Locate detailed player active status information (on IL? active 26? Then add that to dto and models and render that accordingly)
     <div className="bg-gray-50 w-full min-h-screen p-4">
       {isOpen && (
         <PlayerInfoModal
