@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppStatusContext, PlayerContext } from '../store/contexts';
 
 type PlayerInfoModalProps = {
@@ -24,8 +24,20 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
     .filter(Boolean)
     .join(', ');
 
+  useEffect(() => {
+    const handleEscKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEscKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscKeyDown);
+    };
+  }, [onClose]);
+
   return (
-    // # FIXME [June 6] ESC key doesnt close modal
     <div
       className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
         isOpen ? 'visible bg-black/40' : 'visible'
