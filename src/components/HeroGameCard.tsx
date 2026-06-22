@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import { AppStatusContext } from '../store/contexts';
 import type { Game } from '../types/models/game.model';
 import {
   formatTimeForDisplayUtil,
@@ -101,10 +99,6 @@ function OutsIndicator({ outs }: { outs: number }) {
 }
 
 function HeroGameCard({ gameDataProp }: GameDataProps) {
-  const { isLoading, error } = useContext(AppStatusContext);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
   if (!gameDataProp || !gameDataProp.date)
     return <div>No game data available</div>;
 

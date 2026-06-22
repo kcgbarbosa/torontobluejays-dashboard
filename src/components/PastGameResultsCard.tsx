@@ -1,11 +1,7 @@
 import { useContext } from 'react';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import { getGameResult } from '../utils/gameResultUtils';
-import {
-  AppStatusContext,
-  HeroGameContext,
-  ScheduleContext,
-} from '../store/contexts';
+import { HeroGameContext, ScheduleContext } from '../store/contexts';
 import WinLossBadge from './WinLossBadge';
 import {
   isGameInPast,
@@ -15,11 +11,6 @@ import {
 function PastGameResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
   const heroGameData = useContext(HeroGameContext);
-  const { isLoading, error } = useContext(AppStatusContext);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   const pastGames = schedulePreviewData
     .filter(
       (d) => isGameInPast(d) === true && d.gamePk !== heroGameData?.gamePk

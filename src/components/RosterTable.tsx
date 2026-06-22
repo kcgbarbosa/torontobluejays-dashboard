@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { AppStatusContext, PlayerContext } from '../store/contexts';
+import { PlayerContext } from '../store/contexts';
 import SortingArrowButton, {
   type RosterFilterType,
 } from './SortingArrowButton';
@@ -15,7 +15,6 @@ const toInches = (h: string) => {
 
 function RosterTable({ onSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
-  const { isLoading, error } = useContext(AppStatusContext);
   const [rosterFilter, setRosterFilter] =
     useState<RosterFilterType>('lastNameAToZ');
 
@@ -62,9 +61,6 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
         return sorted;
     }
   }, [playerData, rosterFilter]);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">

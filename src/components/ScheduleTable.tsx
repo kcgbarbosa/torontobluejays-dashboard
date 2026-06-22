@@ -1,9 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import {
-  AppStatusContext,
-  ScheduleContext,
-  SeasonContext,
-} from '../store/contexts';
+import { ScheduleContext, SeasonContext } from '../store/contexts';
 import { PastGameTableRow } from './PastGameTableRow';
 import FutureGameTableRow from './FutureGameTableRow';
 import { isGameInPast } from '../utils/dateAndTimeUtilities';
@@ -17,7 +13,6 @@ type ScheduleFilterType =
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
   const seasonData = useContext(SeasonContext);
-  const { isLoading, error } = useContext(AppStatusContext);
   const [scheduleFilter, setScheduleFilter] =
     useState<ScheduleFilterType>('Remaining Games');
   const handleSetScheduleFilter = (filter: ScheduleFilterType) => {
@@ -60,9 +55,6 @@ function ScheduleTable() {
     regularSeasonStartDate,
     regularSeasonEndDate,
   ]);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   const isCompleted =
     scheduleFilter !== 'Remaining Games' && (scheduleFilter as string) !== '';

@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { AppStatusContext, PlayerContext } from '../store/contexts';
+import { PlayerContext } from '../store/contexts';
 
 type PlayerInfoModalProps = {
   playerID: number | null;
@@ -8,13 +8,9 @@ type PlayerInfoModalProps = {
 };
 
 function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
-  const { isLoading, error } = useContext(AppStatusContext);
   const playerData = useContext(PlayerContext);
 
   const selectedPlayerData = playerData.find((d) => d.id === playerID);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   const birthLocation = [
     selectedPlayerData?.birthCity,
