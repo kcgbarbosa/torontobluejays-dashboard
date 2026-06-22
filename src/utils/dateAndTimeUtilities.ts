@@ -3,6 +3,7 @@ import type { Game } from '../types/models/game.model';
 export const isGameInPast = (game: Game) => {
   const todaysDate = new Date().toLocaleDateString('en-CA');
 
+  if (game.detailedState === 'Postponed') return true;
   if (game.date < todaysDate) return true;
   if (game.date > todaysDate) return false;
 
