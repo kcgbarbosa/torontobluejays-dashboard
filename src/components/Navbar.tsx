@@ -18,26 +18,40 @@ function Navbar() {
       <Link to={'/'}>
         <img src="src/assets/imgs/logo-bluejays.png" className="w-36 lg:w-48" />
       </Link>
-      <div className="flex flex-col items-center gap-8">
-        <button onClick={handleClick}>
+      <div className="flex flex-col items-center md:hidden">
+        <button onClick={handleClick} className="">
           <RxHamburgerMenu />
         </button>
-        {isOpen &&
-          navLinkInfo.map((d) => (
-            <NavLink
-              key={d.id}
-              to={d.href}
-              className={({ isActive }) =>
-                `py-2 text-base font-medium transition-colors duration-200 ${
-                  isActive
-                    ? 'text-blue-600 font-semibold border-b-2 border-blue-600'
-                    : 'text-gray-600 hover:text-blue-400'
-                }`
-              }
-            >
-              {d.name}
-            </NavLink>
-          ))}
+        {isOpen && (
+          <div className="absolute top-full flex flex-col right-0 bg-white/50 z-10">
+            {navLinkInfo.map((d) => (
+              <NavLink
+                key={d.id}
+                to={d.href}
+                className="rounded-md text-center px-1 py-2 border border-gray-200"
+              >
+                {d.name}
+              </NavLink>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="hidden md:flex gap-4">
+        {navLinkInfo.map((d) => (
+          <NavLink
+            key={d.id}
+            to={d.href}
+            className={({ isActive }) =>
+              `py-2 text-center text-base font-medium transition-colors duration-200 ${
+                isActive
+                  ? 'text-blue-600 font-semibold border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-blue-400'
+              }`
+            }
+          >
+            {d.name}
+          </NavLink>
+        ))}
       </div>
     </nav>
   );
