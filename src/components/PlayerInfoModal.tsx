@@ -77,7 +77,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             <h2 className="text-3xl font-extrabold tracking-tight leading-tight">
               {selectedPlayerData?.fullName}{' '}
               <span className="text-white/60">
-                {/*  # FIXME [June 6] - Handle empty states (example: no placeholder is being displayed right now for Willie) */}
                 #{selectedPlayerData?.jerseyNumber}
               </span>
             </h2>
