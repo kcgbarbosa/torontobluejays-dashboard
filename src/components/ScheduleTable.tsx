@@ -24,7 +24,9 @@ function ScheduleTable() {
 
   const filteredGames = useMemo(() => {
     if (scheduleFilter === 'Remaining Games')
-      return scheduleData.filter((d) => !isGameInPast(d));
+      return scheduleData.filter(
+        (d) => !isGameInPast(d) && d.detailedState !== 'Postponed'
+      );
 
     if (scheduleFilter === 'Completed Games')
       return regularSeasonStartDate && regularSeasonEndDate
