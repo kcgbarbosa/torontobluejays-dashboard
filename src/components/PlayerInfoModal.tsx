@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { AppStatusContext, PlayerContext } from '../store/contexts';
+import { useContext, useEffect } from 'react';
+import { PlayerContext } from '../store/contexts';
 
 type PlayerInfoModalProps = {
   playerID: number | null;
@@ -8,13 +8,9 @@ type PlayerInfoModalProps = {
 };
 
 function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
-  const { isLoading, error } = useContext(AppStatusContext);
   const playerData = useContext(PlayerContext);
 
   const selectedPlayerData = playerData.find((d) => d.id === playerID);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   const birthLocation = [
     selectedPlayerData?.birthCity,
@@ -24,8 +20,20 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
     .filter(Boolean)
     .join(', ');
 
+  useEffect(() => {
+    const handleEscKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEscKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscKeyDown);
+    };
+  }, [onClose]);
+
   return (
-    // # FIXME [June 6] ESC key doesnt close modal
     <div
       className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
         isOpen ? 'visible bg-black/40' : 'visible'
@@ -36,9 +44,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* # TODO STYLES [June 6]: Review following elements:
-         * - Stat table headers
-         * - Text-size scaling */}
         <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
           <button
             onClick={onClose}
@@ -57,8 +62,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             ✕
           </button>
         </div>
-        {/*  # TODO REFACTOR [May 30] - extract statistics table into reusable
-        component */}
         <div className="bg-blue-600 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
           <img
             src={selectedPlayerData?.playerHeadshotUrl}
@@ -74,7 +77,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             <h2 className="text-3xl font-extrabold tracking-tight leading-tight">
               {selectedPlayerData?.fullName}{' '}
               <span className="text-white/60">
-                {/*  # FIXME [June 6] - Handle empty states (example: no placeholder is being displayed right now for Willie) */}
                 #{selectedPlayerData?.jerseyNumber}
               </span>
             </h2>
@@ -227,7 +229,6 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
               </div>
             )
           )}
-          {/* # TODO FEAT [June 6] Add additional statistics for pitchers */}
           {selectedPlayerData?.isPitcher && (
             <div>
               <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">

@@ -1,9 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import {
-  AppStatusContext,
-  ScheduleContext,
-  SeasonContext,
-} from '../store/contexts';
+import { ScheduleContext, SeasonContext } from '../store/contexts';
 import { PastGameTableRow } from './PastGameTableRow';
 import FutureGameTableRow from './FutureGameTableRow';
 import { isGameInPast } from '../utils/dateAndTimeUtilities';
@@ -17,7 +13,6 @@ type ScheduleFilterType =
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
   const seasonData = useContext(SeasonContext);
-  const { isLoading, error } = useContext(AppStatusContext);
   const [scheduleFilter, setScheduleFilter] =
     useState<ScheduleFilterType>('Remaining Games');
   const handleSetScheduleFilter = (filter: ScheduleFilterType) => {
@@ -29,7 +24,9 @@ function ScheduleTable() {
 
   const filteredGames = useMemo(() => {
     if (scheduleFilter === 'Remaining Games')
-      return scheduleData.filter((d) => !isGameInPast(d));
+      return scheduleData.filter(
+        (d) => !isGameInPast(d) && d.detailedState !== 'Postponed'
+      );
 
     if (scheduleFilter === 'Completed Games')
       return regularSeasonStartDate && regularSeasonEndDate
@@ -61,9 +58,6 @@ function ScheduleTable() {
     regularSeasonEndDate,
   ]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   const isCompleted =
     scheduleFilter !== 'Remaining Games' && (scheduleFilter as string) !== '';
 
@@ -74,7 +68,7 @@ function ScheduleTable() {
     'text-amber-200 hover:text-white hover:bg-amber-700';
 
   return (
-    <div className="sm:py-8 sm:px-4 sm:max-w-11/12 sm:mx-auto">
+    <div className="sm:py-8 :px-4 sm:max-w-11/12 sm:mx-auto">
       <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-3 uppercase tracking-widest px-4 sm:px-0">
         {new Date().getFullYear()} Schedule
       </h1>

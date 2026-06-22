@@ -151,7 +151,6 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
       const probablePitchers: ProbablePitchers | undefined =
         subData.teams.away.probablePitcher && subData.teams.home.probablePitcher
           ? {
-              // #TODO NEXT - Add additional stats for the probable pitchers Preview Game display
               away: {
                 id: subData.teams.away.probablePitcher.id,
                 fullName: subData.teams.away.probablePitcher.fullName,

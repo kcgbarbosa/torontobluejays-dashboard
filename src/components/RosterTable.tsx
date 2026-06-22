@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { AppStatusContext, PlayerContext } from '../store/contexts';
+import { PlayerContext } from '../store/contexts';
 import SortingArrowButton, {
   type RosterFilterType,
 } from './SortingArrowButton';
@@ -15,7 +15,6 @@ const toInches = (h: string) => {
 
 function RosterTable({ onSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
-  const { isLoading, error } = useContext(AppStatusContext);
   const [rosterFilter, setRosterFilter] =
     useState<RosterFilterType>('lastNameAToZ');
 
@@ -63,11 +62,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
     }
   }, [playerData, rosterFilter]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    // #TODO FEAT [June 8] Add player search bar inline with header at end
     <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">
       <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest px-4 sm:px-0">
         Current Roster
@@ -88,7 +83,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="Position"
                     asc="positionAToZ"
@@ -97,7 +92,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="B/T"
                     asc="batSideAToZ"
@@ -106,7 +101,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="Age"
                     asc="ageAsc"
@@ -115,7 +110,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="HT"
                     asc="heightAsc"
@@ -124,7 +119,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     onSelect={setRosterFilter}
                   />
                 </th>
-                <th className="text-left px-4 py-3 hidden sm:table-cell">
+                <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortingArrowButton
                     label="WT"
                     asc="weightAsc"
@@ -157,7 +152,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                           <div className="text-xs text-blue-400">
                             #{player.jerseyNumber}
                           </div>
-                          <div className="sm:hidden flex gap-4 mt-1 text-xs text-gray-600">
+                          <div className="lg:hidden flex gap-4 mt-1 text-xs text-gray-600">
                             <span>{player.positionAbbreviation}</span>
                             <span>
                               {player.batSideCode}/{player.pitchHandCode}
@@ -169,19 +164,19 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.positionName} / {player.positionAbbreviation}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.batSideCode}/{player.pitchHandCode}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.currentAge}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.height}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden sm:table-cell">
+                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.weight} lbs
                     </td>
                   </tr>

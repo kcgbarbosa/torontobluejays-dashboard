@@ -13,7 +13,7 @@ function Navbar() {
         to={'/'}
         className="text-3xl text-blue-600 font-semibold tracking-tighter"
       >
-        Jays Hub
+        Toronto Blue Jays 
       </Link>
       <div className="flex items-center gap-8">
         {navLinkInfo.map((d) => (

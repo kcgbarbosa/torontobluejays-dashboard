@@ -16,7 +16,6 @@ type TeamScoreDTO = {
   probablePitcher?: LinescorePitcherRefDTO;
 };
 
-// #TODO FEAT [June 5] implement usage of status for hero game0
 type StatusDTO = {
   abstractGameState: string;
   detailedState: string;
