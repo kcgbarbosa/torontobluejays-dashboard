@@ -9,11 +9,8 @@ const navLinkInfo = [
 function Navbar() {
   return (
     <nav className="flex w-full justify-between border-b border-gray-300 bg-blue-50 px-10 py-5">
-      <Link
-        to={'/'}
-        className="text-3xl text-blue-600 font-semibold tracking-tighter"
-      >
-        Toronto Blue Jays 
+      <Link to={'/'}>
+        <img src="src/assets/imgs/logo-bluejays.png" className="w-36 lg:w-48" />
       </Link>
       <div className="flex items-center gap-8">
         {navLinkInfo.map((d) => (
