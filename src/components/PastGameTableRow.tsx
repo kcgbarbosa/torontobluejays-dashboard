@@ -23,8 +23,10 @@ export function PastGameTableRow({ gameData }: GameProps) {
   if (detailedState === 'Postponed') {
     return (
       <tr className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors duration-150 ">
-        <td className="pl-4 pr-2 py-2.5 sm:px-4 sm:py-3 text-xs font-medium text-gray-500 whitespace-nowrap w-px">
-          {date}
+        <td className="">
+          <span className="ml-2 px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-xs font-medium">
+            Postponed
+          </span>
         </td>
         <td className="px-2 py-2.5 sm:px-4 sm:py-3 min-w-0 sm:text-center">
           <div className="flex items-center gap-1.5 text-sm text-gray-400 sm:justify-center">
