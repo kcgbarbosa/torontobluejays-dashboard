@@ -14,7 +14,7 @@ function Navbar() {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 flex w-full justify-between border-b border-gray-300 bg-blue-200 px-10 py-5">
+    <nav className="sticky top-0 z-10 flex w-full justify-between border-b border-gray-300 bg-blue-200 px-10 py-5">
       <Link to={'/'}>
         <img src="src/assets/imgs/logo-bluejays.png" className="w-36 lg:w-48" />
       </Link>
@@ -23,12 +23,19 @@ function Navbar() {
           <RxHamburgerMenu />
         </button>
         {isOpen && (
-          <div className="absolute top-full flex flex-col right-0 bg-white/50 z-10">
+          <div className="absolute border text-lg font-semibold tracking-wide rounded-lg top-full flex flex-col w-36 gap-1 right-0 bg-white/80 z-10">
             {navLinkInfo.map((d) => (
               <NavLink
                 key={d.id}
                 to={d.href}
-                className="rounded-md text-center px-1 py-2 border border-gray-200"
+                className={({ isActive }) =>
+                  `rounded-md px-1 py-2 text-center text-base font-medium transition-colors duration-200 ${
+                    isActive
+                      ? 'text-blue-600 font-semibold'
+                      : 'text-gray-600 hover:text-blue-400'
+                  }`
+                }
+                onClick={() => setIsOpen(false)}
               >
                 {d.name}
               </NavLink>
