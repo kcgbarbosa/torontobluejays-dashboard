@@ -13,7 +13,10 @@ function PastGameResultsCard() {
   const heroGameData = useContext(HeroGameContext);
   const pastGames = schedulePreviewData
     .filter(
-      (d) => isGameInPast(d) === true && d.gamePk !== heroGameData?.gamePk
+      (d) =>
+        isGameInPast(d) === true &&
+        d.gamePk !== heroGameData?.gamePk &&
+        d.detailedState === 'Final'
     )
     .reverse()
     .slice(0, 7);
