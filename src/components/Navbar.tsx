@@ -14,7 +14,7 @@ function Navbar() {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="flex w-full justify-between border-b border-gray-300 bg-blue-50 px-10 py-5">
+    <nav className="sticky top-0 flex w-full justify-between border-b border-gray-300 bg-blue-200 px-10 py-5">
       <Link to={'/'}>
         <img src="src/assets/imgs/logo-bluejays.png" className="w-36 lg:w-48" />
       </Link>
