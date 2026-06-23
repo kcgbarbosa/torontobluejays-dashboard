@@ -139,13 +139,13 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
-            <div className="flex items-center text-6xl font-extrabold ">
+            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl ">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.awayTeamScore}
             </div>
 
-            <div className="flex items-center text-6xl font-extrabold ">
+            <div className="w-8 pb-2 text-center text-7xl font-barlow-condensed md:text-8xl ">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.homeTeamScore}
@@ -183,7 +183,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
               )}
               {gameDataProp.abstractGameState === 'Final' && (
-                <h3 className="text-gray-700">Final</h3>
+                <h3 className="text-gray-700 font-extrabold">Final</h3>
               )}
             </div>
             <div className="text-medium text-gray-600">

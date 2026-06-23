@@ -19,12 +19,12 @@ function Navbar() {
       <Link to={'/'}>
         <img src={logoURL} className="w-36 lg:w-48" />
       </Link>
-      <div className="flex flex-col items-center md:hidden">
+      <div className="relative flex flex-col items-center md:hidden">
         <button onClick={handleClick} className="">
           <RxHamburgerMenu />
         </button>
         {isOpen && (
-          <div className="absolute border text-lg font-semibold tracking-wide rounded-lg top-full flex flex-col w-36 gap-1 right-0 bg-white/80 z-10">
+          <div className="absolute top-full -right-10 z-10 flex w-36 flex-col gap-1 rounded-lg border border-gray-100 bg-white p-2 shadow-lg">
             {navLinkInfo.map((d) => (
               <NavLink
                 key={d.id}
