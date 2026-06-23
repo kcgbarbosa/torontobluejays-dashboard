@@ -109,7 +109,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
       <motion.div
         className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center"
         initial={{ opacity: 0, y: 1 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 5 }}
         transition={{ type: 'tween', duration: 0.25, ease: 'easeOut' }}
       >
         {/* Scoreboard Container */}
@@ -128,13 +128,14 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             <span>{formatDateForDisplayLongUtil(gameDataProp.date)}</span>
           </span>
           {/* Names Logo Scores */}
-          <div className="flex justify-center items-center gap-10 md:gap-20">
-            <span className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-10 sm:gap-15">
+            <span className="flex flex-1 flex-col items-center gap-2">
               <div
-                className={`sm:border-4 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
                 <img
-                  className="size-15 rounded-full md:size-20 "
+                  alt={`${gameDataProp.awayTeamName} logo`}
+                  className="size-15 rounded-full sm:size-20"
                   src={gameDataProp.awayTeamLogo}
                 />
               </div>
@@ -145,23 +146,24 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
-            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl ">
+            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.awayTeamScore}
             </div>
 
-            <div className="w-8 pb-2 text-center text-7xl font-barlow-condensed md:text-8xl ">
+            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.homeTeamScore}
             </div>
-            <span className="flex flex-col items-center gap-2">
+            <span className="flex flex-1 flex-col items-center gap-2">
               <div
-                className={`sm:border-4 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
                 <img
-                  className="size-15 rounded-full md:size-20 "
+                  alt={`${gameDataProp.homeTeamName} logo`}
+                  className="size-15 rounded-full sm:size-20"
                   src={gameDataProp.homeTeamLogo}
                 />
               </div>
