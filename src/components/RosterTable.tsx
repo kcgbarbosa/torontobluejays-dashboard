@@ -3,6 +3,7 @@ import { PlayerContext } from '../store/contexts';
 import SortingArrowButton, {
   type RosterFilterType,
 } from './SortingArrowButton';
+import { motion } from 'motion/react';
 
 type RosterProps = {
   onSelectPlayer: (id: number) => void;
@@ -62,6 +63,20 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
     }
   }, [playerData, rosterFilter]);
 
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.05, // 50ms between each child
+      },
+    },
+  };
+
+  const rowVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">
       <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest px-4 sm:px-0">
@@ -70,7 +85,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : (
-        <div className="-mx-4 sm:mx-0 border-y sm:border border-gray-300 sm:rounded-xl overflow-hidden shadow-sm">
+        <div className="-mx-4 sm:mx-0 border-y sm:border border-gray-300 sm:rounded-xl shadow-sm">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
@@ -130,10 +145,17 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <motion.tbody
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="divide-y divide-gray-100 bg-white"
+            >
               {filteredRoster.map((player) => {
                 return (
-                  <tr
+                  <motion.tr
+                    whileHover={{ scale: 1.01 }}
+                    variants={rowVariants}
                     key={player.id}
                     className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
                     onClick={() => onSelectPlayer(player.id)}
@@ -179,10 +201,10 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                     <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
                       {player.weight} lbs
                     </td>
-                  </tr>
+                  </motion.tr>
                 );
               })}
-            </tbody>
+            </motion.tbody>
           </table>
         </div>
       )}
