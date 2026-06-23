@@ -189,7 +189,9 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
               )}
               {gameDataProp.abstractGameState === 'Final' && (
-                <h3 className="text-gray-700 font-extrabold">Final</h3>
+                <h3 className="text-gray-700 font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
+                  Final
+                </h3>
               )}
             </div>
             <div className="text-medium text-gray-600">
