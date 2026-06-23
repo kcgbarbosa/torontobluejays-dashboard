@@ -23,9 +23,9 @@ function Navbar() {
           className="w-36 lg:w-48"
         />
       </Link>
-      <div className="relative flex flex-col items-center md:hidden">
+      <div className="relative flex flex-col items-center pt-2 md:hidden">
         <button onClick={handleClick} className="">
-          <RxHamburgerMenu />
+          <RxHamburgerMenu size={25} />
         </button>
         {isOpen && (
           <div className="absolute top-full -right-10 z-10 flex w-36 flex-col gap-1 rounded-lg border border-gray-100 bg-white p-2 shadow-lg">
