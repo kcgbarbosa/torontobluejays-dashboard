@@ -15,7 +15,7 @@ function Navbar() {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 z-10 flex w-full justify-between border-b border-gray-300 bg-blue-200 px-10 py-5">
+    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-gray-300 bg-blue-200 px-10 py-5">
       <Link to={'/'}>
         <img
           alt="Toronto Blue Jays logo"
@@ -48,13 +48,13 @@ function Navbar() {
           </div>
         )}
       </div>
-      <div className="hidden md:flex gap-4">
+      <div className="hidden md:flex items-start gap-8">
         {navLinkInfo.map((d) => (
           <NavLink
             key={d.id}
             to={d.href}
             className={({ isActive }) =>
-              `py-4 text-center text-base font-medium transition-colors duration-200 ${
+              `pt-5 pb-2 text-center text-base lg:text-lg font-medium transition-colors duration-200 ${
                 isActive
                   ? 'text-blue-600 font-semibold border-b-3 border-blue-600'
                   : 'text-gray-600 hover:text-blue-400'
