@@ -115,7 +115,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
         {/* Scoreboard Container */}
         <div className="w-full flex flex-col">
           {/* Date Status */}
-          <span className="text-medium text-gray-600 flex justify-between pb-2">
+          <span className="text-base text-gray-600 flex justify-between pb-2">
             {gameDataProp.abstractGameState === 'Live' && (
               <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-red-700 ">
                 Live
@@ -175,7 +175,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
           </div>
           {/* Inning StartTime Venue */}
           <div className="items-center flex flex-col">
-            <div className="text-medium text-gray-600 pt-4">
+            <div className="text-base text-gray-600 pt-4">
               {gameDataProp.abstractGameState === 'Live' &&
                 gameDataProp.linescore?.inningState.slice(0, 3) +
                   ' ' +
@@ -194,7 +194,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 </h3>
               )}
             </div>
-            <div className="text-medium text-gray-600">
+            <div className="text-base text-gray-600">
               {gameDataProp.gameVenue}
             </div>
           </div>
