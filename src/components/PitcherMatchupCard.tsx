@@ -20,16 +20,17 @@ const PitcherMatchupCard = ({
         {gameStatus === 'Preview' ? 'Probable Pitchers' : 'Game Decisions'}
       </h3>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-start justify-center gap-2 sm:flex-row sm:items-center sm:gap-6">
         {/* Pitcher A */}
         <div className="flex items-center gap-3">
           <img
+            alt={`${pitcherA?.fullName} headshot`}
             src={
               gameStatus === 'Preview'
                 ? pitcherA?.playerActionShotUrl
                 : pitcherA?.playerHeadshotUrl
             }
-            className="size-20 rounded-full object-cover bg-gray-400/90 md:size-30"
+            className="size-15 rounded-full object-cover bg-gray-400/90 md:size-30"
           />
           <div className="flex flex-col gap-0.5">
             <span className="text-sm font-semibold text-gray-900">
@@ -43,12 +44,13 @@ const PitcherMatchupCard = ({
             )}
           </div>
         </div>
-
-        <span className="text-base font-bold text-gray-400">VS.</span>
+        <span className="hidden sm:block text-base text-center font-bold text-gray-400">
+          VS.
+        </span>
 
         {/* Pitcher B */}
         <div className="flex items-center gap-3">
-          <div className="flex flex-col text-right">
+          <div className="flex flex-col sm:text-right">
             <span className="text-sm font-semibold text-gray-900">
               {pitcherB?.fullName}
             </span>
@@ -58,28 +60,29 @@ const PitcherMatchupCard = ({
             {gameStatus === 'Final' && (
               <span className="font-bold text-2xl text-red-500">L</span>
             )}
-            {/* stats to be include here in future */}
-            {/* <span className="text-xs text-gray-300">-- - --</span> */}
           </div>
           <img
+            alt={`${pitcherB?.fullName} headshot`}
             src={
               gameStatus === 'Preview'
                 ? pitcherB?.playerActionShotUrl
                 : pitcherB?.playerHeadshotUrl
             }
-            className="size-20 rounded-full object-cover bg-gray-400/90 md:size-30"
+            className="order-first sm:order-last size-15 rounded-full object-cover bg-gray-400/90 md:size-30"
           />
         </div>
       </div>
-
       {pitcherC && (
-        <div className="text-center mt-3 pt-3 border-t border-gray-100">
-          <span className="text-xs text-gray-400 uppercase tracking-wider">
-            Save —{' '}
-          </span>
+        <div className="flex items-center justify-start gap-2 mt-3 pt-3 border-t border-gray-100 sm:justify-center">
+          <img
+            alt={`${pitcherC.fullName} headshot`}
+            src={pitcherC.playerHeadshotUrl}
+            className="size-15 rounded-full object-cover bg-gray-400/90"
+          />
           <span className="text-xs font-medium text-gray-700">
             {pitcherC.fullName}
           </span>
+          <span className="text-xs font-bold text-green-500">S</span>
         </div>
       )}
     </div>
