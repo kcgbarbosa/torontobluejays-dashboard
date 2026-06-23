@@ -6,6 +6,7 @@ import {
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import PitcherMatchupCard from './PitcherMatchupCard';
 import type { Linescore } from '../types/models/linescore.model';
+import { motion } from 'motion/react';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -105,7 +106,12 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
   return (
     <>
       {/* Card Container */}
-      <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
+      <motion.div
+        className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center"
+        initial={{ opacity: 0, y: 1 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'tween', duration: 0.25, ease: 'easeOut' }}
+      >
         {/* Scoreboard Container */}
         <div className="w-full flex flex-col">
           {/* Date Status */}
@@ -218,7 +224,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             />
           )}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
