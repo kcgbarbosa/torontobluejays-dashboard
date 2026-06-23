@@ -108,9 +108,26 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
       {/* Card Container */}
       <motion.div
         className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center"
-        initial={{ opacity: 0, y: 1 }}
-        animate={{ opacity: 1, y: 5 }}
-        transition={{ type: 'tween', duration: 0.25, ease: 'easeOut' }}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.01 }}
+        transition={{
+          opacity: {
+            type: 'tween',
+            duration: 0.25,
+            ease: 'easeOut',
+          },
+          y: {
+            type: 'tween',
+            duration: 0.25,
+            ease: 'easeOut',
+          },
+          scale: {
+            type: 'spring',
+            stiffness: 300,
+            damping: 20,
+          },
+        }}
       >
         {/* Scoreboard Container */}
         <div className="w-full flex flex-col">
