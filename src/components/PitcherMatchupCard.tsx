@@ -15,12 +15,12 @@ const PitcherMatchupCard = ({
   pitcherC,
 }: PitcherMatchupCardProps) => {
   return (
-    <div className="w-11/12 mx-auto bg-white  rounded-xl p-2 m-3 border-t-2 border-gray-100">
+    <div className="w-11/12 mx-auto bg-white rounded-xl p-2 m-3 border-t-2 border-gray-100">
       <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest text-center mb-3">
         {gameStatus === 'Preview' ? 'Probable Pitchers' : 'Game Decisions'}
       </h3>
 
-      <div className="flex items-center justify-around gap-4">
+      <div className="flex items-center gap-4">
         {/* Pitcher A */}
         <div className="flex items-center gap-3">
           <img
@@ -29,7 +29,7 @@ const PitcherMatchupCard = ({
                 ? pitcherA?.playerActionShotUrl
                 : pitcherA?.playerHeadshotUrl
             }
-            className="size-30 rounded-full object-cover bg-gray-400/90 shrink-0"
+            className="size-20 rounded-full object-cover bg-gray-400/90 md:size-30"
           />
           <div className="flex flex-col gap-0.5">
             <span className="text-sm font-semibold text-gray-900">
@@ -41,12 +41,10 @@ const PitcherMatchupCard = ({
             {gameStatus === 'Final' && (
               <span className="font-bold text-2xl text-green-500">W</span>
             )}
-            {/* stats to be include here in future */}
-            {/* <span className="text-xs text-gray-300">-- - --</span> */}
           </div>
         </div>
 
-        <span className="text-base font-bold text-gray-400 shrink-0">VS.</span>
+        <span className="text-base font-bold text-gray-400">VS.</span>
 
         {/* Pitcher B */}
         <div className="flex items-center gap-3">
@@ -69,7 +67,7 @@ const PitcherMatchupCard = ({
                 ? pitcherB?.playerActionShotUrl
                 : pitcherB?.playerHeadshotUrl
             }
-            className="size-30 rounded-full object-cover bg-gray-400/90 shrink-0"
+            className="size-20 rounded-full object-cover bg-gray-400/90 md:size-30"
           />
         </div>
       </div>

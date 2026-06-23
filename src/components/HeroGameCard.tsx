@@ -125,16 +125,16 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 </span>
               </span>
             )}
-            {formatDateForDisplayLongUtil(gameDataProp.date)}
+            <span>{formatDateForDisplayLongUtil(gameDataProp.date)}</span>
           </span>
           {/* Names Logo Scores */}
           <div className="flex justify-center items-center gap-10 md:gap-20">
-            <span className="flex flex-col items-center gap-2 shrink-0">
+            <span className="flex flex-col items-center gap-2">
               <div
-                className={`border-4 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
                 <img
-                  className="w-15 h-15 rounded-full"
+                  className="size-15 rounded-full md:size-20 "
                   src={gameDataProp.awayTeamLogo}
                 />
               </div>
@@ -156,12 +156,12 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 ? '-'
                 : gameDataProp.homeTeamScore}
             </div>
-            <span className="flex flex-col items-center gap-2 shrink-0">
+            <span className="flex flex-col items-center gap-2">
               <div
-                className={`border-4 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
                 <img
-                  className="w-15 h-15 rounded-full"
+                  className="size-15 rounded-full md:size-20 "
                   src={gameDataProp.homeTeamLogo}
                 />
               </div>
