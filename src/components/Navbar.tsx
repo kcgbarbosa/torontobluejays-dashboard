@@ -17,7 +17,11 @@ function Navbar() {
   return (
     <nav className="sticky top-0 z-10 flex w-full justify-between border-b border-gray-300 bg-blue-200 px-10 py-5">
       <Link to={'/'}>
-        <img src={logoURL} className="w-36 lg:w-48" />
+        <img
+          alt="Toronto Blue Jays logo"
+          src={logoURL}
+          className="w-36 lg:w-48"
+        />
       </Link>
       <div className="relative flex flex-col items-center md:hidden">
         <button onClick={handleClick} className="">
