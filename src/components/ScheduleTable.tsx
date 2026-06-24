@@ -34,7 +34,8 @@ function ScheduleTable() {
             (d) =>
               isGameInPast(d) &&
               d.date >= regularSeasonStartDate &&
-              d.date <= regularSeasonEndDate
+              d.date <= regularSeasonEndDate &&
+              d.detailedState !== 'Live'
           )
         : [];
 
