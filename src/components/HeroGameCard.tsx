@@ -6,6 +6,7 @@ import {
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 import PitcherMatchupCard from './PitcherMatchupCard';
 import type { Linescore } from '../types/models/linescore.model';
+import { motion } from 'motion/react';
 
 type GameDataProps = {
   gameDataProp: Game | null;
@@ -105,11 +106,33 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
   return (
     <>
       {/* Card Container */}
-      <div className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
+      <motion.div
+        className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.01 }}
+        transition={{
+          opacity: {
+            type: 'tween',
+            duration: 0.25,
+            ease: 'easeOut',
+          },
+          y: {
+            type: 'tween',
+            duration: 0.25,
+            ease: 'easeOut',
+          },
+          scale: {
+            type: 'spring',
+            stiffness: 300,
+            damping: 20,
+          },
+        }}
+      >
         {/* Scoreboard Container */}
         <div className="w-full flex flex-col">
           {/* Date Status */}
-          <span className="text-medium text-gray-600 flex justify-between pb-2">
+          <span className="text-base text-gray-600 flex justify-between pb-2">
             {gameDataProp.abstractGameState === 'Live' && (
               <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-red-700 ">
                 Live
@@ -119,16 +142,17 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 </span>
               </span>
             )}
-            {formatDateForDisplayLongUtil(gameDataProp.date)}
+            <span>{formatDateForDisplayLongUtil(gameDataProp.date)}</span>
           </span>
           {/* Names Logo Scores */}
-          <div className="flex justify-center items-center gap-10 md:gap-20">
-            <span className="flex flex-col items-center gap-2 shrink-0">
+          <div className="flex items-center gap-10 sm:gap-15">
+            <span className="flex flex-1 flex-col items-center gap-2">
               <div
-                className={`border-4 rounded-full p-2 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
                 <img
-                  className="w-15 h-15 rounded-full"
+                  alt={`${gameDataProp.awayTeamName} logo`}
+                  className="size-15 rounded-full sm:size-20"
                   src={gameDataProp.awayTeamLogo}
                 />
               </div>
@@ -139,23 +163,24 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
-            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl ">
+            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.awayTeamScore}
             </div>
 
-            <div className="w-8 pb-2 text-center text-7xl font-barlow-condensed md:text-8xl ">
+            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl">
               {gameDataProp.abstractGameState === 'Preview'
                 ? '-'
                 : gameDataProp.homeTeamScore}
             </div>
-            <span className="flex flex-col items-center gap-2 shrink-0">
+            <span className="flex flex-1 flex-col items-center gap-2">
               <div
-                className={`border-4 rounded-full p-2 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
               >
                 <img
-                  className="w-15 h-15 rounded-full"
+                  alt={`${gameDataProp.homeTeamName} logo`}
+                  className="size-15 rounded-full sm:size-20"
                   src={gameDataProp.homeTeamLogo}
                 />
               </div>
@@ -169,7 +194,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
           </div>
           {/* Inning StartTime Venue */}
           <div className="items-center flex flex-col">
-            <div className="text-medium text-gray-600 pt-4">
+            <div className="text-base text-gray-600 pt-4">
               {gameDataProp.abstractGameState === 'Live' &&
                 gameDataProp.linescore?.inningState.slice(0, 3) +
                   ' ' +
@@ -183,10 +208,12 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
                 <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
               )}
               {gameDataProp.abstractGameState === 'Final' && (
-                <h3 className="text-gray-700 font-extrabold">Final</h3>
+                <h3 className="text-gray-700 font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
+                  Final
+                </h3>
               )}
             </div>
-            <div className="text-medium text-gray-600">
+            <div className="text-base text-gray-600">
               {gameDataProp.gameVenue}
             </div>
           </div>
@@ -218,7 +245,7 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
             />
           )}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

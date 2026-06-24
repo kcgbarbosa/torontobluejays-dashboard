@@ -24,6 +24,7 @@ function StatCard({
       </h2>
       <div className="flex items-center gap-4">
         <img
+          alt={`${playerName} headshot`}
           src={`https://midfield.mlbstatic.com/v1/people/${playerID}/spots/120`}
           className="size-25 rounded-lg object-contain bg-gray-50 "
         />

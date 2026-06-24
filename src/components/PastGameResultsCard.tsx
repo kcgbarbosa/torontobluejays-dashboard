@@ -39,6 +39,7 @@ function PastGameResultsCard() {
               <div className="flex relative items-center justify-between ">
                 <div className="flex items-center gap-2">
                   <img
+                    alt={`${d.awayTeamName} logo`}
                     src={d.awayTeamLogo}
                     className="w-10 h-10 object-contain"
                   />
@@ -71,6 +72,7 @@ function PastGameResultsCard() {
                   </span>
                   <img
                     src={d.homeTeamLogo}
+                    alt={`${d.homeTeamName} logo`}
                     className="w-10 h-10 object-contain"
                   />
                 </div>

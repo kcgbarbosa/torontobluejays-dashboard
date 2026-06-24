@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import dogImgURL from '../assets/imgs/goodBoy.webp';
 
 function NotFoundPage() {
   return (
@@ -18,8 +19,9 @@ function NotFoundPage() {
         </div>
       </div>
       <img
+        alt="golden retriever kingsley wearing Blue Jays baseball cap"
         className="size-100 rounded-2xl"
-        src="src/assets/imgs/dPMMCb_GR_iM-cCO_FtCgw.webp"
+        src={dogImgURL}
       />
     </div>
   );
