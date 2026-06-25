@@ -81,17 +81,18 @@ function ScheduleTable() {
           >
             Remaining Games
           </button>
+          <label htmlFor="season-filter" className="sr-only">
+            View Season
+          </label>
           <select
-            aria-labelledby="season-filter-label"
+            id="season-filter"
             className={`${filterBtnBase} ${isCompleted ? filterBtnActive : filterBtnInactive}`}
             value={scheduleFilter}
             onChange={(e) =>
               handleSetScheduleFilter(e.target.value as ScheduleFilterType)
             }
           >
-            <option id="season-filter-label" value="">
-              View Season:
-            </option>
+            <option value="">View Season:</option>
             <option value="Completed Games">
               {new Date().getFullYear()} Completed Games
             </option>
