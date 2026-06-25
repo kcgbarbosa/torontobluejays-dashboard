@@ -79,6 +79,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent, id: number) => {
     if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
       handleSelectPlayer(id);
     }
   };
