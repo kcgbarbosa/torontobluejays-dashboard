@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { PlayerContext } from '../store/contexts';
 
 type PlayerInfoModalProps = {
@@ -11,6 +11,8 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
   const playerData = useContext(PlayerContext);
 
   const selectedPlayerData = playerData.find((d) => d.id === playerID);
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const birthLocation = [
     selectedPlayerData?.birthCity,
@@ -27,6 +29,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
       }
     };
     window.addEventListener('keydown', handleEscKeyDown);
+    if (isOpen) closeButtonRef.current?.focus();
 
     return () => {
       window.removeEventListener('keydown', handleEscKeyDown);
@@ -50,8 +53,9 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
           </span>
           <button
             onClick={onClose}
-            className="absolute right-6 text-lg text-gray-500 hover:text-gray-600 transition-colors"
             aria-label="Close"
+            ref={closeButtonRef}
+            className="absolute right-6 text-lg text-gray-500 hover:text-gray-600 transition-colors"
           >
             x
           </button>
