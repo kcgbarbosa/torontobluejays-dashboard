@@ -43,7 +43,7 @@ function FutureGameTableRow({ gameData }: GameProps) {
           <span className="sm:hidden">{teamAbbreviator(homeTeamName)}</span>
           <span className="hidden sm:inline">{homeTeamName}</span>
         </div>
-        <div className="sm:hidden mt-0.5 text-xs text-gray-400">
+        <div className="sm:hidden mt-0.5 text-xs text-gray-500">
           {formatTimeForDisplayUtil(startTime)}
         </div>
       </td>

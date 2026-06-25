@@ -15,7 +15,7 @@ function Navbar() {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-gray-300 bg-blue-200 px-10 py-5">
+    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-gray-300 bg-blue-100 px-10 py-5">
       <Link to={'/'}>
         <img
           alt="Toronto Blue Jays logo"
@@ -24,7 +24,7 @@ function Navbar() {
         />
       </Link>
       <div className="relative flex flex-col items-center pt-2 md:hidden">
-        <button onClick={handleClick} aria-label='navbar-links'>
+        <button onClick={handleClick} aria-label="navbar-links">
           <RxHamburgerMenu size={25} />
         </button>
         {isOpen && (
@@ -56,7 +56,7 @@ function Navbar() {
             className={({ isActive }) =>
               `pt-5 pb-2 text-center text-base lg:text-lg font-medium transition-colors duration-200 ${
                 isActive
-                  ? 'text-blue-600 font-semibold border-b-3 border-blue-600'
+                  ? 'text-blue-700 font-semibold border-b-3 border-blue-700'
                   : 'text-gray-600 hover:text-blue-400'
               }`
             }

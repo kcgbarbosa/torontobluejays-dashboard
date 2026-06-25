@@ -16,7 +16,7 @@ const PitcherMatchupCard = ({
 }: PitcherMatchupCardProps) => {
   return (
     <div className="w-11/12 mx-auto bg-white rounded-xl p-2 m-3 border-t-2 border-gray-100">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest text-center mb-3">
+      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest text-center mb-3">
         {gameStatus === 'Preview' ? 'Probable Pitchers' : 'Game Decisions'}
       </h3>
 
@@ -37,14 +37,14 @@ const PitcherMatchupCard = ({
               {pitcherA?.fullName}
             </span>
             {gameStatus === 'Preview' && (
-              <span className="text-xs text-gray-400 uppercase">Away</span>
+              <span className="text-xs text-gray-500 uppercase">Away</span>
             )}
             {gameStatus === 'Final' && (
               <span className="font-bold text-2xl text-green-500">W</span>
             )}
           </div>
         </div>
-        <span className="hidden sm:block text-base text-center font-bold text-gray-400">
+        <span className="hidden sm:block text-base text-center font-bold text-gray-500">
           VS.
         </span>
 
@@ -55,7 +55,7 @@ const PitcherMatchupCard = ({
               {pitcherB?.fullName}
             </span>
             {gameStatus === 'Preview' && (
-              <span className="text-xs text-gray-400 uppercase">Home</span>
+              <span className="text-xs text-gray-500 uppercase">Home</span>
             )}
             {gameStatus === 'Final' && (
               <span className="font-bold text-2xl text-red-500">L</span>

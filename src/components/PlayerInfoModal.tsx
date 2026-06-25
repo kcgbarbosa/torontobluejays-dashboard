@@ -51,18 +51,18 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
           >
             ← Roster
           </button>
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
             Player Profile
           </span>
           <button
             onClick={onClose}
-            className="text-lg text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-lg text-gray-500 hover:text-gray-600 transition-colors"
             aria-label="Close"
           >
             ✕
           </button>
         </div>
-        <div className="bg-blue-600 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
+        <div className="bg-blue-700 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
           <img
             src={selectedPlayerData?.playerHeadshotUrl}
             alt={selectedPlayerData?.fullName}
@@ -86,7 +86,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
             </p>
             <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-6 text-sm border-t border-white/25 pt-6">
               <span>
-                <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                <span className="text-blue-100 text-xs uppercase tracking-wider">
                   Born{' '}
                 </span>
                 <span className="text-white">
@@ -95,7 +95,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
               </span>
               {birthLocation && (
                 <span>
-                  <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                  <span className="text-blue-100 text-xs uppercase tracking-wider">
                     From{' '}
                   </span>
                   <span className="text-white">{birthLocation}</span>
@@ -104,7 +104,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
               <span>
                 {selectedPlayerData?.draftYear !== undefined ? (
                   <>
-                    <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                    <span className="text-blue-100 text-xs uppercase tracking-wider">
                       Drafted{' '}
                     </span>
                     <span className="text-white">
@@ -113,7 +113,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                   </>
                 ) : (
                   <>
-                    <span className="text-blue-100/70 text-xs uppercase tracking-wider">
+                    <span className="text-blue-100 text-xs uppercase tracking-wider">
                       Debut{' '}
                     </span>
                     <span className="text-white">
@@ -137,14 +137,14 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         <div className="p-10">
           {selectedPlayerData?.hitting === undefined &&
           !selectedPlayerData?.isPitcher ? (
-            <p className="text-center py-6 text-gray-400 font-medium text-sm">
+            <p className="text-center py-6 text-gray-500 font-medium text-sm">
               No statistics available.
             </p>
           ) : (
             selectedPlayerData?.positionName !== 'Pitcher' && (
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
                     {new Date().getFullYear()} Standard Statistics
                   </h3>
                   <div className="overflow-x-auto rounded-xl border border-gray-200">
@@ -186,7 +186,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
                     {new Date().getFullYear()} Additional Statistics
                   </h3>
                   <div className="overflow-x-auto rounded-xl border border-gray-300">
@@ -231,7 +231,7 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
           )}
           {selectedPlayerData?.isPitcher && (
             <div>
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
                 {new Date().getFullYear()} Pitching Statistics
               </h3>
               <div className="overflow-x-auto rounded-xl border border-gray-300">

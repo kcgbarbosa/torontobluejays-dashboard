@@ -122,7 +122,7 @@ function ScheduleTable() {
               <tr>
                 <td
                   colSpan={3}
-                  className="text-center p-4 text-gray-400 text-sm"
+                  className="text-center p-4 text-gray-500 text-sm"
                 >
                   No games found.
                 </td>

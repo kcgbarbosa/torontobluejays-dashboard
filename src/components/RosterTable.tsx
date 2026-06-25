@@ -171,7 +171,7 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
                           <div className="font-medium text-gray-900">
                             {player.fullName}
                           </div>
-                          <div className="text-xs text-blue-400">
+                          <div className="text-xs text-blue-600">
                             #{player.jerseyNumber}
                           </div>
                           <div className="lg:hidden flex gap-4 mt-1 text-xs text-gray-600">
