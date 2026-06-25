@@ -22,8 +22,9 @@ function HomePage() {
   );
 
   return (
-    <div className="bg-gray-50 min-h-screen w-full p-4 overflow-hidden">
-      <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <main className="bg-gray-50 min-h-screen w-full p-4 overflow-hidden">
+      <h1 className="sr-only">Home Page</h1>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div>
             <HeroGameCard gameDataProp={heroGameData} />
@@ -71,8 +72,8 @@ function HomePage() {
             />
           </div>
         </section>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
 export default HomePage;
