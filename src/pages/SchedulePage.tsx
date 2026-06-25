@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AppStatusContext } from '../store/contexts';
 import ScheduleTable from '../components/ScheduleTable';
 
@@ -9,9 +9,10 @@ function SchedulePage() {
   if (error) return <div>Error loading schedule: {error}</div>;
 
   return (
-    <div className="bg-gray-50 min-h-screen p-4">
+    <main className="bg-gray-50 min-h-screen p-4">
+      <h1 className="sr-only">Schedule Page</h1>
       <ScheduleTable />
-    </div>
+    </main>
   );
 }
 

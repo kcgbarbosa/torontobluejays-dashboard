@@ -33,7 +33,7 @@ function StatCard({
             {playerName}
             <span className="text-blue-600"> {jerseyNumber}</span>
           </span>
-          <span className="text-sm text-gray-400 uppercase tracking-wider">
+          <span className="text-sm text-gray-500 uppercase tracking-wider">
             {positionAbbreviation}
           </span>
           <div className="flex items-baseline gap-1.5 mt-2">
