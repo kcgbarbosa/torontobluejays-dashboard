@@ -24,7 +24,10 @@ function Navbar() {
         />
       </Link>
       <div className="relative flex flex-col items-center pt-2 md:hidden">
-        <button onClick={handleClick} aria-label="navbar-links">
+        <button
+          onClick={handleClick}
+          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        >
           <RxHamburgerMenu size={25} />
         </button>
         {isOpen && (
