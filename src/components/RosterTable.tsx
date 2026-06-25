@@ -6,7 +6,7 @@ import SortingArrowButton, {
 import { motion } from 'motion/react';
 
 type RosterProps = {
-  onSelectPlayer: (id: number) => void;
+  handleSelectPlayer: (id: number) => void;
 };
 
 const toInches = (h: string) => {
@@ -14,7 +14,7 @@ const toInches = (h: string) => {
   return ft * 12 + ins;
 };
 
-function RosterTable({ onSelectPlayer }: RosterProps) {
+function RosterTable({ handleSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
   const [rosterFilter, setRosterFilter] =
     useState<RosterFilterType>('lastNameAToZ');
@@ -77,6 +77,11 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
     show: { opacity: 1, y: 0 },
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, id: number) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      handleSelectPlayer(id);
+    }
+  };
   return (
     <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">
       <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest px-4 sm:px-0">
@@ -154,11 +159,14 @@ function RosterTable({ onSelectPlayer }: RosterProps) {
               {filteredRoster.map((player) => {
                 return (
                   <motion.tr
+                    tabIndex={0}
+                    aria-label={`View ${player.fullName}s full details`}
+                    onKeyDown={(e) => handleKeyDown(e, player.id)}
                     whileHover={{ scale: 1.01 }}
                     variants={rowVariants}
                     key={player.id}
                     className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
-                    onClick={() => onSelectPlayer(player.id)}
+                    onClick={() => handleSelectPlayer(player.id)}
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3 ">

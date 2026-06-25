@@ -27,7 +27,7 @@ function RosterPage() {
           onClose={() => setIsOpen(false)}
         />
       )}
-      <RosterTable onSelectPlayer={handleSelectPlayer} />
+      <RosterTable handleSelectPlayer={handleSelectPlayer} />
     </main>
   );
 }
