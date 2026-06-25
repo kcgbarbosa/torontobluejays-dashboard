@@ -44,22 +44,16 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
         className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
-          <button
-            onClick={onClose}
-            className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
-          >
-            ← Roster
-          </button>
+        <div className="relative flex px-6 py-3 items-center justify-center border-b border-gray-100">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
             Player Profile
           </span>
           <button
             onClick={onClose}
-            className="text-lg text-gray-500 hover:text-gray-600 transition-colors"
+            className="absolute right-6 text-lg text-gray-500 hover:text-gray-600 transition-colors"
             aria-label="Close"
           >
-            ✕
+            x
           </button>
         </div>
         <div className="bg-blue-700 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
