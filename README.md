@@ -50,7 +50,9 @@ npm run dev
 
 ---
 
-## Connect
+## Connect With Me
 
 **Kevin-Christian Giraldo-Barbosa**
-[LinkedIn](https://www.linkedin.com/in/kcgbarbosa/) · [Email](mailto:kcgbarbosa@gmail.com)
+
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kcgbarbosa/)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:kcgbarbosa@gmail.com)
