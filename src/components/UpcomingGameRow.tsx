@@ -5,7 +5,7 @@ type GameProps = {
   gameData: Game;
 };
 
-function FutureGameTableRow({ gameData }: GameProps) {
+function UpcomingGameRow({ gameData }: GameProps) {
   const {
     keyID,
     date,
@@ -55,4 +55,4 @@ function FutureGameTableRow({ gameData }: GameProps) {
   );
 }
 
-export default FutureGameTableRow;
+export default UpcomingGameRow;

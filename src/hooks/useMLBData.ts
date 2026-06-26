@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ALRecords } from '../types/models/standings.model';
 import type { Game, Season } from '../types/models/game.model';
 import type { Player } from '../types/models/person.model';

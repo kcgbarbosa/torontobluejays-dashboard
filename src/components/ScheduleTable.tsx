@@ -1,7 +1,7 @@
 import { useContext, useMemo, useState } from 'react';
 import { ScheduleContext, SeasonContext } from '../store/contexts';
-import { PastGameTableRow } from './PastGameTableRow';
-import FutureGameTableRow from './FutureGameTableRow';
+import { CompletedGameRow } from './CompletedGameRow';
+import UpcomingGameRow from './UpcomingGameRow';
 import { isGameInPast } from '../utils/dateAndTimeUtilities';
 
 type ScheduleFilterType =
@@ -133,11 +133,11 @@ function ScheduleTable() {
               </tr>
             ) : isCompleted ? (
               filteredGames.map((d) => (
-                <PastGameTableRow key={d.keyID} gameData={d} />
+                <CompletedGameRow key={d.keyID} gameData={d} />
               ))
             ) : (
               filteredGames.map((d) => (
-                <FutureGameTableRow key={d.keyID} gameData={d} />
+                <UpcomingGameRow key={d.keyID} gameData={d} />
               ))
             )}
           </tbody>

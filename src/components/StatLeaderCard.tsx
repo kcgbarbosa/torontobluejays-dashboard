@@ -1,4 +1,4 @@
-type StatCardProps = {
+type StatLeaderCardProps = {
   statName?: string | undefined;
   playerName?: string | undefined;
   playerID?: number | undefined;
@@ -8,7 +8,7 @@ type StatCardProps = {
   statAbbreviation?: string;
 };
 
-function StatCard({
+function StatLeaderCard({
   statName,
   playerName,
   playerID,
@@ -16,7 +16,7 @@ function StatCard({
   jerseyNumber,
   positionAbbreviation,
   statAbbreviation,
-}: StatCardProps) {
+}: StatLeaderCardProps) {
   return (
     <div className="bg-white border border-y-amber-900 rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
       <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-widest pb-3">
@@ -50,4 +50,4 @@ function StatCard({
   );
 }
 
-export default StatCard;
+export default StatLeaderCard;

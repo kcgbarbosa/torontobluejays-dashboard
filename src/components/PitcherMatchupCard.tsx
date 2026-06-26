@@ -1,4 +1,3 @@
-import React from 'react';
 import type { PitcherRef } from '../types/models/linescore.model';
 
 type PitcherMatchupCardProps = {

@@ -99,7 +99,7 @@ function OutsIndicator({ outs }: { outs: number }) {
   );
 }
 
-function HeroGameCard({ gameDataProp }: GameDataProps) {
+function FeaturedGameCard({ gameDataProp }: GameDataProps) {
   if (!gameDataProp || !gameDataProp.date)
     return <div>No game data available</div>;
 
@@ -250,4 +250,4 @@ function HeroGameCard({ gameDataProp }: GameDataProps) {
   );
 }
 
-export default HeroGameCard;
+export default FeaturedGameCard;

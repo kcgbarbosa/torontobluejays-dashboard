@@ -1,5 +1,5 @@
 import RosterTable from '../components/RosterTable';
-import PlayerInfoModal from '../components/PlayerInfoModal';
+import PlayerProfileModal from '../components/PlayerProfileModal';
 import { useContext, useState } from 'react';
 import { AppStatusContext } from '../store/contexts';
 
@@ -21,7 +21,7 @@ function RosterPage() {
     <main className="bg-gray-50 w-full min-h-screen p-4">
       <h1 className="sr-only">Roster Page</h1>
       {isOpen && (
-        <PlayerInfoModal
+        <PlayerProfileModal
           playerID={selectedPlayerID}
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}

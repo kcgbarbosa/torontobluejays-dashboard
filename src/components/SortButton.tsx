@@ -14,7 +14,7 @@ export type RosterFilterType =
   | 'weightAsc'
   | 'weightDesc';
 
-type SortingArrowButtonProps = {
+type SortButtonProps = {
   label: string;
   asc: RosterFilterType;
   desc: RosterFilterType;
@@ -22,13 +22,13 @@ type SortingArrowButtonProps = {
   onSelect: (filter: RosterFilterType) => void;
 };
 
-function SortingArrowButton({
+function SortButton({
   label,
   asc,
   desc,
   activeFilter,
   onSelect,
-}: SortingArrowButtonProps) {
+}: SortButtonProps) {
   return (
     <span className="inline-flex items-center gap-2">
       {label}
@@ -50,4 +50,4 @@ function SortingArrowButton({
   );
 }
 
-export default SortingArrowButton;
+export default SortButton;

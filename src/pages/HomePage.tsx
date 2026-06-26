@@ -1,7 +1,7 @@
-import HeroGameCard from '../components/HeroGameCard';
+import FeaturedGameCard from '../components/FeaturedGameCard';
 import ALEastStandings from '../components/ALEastStandings';
-import StatCard from '../components/StatCard';
-import PastGameResultsCard from '../components/PastGameResultsCard';
+import StatLeaderCard from '../components/StatLeaderCard';
+import RecentResultsCard from '../components/RecentResultsCard';
 import { useContext } from 'react';
 import { PlayerContext, HeroGameContext } from '../store/contexts';
 import { getStatLeader } from '../utils/statisticUtilities';
@@ -27,10 +27,10 @@ function HomePage() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div>
-            <HeroGameCard gameDataProp={heroGameData} />
+            <FeaturedGameCard gameDataProp={heroGameData} />
           </div>
           <div>
-            <PastGameResultsCard />
+            <RecentResultsCard />
           </div>
         </div>
 
@@ -39,7 +39,7 @@ function HomePage() {
             <ALEastStandings />
           </div>
           <div>
-            <StatCard
+            <StatLeaderCard
               statName="Home Runs"
               playerName={homeRunLeader?.fullName}
               playerID={homeRunLeader?.id}
@@ -50,7 +50,7 @@ function HomePage() {
             />
           </div>
           <div>
-            <StatCard
+            <StatLeaderCard
               statName="Hits"
               playerName={hitLeader?.fullName}
               playerID={hitLeader?.id}
@@ -61,7 +61,7 @@ function HomePage() {
             />
           </div>
           <div>
-            <StatCard
+            <StatLeaderCard
               statName="OPS"
               playerName={opsLeader?.fullName}
               playerID={opsLeader?.id}

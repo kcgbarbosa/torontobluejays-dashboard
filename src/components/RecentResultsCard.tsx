@@ -8,7 +8,7 @@ import {
   formatDateForDisplayShortUtil,
 } from '../utils/dateAndTimeUtilities';
 
-function PastGameResultsCard() {
+function RecentResultsCard() {
   const schedulePreviewData = useContext(ScheduleContext);
   const heroGameData = useContext(HeroGameContext);
   const pastGames = schedulePreviewData
@@ -85,4 +85,4 @@ function PastGameResultsCard() {
   );
 }
 
-export default PastGameResultsCard;
+export default RecentResultsCard;

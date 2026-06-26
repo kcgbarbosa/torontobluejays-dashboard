@@ -1,8 +1,8 @@
 import { useContext, useMemo, useState } from 'react';
 import { PlayerContext } from '../store/contexts';
-import SortingArrowButton, {
+import SortButton, {
   type RosterFilterType,
-} from './SortingArrowButton';
+} from './SortButton';
 import { motion } from 'motion/react';
 
 type RosterProps = {
@@ -96,7 +96,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
             <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
               <tr>
                 <th className="text-left px-4 py-3">
-                  <SortingArrowButton
+                  <SortButton
                     label="Player"
                     asc="lastNameAToZ"
                     desc="lastNameZToA"
@@ -105,7 +105,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
-                  <SortingArrowButton
+                  <SortButton
                     label="Position"
                     asc="positionAToZ"
                     desc="positionZToA"
@@ -114,7 +114,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
-                  <SortingArrowButton
+                  <SortButton
                     label="B/T"
                     asc="batSideAToZ"
                     desc="batSideZToA"
@@ -123,7 +123,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
-                  <SortingArrowButton
+                  <SortButton
                     label="Age"
                     asc="ageAsc"
                     desc="ageDesc"
@@ -132,7 +132,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
-                  <SortingArrowButton
+                  <SortButton
                     label="HT"
                     asc="heightAsc"
                     desc="heightDesc"
@@ -141,7 +141,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                   />
                 </th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
-                  <SortingArrowButton
+                  <SortButton
                     label="WT"
                     asc="weightAsc"
                     desc="weightDesc"

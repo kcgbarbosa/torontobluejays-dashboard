@@ -7,7 +7,7 @@ type GameProps = {
   gameData: Game;
 };
 
-export function PastGameTableRow({ gameData }: GameProps) {
+export function CompletedGameRow({ gameData }: GameProps) {
   const {
     keyID,
     date,
@@ -103,4 +103,4 @@ export function PastGameTableRow({ gameData }: GameProps) {
   );
 }
 
-export default PastGameTableRow;
+export default CompletedGameRow;

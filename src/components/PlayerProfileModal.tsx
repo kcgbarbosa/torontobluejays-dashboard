@@ -1,13 +1,13 @@
 import { useContext, useEffect, useRef } from 'react';
 import { PlayerContext } from '../store/contexts';
 
-type PlayerInfoModalProps = {
+type PlayerProfileModalProps = {
   playerID: number | null;
   isOpen: boolean;
   onClose: () => void;
 };
 
-function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
+function PlayerProfileModal({ playerID, isOpen, onClose }: PlayerProfileModalProps) {
   const playerData = useContext(PlayerContext);
 
   const selectedPlayerData = playerData.find((d) => d.id === playerID);
@@ -277,4 +277,4 @@ function PlayerInfoModal({ playerID, isOpen, onClose }: PlayerInfoModalProps) {
   );
 }
 
-export default PlayerInfoModal;
+export default PlayerProfileModal;
