@@ -2,7 +2,7 @@
 
 A data-driven Toronto Blue Jays dashboard, powered by the public MLB Stats API.
 
-**[Live Demo](https://kcgbarbosa.dev)** · **[View Code](https://github.com/kcgbarbosa/torontobluejays-dashboard)**
+**[Live Demo](https://jays.kcgbarbosa.dev)** · **[View Code](https://github.com/kcgbarbosa/jays-central)**
 
 <img width="1316" height="811" alt="dashboard page view" src="https://github.com/user-attachments/assets/fdd39226-62d6-4e08-993d-82075b235cfd" />
 
